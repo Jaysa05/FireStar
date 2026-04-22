@@ -1,0 +1,163 @@
+{
+  "bboxMode": 0,
+  "collisionKind": 1,
+  "type": 0,
+  "origin": 0,
+  "preMultiplyAlpha": false,
+  "edgeFiltering": false,
+  "collisionTolerance": 0,
+  "swfPrecision": 2.525,
+  "bbox_left": 99,
+  "bbox_right": 229,
+  "bbox_top": 35,
+  "bbox_bottom": 158,
+  "HTile": false,
+  "VTile": false,
+  "For3D": false,
+  "width": 288,
+  "height": 160,
+  "textureGroupId": {
+    "name": "Default",
+    "path": "texturegroups/Default",
+  },
+  "swatchColours": null,
+  "gridX": 0,
+  "gridY": 0,
+  "frames": [
+    {"compositeImage":{"FrameId":{"name":"db5c1f85-a7fb-4d90-a25d-538e022937fe","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"db5c1f85-a7fb-4d90-a25d-538e022937fe","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"db5c1f85-a7fb-4d90-a25d-538e022937fe","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"8602f38e-4e58-4d73-9007-5baeb6d4ad29","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"8602f38e-4e58-4d73-9007-5baeb6d4ad29","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"8602f38e-4e58-4d73-9007-5baeb6d4ad29","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"b8d87e41-de3b-4880-972c-e978f6808d7c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"b8d87e41-de3b-4880-972c-e978f6808d7c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"b8d87e41-de3b-4880-972c-e978f6808d7c","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"f985f1af-a10a-45aa-b27e-9d239e3ce951","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"f985f1af-a10a-45aa-b27e-9d239e3ce951","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"f985f1af-a10a-45aa-b27e-9d239e3ce951","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"ef1e952e-991a-4d25-a18a-206ec000e0d4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"ef1e952e-991a-4d25-a18a-206ec000e0d4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"ef1e952e-991a-4d25-a18a-206ec000e0d4","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"dd2b7c13-514e-491c-ae5e-37b72ca4a303","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"dd2b7c13-514e-491c-ae5e-37b72ca4a303","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"dd2b7c13-514e-491c-ae5e-37b72ca4a303","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"476584e8-984f-42e4-8fde-0a23c21ef654","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"476584e8-984f-42e4-8fde-0a23c21ef654","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"476584e8-984f-42e4-8fde-0a23c21ef654","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"b6b1f1b6-9190-4e71-92b0-047ec6e7d3db","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"b6b1f1b6-9190-4e71-92b0-047ec6e7d3db","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"b6b1f1b6-9190-4e71-92b0-047ec6e7d3db","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"c12435b8-7d7a-4190-aa4d-4161614d921c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"c12435b8-7d7a-4190-aa4d-4161614d921c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"c12435b8-7d7a-4190-aa4d-4161614d921c","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"a08ae890-0317-482d-953f-204db0db11bf","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"a08ae890-0317-482d-953f-204db0db11bf","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"a08ae890-0317-482d-953f-204db0db11bf","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"3c3cc206-44ce-4d6f-ae87-27fba159f389","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"3c3cc206-44ce-4d6f-ae87-27fba159f389","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"3c3cc206-44ce-4d6f-ae87-27fba159f389","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"f73d1304-e7f9-4893-b942-7f6762404fc0","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"f73d1304-e7f9-4893-b942-7f6762404fc0","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"f73d1304-e7f9-4893-b942-7f6762404fc0","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"febc33a4-ec40-4c87-a0da-7c6d6f2f07ed","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"febc33a4-ec40-4c87-a0da-7c6d6f2f07ed","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"febc33a4-ec40-4c87-a0da-7c6d6f2f07ed","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"22651f6b-5bc4-4e4d-8920-ca57b9e8902a","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"22651f6b-5bc4-4e4d-8920-ca57b9e8902a","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"22651f6b-5bc4-4e4d-8920-ca57b9e8902a","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"f68465cd-d87c-4218-9a69-7181b572dbe7","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"f68465cd-d87c-4218-9a69-7181b572dbe7","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"f68465cd-d87c-4218-9a69-7181b572dbe7","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"f1380623-5735-478c-9acf-763ecefb289c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"f1380623-5735-478c-9acf-763ecefb289c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"f1380623-5735-478c-9acf-763ecefb289c","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"cc6472f7-c732-41da-a26e-6ed0884bd7e8","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"cc6472f7-c732-41da-a26e-6ed0884bd7e8","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"cc6472f7-c732-41da-a26e-6ed0884bd7e8","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"78036aa6-d734-4e3e-94fa-f970c23dcf92","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"78036aa6-d734-4e3e-94fa-f970c23dcf92","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"78036aa6-d734-4e3e-94fa-f970c23dcf92","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"b1bed0d8-4c77-4bd8-8ee5-5ea676d9cc77","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"b1bed0d8-4c77-4bd8-8ee5-5ea676d9cc77","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"b1bed0d8-4c77-4bd8-8ee5-5ea676d9cc77","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"ba6a12d1-6234-4e8f-8f90-0351c1a4c439","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"ba6a12d1-6234-4e8f-8f90-0351c1a4c439","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"ba6a12d1-6234-4e8f-8f90-0351c1a4c439","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"63f75577-0d4c-4266-9378-be7186075c8e","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"63f75577-0d4c-4266-9378-be7186075c8e","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"63f75577-0d4c-4266-9378-be7186075c8e","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"53b964c6-7479-4b98-a3b1-e4889e77dab4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"53b964c6-7479-4b98-a3b1-e4889e77dab4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"LayerId":{"name":"dfc658c0-fba6-408a-9095-424abef0bca3","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","name":"53b964c6-7479-4b98-a3b1-e4889e77dab4","tags":[],"resourceType":"GMSpriteFrame",},
+  ],
+  "sequence": {
+    "spriteId": {"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},
+    "timeUnits": 1,
+    "playback": 1,
+    "playbackSpeed": 8.0,
+    "playbackSpeedType": 0,
+    "autoRecord": true,
+    "volume": 1.0,
+    "length": 22.0,
+    "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MessageEventKeyframe>",},
+    "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
+    "tracks": [
+      {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
+            {"id":"3cac0de4-19a9-47b9-ae6f-f38dce872221","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"db5c1f85-a7fb-4d90-a25d-538e022937fe","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"7bf2b17a-ad12-4ddd-b73a-ace04ab302e2","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"8602f38e-4e58-4d73-9007-5baeb6d4ad29","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"7247f967-7d64-405f-a4b3-0c34f1bce4b8","Key":2.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b8d87e41-de3b-4880-972c-e978f6808d7c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"cdc9eba5-5854-4192-8310-2d0a15f16fdf","Key":3.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"f985f1af-a10a-45aa-b27e-9d239e3ce951","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"d3c5bb22-510e-4e97-bcbf-50b395438e26","Key":4.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"ef1e952e-991a-4d25-a18a-206ec000e0d4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"785def1a-5bc1-4574-a4e5-df3434499fd4","Key":5.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"dd2b7c13-514e-491c-ae5e-37b72ca4a303","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"13c3afe5-fb37-4dd8-b99e-40a2b557154f","Key":6.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"476584e8-984f-42e4-8fde-0a23c21ef654","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"78daf08e-941a-433d-8c4f-0976e7c80361","Key":7.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b6b1f1b6-9190-4e71-92b0-047ec6e7d3db","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"4e3428e4-10f8-48ed-a9c8-7f75ce0b7079","Key":8.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"c12435b8-7d7a-4190-aa4d-4161614d921c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"7f0dbe68-523a-4759-8a47-66a0fb7c49b1","Key":9.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"a08ae890-0317-482d-953f-204db0db11bf","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"fa621f1d-0382-4179-a868-b18942904481","Key":10.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"3c3cc206-44ce-4d6f-ae87-27fba159f389","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"50f5704d-2616-475d-8db4-064bf2009dea","Key":11.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"f73d1304-e7f9-4893-b942-7f6762404fc0","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"2b3ce4e3-0b6c-4876-a505-17f719f34b3b","Key":12.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"febc33a4-ec40-4c87-a0da-7c6d6f2f07ed","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"9ca2c229-95ab-49db-9172-cd9407533ebb","Key":13.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"22651f6b-5bc4-4e4d-8920-ca57b9e8902a","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"5d473d61-02e3-492e-a60b-3fc757bd15e9","Key":14.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"f68465cd-d87c-4218-9a69-7181b572dbe7","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"38b5cf64-d760-4196-859f-71fca965b961","Key":15.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"f1380623-5735-478c-9acf-763ecefb289c","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"ea166dff-bee5-4ad0-bd49-cc20007c8ad3","Key":16.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"cc6472f7-c732-41da-a26e-6ed0884bd7e8","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"e68131bd-5abc-47bd-8bb2-9f4ad1d13d8d","Key":17.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"78036aa6-d734-4e3e-94fa-f970c23dcf92","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"2f5d76c8-4643-450a-94a5-40308ce3a5da","Key":18.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b1bed0d8-4c77-4bd8-8ee5-5ea676d9cc77","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"d9df9585-b5f0-48b1-9198-18bef81a29cc","Key":19.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"ba6a12d1-6234-4e8f-8f90-0351c1a4c439","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"cc77e0d5-b6e1-4ccb-85ba-d2434f3aa01f","Key":20.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"63f75577-0d4c-4266-9378-be7186075c8e","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"b9514fcc-fac5-43ca-bb56-d5a4f8ccb18f","Key":21.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"53b964c6-7479-4b98-a3b1-e4889e77dab4","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
+    ],
+    "visibleRange": null,
+    "lockOrigin": false,
+    "showBackdrop": true,
+    "showBackdropImage": false,
+    "backdropImagePath": "",
+    "backdropImageOpacity": 0.5,
+    "backdropWidth": 1366,
+    "backdropHeight": 768,
+    "backdropXOffset": 0.0,
+    "backdropYOffset": 0.0,
+    "xorigin": 0,
+    "yorigin": 0,
+    "eventToFunction": {},
+    "eventStubScript": null,
+    "parent": {"name":"spr_boss_morrendo","path":"sprites/spr_boss_morrendo/spr_boss_morrendo.yy",},
+    "resourceVersion": "1.3",
+    "name": "spr_boss_morrendo",
+    "tags": [],
+    "resourceType": "GMSequence",
+  },
+  "layers": [
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"dfc658c0-fba6-408a-9095-424abef0bca3","tags":[],"resourceType":"GMImageLayer",},
+  ],
+  "nineSlice": null,
+  "parent": {
+    "name": "Inimigos",
+    "path": "folders/Sprites/Inimigos.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "spr_boss_morrendo",
+  "tags": [],
+  "resourceType": "GMSprite",
+}

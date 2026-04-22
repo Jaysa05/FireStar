@@ -1,0 +1,1 @@
+atraso_inicial = 60;

@@ -31,10 +31,44 @@
 		// GRAVIDADE E PULO
 		// -----------------------------
 		// Verifica se o personagem está no chão
-var _chao = place_meeting(x, y + 1, obj_parede) ||
-			place_meeting(x, y + 1, obj_trampolim)||
-			(place_meeting(x, y + 1, obj_plataforma_cair) && !place_meeting(x, y, obj_plataforma_cair)) ||
-			(place_meeting(x, y + 1, obj_plataforma) && !place_meeting(x, y, obj_plataforma));
+// Cria uma variável chamada _chao
+// Ela vai guardar: TRUE (verdadeiro) ou FALSE (falso)
+// Pergunta geral: "tem chão embaixo do personagem?"
+var _chao = 
+
+    // Verifica se tem uma parede logo abaixo (1 pixel abaixo do personagem)
+    place_meeting(x, y + 1, obj_parede) ||
+
+    // OU: verifica se tem um trampolim embaixo
+    place_meeting(x, y + 1, obj_trampolim) ||
+
+    // OU: verifica plataforma que cai
+    (
+        // Tem plataforma de cair embaixo?
+        place_meeting(x, y + 1, obj_plataforma_cair) 
+        
+        && // E ao mesmo tempo...
+
+        // NÃO está dentro dessa plataforma (evita bug)
+        !place_meeting(x, y, obj_plataforma_cair)
+    ) ||
+
+    // OU: verifica plataforma normal
+    (
+        // Tem plataforma normal embaixo?
+        place_meeting(x, y + 1, obj_plataforma) 
+        
+        && // E ao mesmo tempo...
+
+        // NÃO está dentro da plataforma (evita bug)
+        !place_meeting(x, y, obj_plataforma) ||
+		
+		// Verifica se existe uma plataforma2 logo abaixo do personagem (1 pixel abaixo)
+		place_meeting(x, y + 1, obj_plataforma2)
+		//&&  E ao mesmo tempo...
+// Verifica se o personagem NÃO está dentro da plataforma2 atualmente
+		&& !place_meeting(x, y, obj_plataforma2)
+    );
 
 // Se NÃO estiver no chão
 if (!_chao) {
@@ -97,29 +131,40 @@ if (cima && pulos > 0) {
 // -----------------------------
 // COLISÃO VERTICAL COM A PLATAFORMA (Snap para o topo)
 // -----------------------------
-// Procura qualquer uma das plataformas no caminho
+// -----------------------------
+// COLISÃO VERTICAL COM PLATAFORMAS (UM SENTIDO)
+// -----------------------------
+
+// Procura uma plataforma do tipo "cair" no caminho vertical do personagem
 var _plat = instance_place(x, y + vveloc, obj_plataforma_cair);
-if (_plat == noone) _plat = instance_place(x, y + vveloc, obj_plataforma);
 
-// Se encontrou uma plataforma (seja vindo de cima ou de baixo)
-if (_plat != noone) {
-	
-	// Puxa o personagem para o topo da plataforma
-	// Move o personagem para cima até ele não estar mais "dentro" da plataforma
-	while (place_meeting(x, y + vveloc, _plat.object_index)) {
-		y -= 1;
-	}
-	
-	// Garante que ele fique exatamente em cima
-	while (!place_meeting(x, y + 1, _plat.object_index)) {
-		y += 1;
-	}
-	
-	// Zera a velocidade e recarrega os pulos
-	vveloc = 0;
-	pulos = pulos_max;
-}
+// Se NÃO encontrou, tenta achar uma plataforma normal
+if (_plat == noone)
+_plat = instance_place(x, y + vveloc, obj_plataforma);
 
+// Se ainda NÃO encontrou, tenta o terceiro tipo de plataforma
+if (_plat == noone)
+_plat = instance_place(x, y + vveloc, obj_plataforma2);
+
+// Se encontrou alguma plataforma (ou seja, não é "noone")
+if (_plat != noone){
+
+ // Só colide se: Estiver CAINDO e se os pés do jogador estiverem acima do topo da plataforma
+	if (vveloc > 0 && bbox_bottom <= _plat.bbox_top) {
+		
+	// Move o personagem pixel por pixel até encostar
+		while (!place_meeting(x, y + sign(vveloc), _plat)){
+			y += sign(vveloc);
+		}
+	
+		 // Para a queda (zera a velocidade vertical)
+		 vveloc = 0;
+		 
+		 // Reseta os pulos (permite pular novamente)
+		 pulos = pulos_max;
+	}
+
+	}
 // Aplica o movimento vertical (sobe ou desce)
 y += vveloc;
 

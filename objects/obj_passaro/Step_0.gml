@@ -54,7 +54,7 @@ if ( x >= 460){ // Se o pássaro chegou ou passou do limite direito (posição 4
 	
 	
 	
-	// Limite ESQUERDO: inverte para a direita
+// Limite ESQUERDO: inverte para a direita
 // Se o pássaro chegou ou passou do limite esquerdo (posição 300)	
 if ( x <= 300){
 	// Trava ele exatamente no limite (impede de passar)
@@ -69,5 +69,56 @@ if ( x <= 300){
 	image_xscale = -1;
 	
 }
-	
 
+// === MERGULHO DO PÁSSARO ===
+
+// Se NÃO está mergulhando e NÃO está voltando
+if(!mergulhando && !voltando){
+	
+	// Verifica se o jogador existe no jogo
+	if ( instance_exists(obj_personagem)){
+		
+		 // Verifica duas coisas:
+        // 1) Se o jogador está perto no eixo X (menos de 60 pixels)
+        // 2) Se o jogador está embaixo do pássaro (y maior)
+		if(abs(obj_personagem.x - x) < 60 && obj_personagem.y > y){
+			
+			// Começa o mergulho
+			mergulhando = true;
+		}
+	}
+}
+
+// Se estiver mergulhando
+else if (mergulhando){
+	
+	// Move o pássaro para baixo (desce rápido)
+	y += 2;
+	
+	// Verifica se já desceu o limite do mergulho (ex: 45 pixels)
+	if (y >= y_inicial + 45){
+		
+		 // Para de mergulhar
+		 mergulhando = false;
+		 
+		 // Começa a subir (voltar)
+		 voltando = true;
+	}
+}
+
+// Se estiver voltando (subindo)
+else if (voltando){
+	
+	// Move o pássaro para cima (mais devagar que desce)
+	y -= 2;
+	
+	// Quando chegar na altura original
+	if (y <= y_inicial){
+		
+		// Corrige exatamente a posição inicial
+		y = y_inicial;
+		
+		// Para de subir
+		voltando = false;
+	}
+}

@@ -76,18 +76,30 @@ switch (estado) {
 // ------------------------------
 
 // Verifica se existe um personagem logo em cima da plataforma
-if (place_meeting(x, y - 1, obj_personagem)) {
+// (usa y - 1 para checar um pouquinho acima da plataforma)
+if ( place_meeting(x, y - 1, obj_personagem)){
 	
-	// Executa código dentro do objeto personagem
-	with (obj_personagem) {
-		
-		// Verifica se o personagem NÃO vai bater em uma parede ao se mover
-		if (!place_meeting(x, y + _move_y, obj_parede)) {
+	// Só move o personagem se ele NÃO estiver pulando para cima
+    // vveloc < 0 = subindo | >= 0 = caindo ou parado
+	if ( obj_personagem.vveloc >= 0) {
+		// Executa o código dentro do objeto personagem
+        // ou seja, tudo aqui dentro afeta o player
+		with(obj_personagem){
 			
-			y += _move_y; // Move o personagem junto com a plataforma
+			// Verifica se o personagem NÃO vai colidir com uma parede
+            // ao ser movido junto com a plataforma
+			if (!place_meeting(x, y + _move_y, obj_parede)){
+				
+				 // Move o personagem na vertical junto com a plataforma
+                // _move_y é o quanto a plataforma está se movendo
+				y += _move_y;
+			}
 		}
 	}
 }
+// ------------------------------
+// MOVIMENTO DA PRÓPRIA PLATAFORMA
+// ------------------------------
 
-// Aplica o movimento na própria plataforma
+// Move a plataforma na vertical
 y += _move_y;

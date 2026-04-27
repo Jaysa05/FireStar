@@ -10,3 +10,18 @@ item_drop = noone;
 hveloc = 1;       // velocidade horizontal de voo
 vveloc = -2;             // velocidade vertical (sobe levemente)
 image_xscale = -1;    // começa voando para a esquerda
+
+// ------------------------------
+// CONTROLE DO MERGULHO
+// ------------------------------
+
+// Guarda a posição vertical inicial do pássaro
+// (serve como "altura original" para ele voltar depois)
+y_inicial = y;
+
+// Indica que o pássaro NÃO está mergulhando no momento
+mergulhando = false;
+
+// Indica que o pássaro NÃO está voltando (subindo) no momento
+voltando = false;
+

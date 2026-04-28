@@ -41,6 +41,7 @@ if (vida <= 0 && !morreu) {
         global.faca_save = 0;
         global.faca_cargas_save = 0;
         global.frutas_save = 0;
+        global.inv_save = 0;
     }
     
     vida = global.vida_save;

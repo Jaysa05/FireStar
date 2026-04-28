@@ -19,13 +19,51 @@ if vida <= 0 {
     // O SEGREDO ESTÁ AQUI: Quando a fumaça da morte termina!
     if scr_fim_da_animacao(){
         
-        // Se ele tem algum item para dropar, ele cria
-    if (item_drop != noone) {  
-        instance_create_layer(x, y - 25, "colisao", item_drop); 
-    }
-        
-        instance_destroy(); 
-    }
+    // ==============================
+// SISTEMA DE DROP DE ITENS
+// ==============================
 
+// Verifica se existe um item para dropar (se não for "nenhum")
+if (item_drop != noone){
+	
+	 // Repete o processo de criação de itens
+    // de acordo com a quantidade definida
+	for (var i = 0; i < item_drop_quantidade; i ++){
+		
+		// Define uma posição X aleatória próxima ao inimigo
+		var _x_drop = x + random_range(-25, 25);
+		
+		 // Define uma posição Y um pouco acima do inimigo,
+        // com uma pequena variação aleatória
+		var _y_drop = (y - 25) + random_range(-10, 0);
+		
+		 // ==============================
+        // SISTEMA DE SEGURANÇA CONTRA PAREDES
+        // ==============================
+		
+		 // Verifica se o ponto gerado está dentro de uma parede
+		 if (position_meeting(_x_drop, _y_drop, obj_parede)){
+			 
+			 // Se estiver dentro da parede, ajusta a posição
+            // para mais perto do centro do inimigo (lugar seguro)
+			_x_drop = x + random_range(-5, 5);
+			_y_drop = y -25;
+			
+			
+		 }
+		
+		// Cria o item no jogo na posição calculada
+        // "colisao" é a layer onde o item será colocado
+		instance_create_layer(_x_drop, _y_drop, "colisao", item_drop);
+	}
+}
 
+// ==============================
+// REMOÇÃO DO INIMIGO
+// ==============================
+
+// Depois de dropar os itens, remove o inimigo do jogo
+instance_destroy()
+
+	}
 }

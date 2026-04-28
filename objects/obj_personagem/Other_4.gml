@@ -26,7 +26,8 @@ if (variable_global_exists("checkpoint_ativo")
     faca_cargas = global.faca_cargas_save;
     frutas = global.frutas_save;
     
-    alarm[0] = 60;
+    // Mantém a invencibilidade atual ou dá 60 frames (1 segundo) de segurança
+    alarm[0] = max(alarm[0], 60);
     
     show_debug_message("Respawn no checkpoint!");
     exit; // Sai do evento, não executa o spawn padrão abaixo
@@ -53,8 +54,8 @@ if (_nome_sala == "rm_fase3") {
 	global.vida_save = 5;
 	vida = global.vida_save;
 	
-	// INVENCIBILIDADE TEMPORÁRIA: 1 segundo de segurança ao nascer
-	alarm[0] = 60; 
+	// INVENCIBILIDADE TEMPORÁRIA: Mantém a invencibilidade da fase anterior, ou dá 1 segundo de segurança
+	alarm[0] = max(alarm[0], 60); 
 	
 	// Restaurar itens
 	faca = global.faca_save;

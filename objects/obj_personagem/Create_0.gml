@@ -27,6 +27,7 @@ if (!variable_global_exists("vida_save")) {
     global.faca_save = 0;
     global.faca_cargas_save = 0;
 	global.frutas_save = 0;
+	global.inv_save = 0;
 }
 
 
@@ -39,8 +40,11 @@ frutas = global.frutas_save;
 alfa_hit = 0; 
 // variável usada para controlar o efeito de piscar quando o personagem toma dano
 
-alarm[0] = 0; 
-// inicia o alarme 0 em 0
+// Inicia o alarme com o tempo que foi salvo ao passar de fase
+alarm[0] = global.inv_save; 
+// Zera o save para garantir que a invencibilidade não fique salva para sempre se o jogo reiniciar
+global.inv_save = 0; 
+
 // o alarm é um temporizador do GameMaker
 // Usado para dar um tempo de invencibilidade após levar dano
 

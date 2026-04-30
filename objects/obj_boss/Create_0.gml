@@ -92,6 +92,9 @@ spr_morte = spr_boss_morrendo;
 spr_ataque = spr_boss_atacando_espada;
 // Sprite usado no ataque de espada
 
+spr_fogo = spr_boss_soltando_fogo;
+// Sprite usado no ataque de lançar fogo
+
 mask_index = spr_parado;
 // Mantém a caixa de colisão sempre igual para evitar prender em paredes
 

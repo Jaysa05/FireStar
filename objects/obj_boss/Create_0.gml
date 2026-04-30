@@ -2,6 +2,13 @@ event_inherited();
 // Chama o código do evento pai (caso esse objeto herde de outro)
 
 // ==============================
+// SISTEMA DE ALEATORIEDADE
+// ==============================
+randomize(); 
+// IMPORTANTE: Isso obriga o GameMaker a gerar uma semente ("seed") aleatória nova toda vez que você abrir o jogo.
+// Sem isso, o GameMaker usa SEMPRE a mesma sequência de números para facilitar os testes, o que faz os ataques parecerem scriptados!
+
+// ==============================
 // FÍSICA E MOVIMENTO
 // ==============================
 

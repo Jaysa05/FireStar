@@ -138,6 +138,7 @@ else if (_dist_horizontal < _alvo_perto){
 
             // Se pode atacar E está perto o suficiente do jogador (para não atacar o vento)
             if (timer_ataque <= 0 && _no_chao && _dist_horizontal <= _distancia_alvo + 15) {
+
                 
                 // Escolhe aleatoriamente entre 0 e 1 (50% de chance cada)
                 var _ataque_escolhido = irandom(1);
@@ -247,7 +248,7 @@ else if (_dist_horizontal < _alvo_perto){
         mask_index = spr_parado;
 
         // Dano só em frames específicos
-        if (image_index >= 11 && image_index <= 14) {
+        if (image_index >= 12 && image_index <= 14) {
 
             // Posição da espada
             var _x_espada = x + (70 * -image_xscale);
@@ -290,26 +291,47 @@ else if (_dist_horizontal < _alvo_perto){
         // Para de andar
         hveloc = 0;
 
+        // Fica vermelho para avisar o jogador que lá vem fogo!
+        image_blend = c_red;
+
         // Define sprite de lançar fogo
-        // ATENÇÃO: Adicione "spr_fogo = spr_boss_soltando_fogo;" no Create do obj_boss!
         if (sprite_index != spr_fogo) {
             sprite_index = spr_fogo;
             image_index = 0;
         }
 
-        image_speed = 1;
+        // Deixa a "preparação" do ataque bem mais lenta para dar tempo de fugir!
+        // Mas quando o fogo finalmente sai (frame 12), a animação volta para a velocidade normal.
+        if (image_index < 12) {
+            image_speed = 0.4; // Carregando o ataque devagar
+        } else {
+            image_speed = 1;   // Cuspiu o fogo na velocidade normal
+        }
+        
         mask_index = spr_parado;
 
-        // Dano só em frames específicos onde o fogo aparece na animação
-        if (image_index >= 6 && image_index <= 17) {
+        // Dano só em frames específicos onde o fogo JÁ SAIU e chegou longe!
+        // Mudamos o início de 6 para 12, para ele não dar dano enquanto o fogo ainda está saindo da boca!
+        if (image_index >= 12 && image_index <= 17) {
 
-            // Cria um retângulo de colisão (caixa de dano) que sai do boss e vai até 350 pixels
+            // Para o dano ser no frame perfeito sem bater adiantado, nós vamos fazer a 
+            // caixa de dano "CRESCER PRA FRENTE" junto com a animação!
+            var _progresso = (image_index - 12) / 5; // Calcula a porcentagem da animação (de 0.0 a 1.0)
+            if (_progresso < 0) _progresso = 0;
+            if (_progresso > 1) _progresso = 1;
+
+            var _alcance_maximo = 320; // Quão longe o fogo vai na horizontal
+            var _distancia_atual = _alcance_maximo * _progresso;
+
+            // Retângulo que começa perto do Boss e vai esticando pra frente
             var _x1 = x;
-            var _y1 = y - 350;            // ALTO O SUFICIENTE para pegar o jogador nas plataformas altas!
-            var _x2 = x + (350 * direct); // Vai longe o suficiente para cobrir o fogo
-            var _y2 = y + 10;             // Até um pouco abaixo do pé do boss
+            var _x2 = x + (_distancia_atual * direct); // Cresce pra frente com o tempo!
+            
+            // Altura do fogo: pega o chão mas NÃO pega a 3ª plataforma!
+            var _y1 = y - 130; // Se ainda te matar na 3ª plataforma, diminua esse valor (ex: -100)
+            var _y2 = y + 10;  // Garante que te acerta no chão!
 
-            // Área de dano do fogo usando retângulo
+            // Área de dano usando esse retângulo expansivo
             var _alvo = collision_rectangle(_x1, _y1, _x2, _y2, obj_personagem, false, true);
 
             if (_alvo != noone) {
@@ -331,6 +353,9 @@ else if (_dist_horizontal < _alvo_perto){
             timer_ataque = tempo_ataque;
 
             estado = ESTADO_BOSS.PERSEGUINDO;
+
+            // Volta para a cor normal ao terminar o ataque
+            image_blend = c_white;
 
             sprite_index = spr_parado;
             mask_index = spr_parado;

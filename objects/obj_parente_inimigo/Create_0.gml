@@ -4,9 +4,9 @@ veloc = 0;
 
 vida = 3;
 
-hit = 0;
+hit = false
 
-sprite_morrendo = 0;
+sprite_morrendo = spr_tomate_morrendo;
 
 reset = 0;
 

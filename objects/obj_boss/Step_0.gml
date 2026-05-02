@@ -2,168 +2,142 @@
 // SISTEMA DE DANO (HIT)
 // ==============================
 
-// Se o boss foi atingido
+// Se o boss foi atingido (algum ataque marcou "hit = true")
 if (hit == true) {
 
-    // Só recebe dano se estiver no estado de descanso (vulnerável)
+    // Só recebe dano se estiver no estado de descanso (único momento vulnerável)
     if (estado == ESTADO_BOSS.DESCANSO) {
         
-        // Ativa efeito visual de "piscar"
         alarm[1] = 5;
-        
-        // Diminui a vida do boss
+        // Ativa um efeito visual (ex: piscar por alguns frames)
+
         vida_boss -= 1;
+        // Diminui a vida do boss em 1
     }
 
-    // Reseta o hit para não tomar dano várias vezes no mesmo frame
     hit = false;
+    // Reseta o hit para evitar dano repetido no mesmo frame
 }
 
-// NÃO usamos event_inherited() porque o dano já está sendo controlado manualmente
+// NÃO usamos event_inherited()
+// porque todo o sistema de dano está sendo controlado aqui manualmente
 
 
 // ==============================
 // GRAVIDADE
 // ==============================
 
-// Aplica gravidade (faz o boss cair)
 vveloc += gravidade;
+// Aplica gravidade → aumenta velocidade vertical para baixo
 
 
 // ==============================
-// MÁQUINA DE ESTADOS
+// MÁQUINA DE ESTADOS (CÉREBRO DO BOSS)
 // ==============================
 
 switch (estado) {
 
-    // ------------------------------
+    // ==============================
     // ESTADO: PERSEGUINDO
-    // ------------------------------
+    // ==============================
     case ESTADO_BOSS.PERSEGUINDO:
 
-        // Cor normal
         image_blend = c_white;
+        // Cor normal
 
-        // Diminui tempo de perseguição
         timer_perseguicao -= 1;
+        // Tempo de perseguição vai diminuindo
 
-        // Diminui cooldown do ataque
         if (timer_ataque > 0) timer_ataque -= 1;
+        // Diminui o tempo de recarga do ataque
 
-        // Se o jogador existe
+        // Só faz lógica se o jogador existir
         if (instance_exists(obj_personagem)) {
 
-            // Diferença de posição horizontal
             var _dif_x = obj_personagem.x - x;
+            // Diferença horizontal entre boss e jogador
 
-            // Distância horizontal (sempre positiva)
             var _dist_horizontal = abs(_dif_x);
+            // Distância horizontal (sempre positiva)
 
-            // Atualiza direção (evita tremedeira quando muito perto)
             if (_dist_horizontal > 5) direct = sign(_dif_x);
+            // Define direção (evita tremedeira quando está muito perto)
 
-            // Faz o boss olhar para o jogador
             if (direct != 0) image_xscale = -direct;
+            // Faz o boss virar para olhar o jogador
 
-            // Sprite atual
             var _sprite_alvo = sprite_index;
+            // Guarda qual sprite deveria usar
 
-            // Velocidade da animação
             var _vel_anim = 1;
+            // Velocidade padrão da animação
 
-            // Distância ideal que o boss quer manter
             var _distancia_alvo = 70;
-            var _margem = 5; // Aumentamos a margem para dar um respiro maior
+            // Distância ideal do jogador
 
-            // Lógica para evitar que a animação fique "piscando" (flickering)
-            // Se o boss já estava correndo, ele vai até atingir o alvo exato.
-            // Se estava parado, ele espera o jogador sair da margem para começar a mover.
-			var _alvo_longe = _distancia_alvo + _margem;
-			
-			// Define o limite de "perto demais" (distância ideal - margem)
-           var _alvo_perto = _distancia_alvo - _margem;
-		   
-		   // Se já está andando na direção do jogador
-			if (sprite_index == spr_andando && hveloc != 0 && sign(hveloc) == direct){
-			   
-			    // Remove a margem → vai direto na distância ideal (movimento mais preciso)
-				_alvo_longe = _distancia_alvo;
-			}
-				
-			// Se está andando na direção contrária do jogador (recuando)
-			if (sprite_index == spr_andando && hveloc != 0 && sign(hveloc) == -direct){
-					
-					// Remove a margem → mantém distância exata ao recuar
-					_alvo_perto = _distancia_alvo;
-				
-		   }
+            var _margem = 5;
+            // Margem para evitar tremedeira
 
-// ------------------------------
-// LONGE DEMAIS → SE APROXIMA
-// ------------------------------
+            var _alvo_longe = _distancia_alvo + _margem;
+            var _alvo_perto = _distancia_alvo - _margem;
 
-if ( _dist_horizontal > _alvo_longe ){
-	
-	// Move o boss na direção do jogador
-	hveloc = spd * direct;
-	
-	// Define sprite de andando
-	_sprite_alvo = spr_andando;
-	
-}
+            // Ajustes finos para deixar o movimento suave
+            if (sprite_index == spr_andando && hveloc != 0 && sign(hveloc) == direct){
+                _alvo_longe = _distancia_alvo;
+            }
 
-// ------------------------------
-// PERTO DEMAIS → RECUA
-// ------------------------------
+            if (sprite_index == spr_andando && hveloc != 0 && sign(hveloc) == -direct){
+                _alvo_perto = _distancia_alvo;
+            }
 
-else if (_dist_horizontal < _alvo_perto){
-	
-	// Move o boss para longe do jogador (direção contrária)
-	hveloc = spd * -direct;
-	
-	// Continua usando sprite de andando
-	_sprite_alvo = spr_andando;
-}
+            // LONGE → SE APROXIMA
+            if (_dist_horizontal > _alvo_longe){
+                hveloc = spd * direct;
+                _sprite_alvo = spr_andando;
+            }
 
-            // DISTÂNCIA PERFEITA
-            // ------------------------------
+            // PERTO → RECUA
+            else if (_dist_horizontal < _alvo_perto){
+                hveloc = spd * -direct;
+                _sprite_alvo = spr_andando;
+            }
+
+            // DISTÂNCIA IDEAL → PARA
             else {
-
                 hveloc = 0;
                 _sprite_alvo = spr_parado;
             }
 
-            // Verifica se está no chão
             var _no_chao = place_meeting(x, y + 1, obj_parede);
+            // Verifica se está no chão
 
-            // Se pode atacar E está perto o suficiente do jogador (para não atacar o vento)
-            if (timer_ataque <= 0 && _no_chao && _dist_horizontal <= _distancia_alvo + 15) {
+            // Se pode atacar
+            if (timer_ataque <= 0 && _no_chao && _dist_horizontal <= _distancia_alvo) {
 
-                
-                // Escolhe aleatoriamente entre 0 e 1 (50% de chance cada)
                 var _ataque_escolhido = irandom(1);
-                
+                // Escolhe ataque aleatório
+
                 if (_ataque_escolhido == 0) {
                     estado = ESTADO_BOSS.ESPADA;
                 } else {
-                    estado = ESTADO_BOSS.FOGO;
-                    atirou = false; // Reseta a variável do tiro de fogo
+                    estado = ESTADO_BOSS.PULO;
+                    pulo_fase = 0;
                 }
-                
+
                 image_index = 0;
+                // Reinicia animação
             }
         }
 
-        // Aplica sprite escolhido
+        // Aplica o sprite escolhido
         if (sprite_index != _sprite_alvo) {
             sprite_index = _sprite_alvo;
             image_index = 0;
         }
 
-        // Aplica velocidade da animação
         image_speed = _vel_anim;
 
-        // Se tempo acabar → descanso
+        // Se tempo acabar → entra em descanso
         if (timer_perseguicao <= 0) {
             estado = ESTADO_BOSS.DESCANSO;
             timer_descanso = tempo_descanso;
@@ -173,30 +147,28 @@ else if (_dist_horizontal < _alvo_perto){
         break;
 
 
-    // ------------------------------
-    // ESTADO: DESCANSO
-    // ------------------------------
+    // ==============================
+    // ESTADO: DESCANSO (VULNERÁVEL)
+    // ==============================
     case ESTADO_BOSS.DESCANSO:
 
-        // Garante sprite parado
         if (sprite_index != spr_parado) {
             sprite_index = spr_parado;
             image_index = 0;
         }
 
-        // Não se move
         hveloc = 0;
+        // Não se move
 
-        // Conta tempo de descanso
         timer_descanso -= 1;
+        // Conta o tempo de descanso
 
-        // Fica azul (indica vulnerável)
         image_blend = c_aqua;
+        // Azul → indica vulnerabilidade
 
-        // Animação lenta
         image_speed = 0.5;
+        // Animação mais lenta
 
-        // Volta a perseguir quando terminar
         if (timer_descanso <= 0) {
             estado = ESTADO_BOSS.PERSEGUINDO;
             timer_perseguicao = tempo_perseguindo;
@@ -206,37 +178,34 @@ else if (_dist_horizontal < _alvo_perto){
         break;
 
 
-    // ------------------------------
+    // ==============================
     // ESTADO: MORTE
-    // ------------------------------
+    // ==============================
     case ESTADO_BOSS.MORTE:
 
-        // Para completamente
         hveloc = 0;
+        // Para completamente
 
         image_blend = c_white;
 
-        // Troca para sprite de morte
         if (sprite_index != spr_morte) {
             sprite_index = spr_morte;
             image_index = 0;
         }
 
-        // Animação normal
         image_speed = 1;
 
         break;
 
 
-    // ------------------------------
-    // ESTADO: ATAQUE (ESPADA)
-    // ------------------------------
+    // ==============================
+    // ATAQUE: ESPADA
+    // ==============================
     case ESTADO_BOSS.ESPADA:
 
-        // Para de andar
         hveloc = 0;
+        // Para de andar
 
-        // Define sprite de ataque
         if (sprite_index != spr_ataque) {
             sprite_index = spr_ataque;
             image_index = 0;
@@ -244,23 +213,21 @@ else if (_dist_horizontal < _alvo_perto){
 
         image_speed = 1;
 
-        // Usa colisão do sprite parado
         mask_index = spr_parado;
+        // Colisão menor
 
         // Dano só em frames específicos
         if (image_index >= 12 && image_index <= 14) {
 
-            // Posição da espada
             var _x_espada = x + (70 * -image_xscale);
+            // Posição da espada
 
-            // Área de dano
             var _alvo = collision_circle(_x_espada, y - 10, 40, obj_personagem, false, true);
+            // Área circular de dano
 
             if (_alvo != noone) {
 
                 with (_alvo) {
-
-                    // Só toma dano se não estiver invencível
                     if (alarm[0] <= 0) {
                         vida -= 1;
                         alarm[0] = inv_tempo;
@@ -269,83 +236,104 @@ else if (_dist_horizontal < _alvo_perto){
             }
         }
 
-        // Quando animação termina
+        // Final do ataque
         if (image_index >= image_number - 1) {
-
             timer_ataque = tempo_ataque;
-
             estado = ESTADO_BOSS.PERSEGUINDO;
-
             sprite_index = spr_parado;
             mask_index = spr_parado;
         }
 
         break;
 
-    // ------------------------------
-    // ESTADO: ATAQUE (FOGO) - Ajustado para ser mais lento e preciso
-    // ------------------------------
-    case ESTADO_BOSS.FOGO:
 
-        hveloc = 0; 
-        image_blend = c_red;
+    // ==============================
+    // ATAQUE: PULO (ÁREA)
+    // ==============================
+    case ESTADO_BOSS.PULO:
 
-        if (sprite_index != spr_fogo) {
-            sprite_index = spr_fogo;
+        hveloc = 0;
+        // Para movimento horizontal
+
+        if (sprite_index != spr_pulo){
+            sprite_index = spr_pulo;
             image_index = 0;
+            mask_index = spr_parado;
         }
 
-        // VELOCIDADE: Diminuímos a velocidade para você conseguir ver o fogo crescendo
-        if (image_index < 12) {
-            image_speed = 0.3; // Carregando (mais lento)
-            x += random_range(-1, 1); 
-        } else {
-            image_speed = 0.4; // Soltando o fogo (velocidade justa para 60 FPS)
-        }
-        
-        mask_index = spr_parado;
+        // FASE 0 → PREPARAÇÃO
+        if(pulo_fase == 0) {
 
-               // DANO (Frames 14 a 20) - Ajuste Fino de Precisão
-        if (image_index >= 14 && image_index <= 20) {
+            image_speed = 0.8;
 
-            // Mudamos para começar no frame 14 (atrasa o hit para bater com o desenho)
-            var _progresso = (image_index - 14) / 6; 
-            if (_progresso > 1) _progresso = 1;
+            // Pisca vermelho/branco
+            if (floor(image_index) % 2 == 0) image_blend = c_red;
+            else image_blend = c_white;
 
-            var _alcance_maximo = 210; // Reduzi 10 pixels para não "sobrar" fogo
-            var _distancia_atual = _alcance_maximo * _progresso;
+            if(image_index >= 5){
+                vveloc = -10;
+                // Pula
 
-            // Ajustei o início para 40 pixels (mais perto da boca do Boss)
-            var _x_inicial = x + (40 * direct);
-            var _x_final = _x_inicial + (_distancia_atual * direct);
-            
-            var _y1 = y - 110; 
-            var _y2 = y + 2; 
-
-            var _alvo = collision_rectangle(_x_inicial, _y1, _x_final, _y2, obj_personagem, false, true);
-
-            if (_alvo != noone) {
-                with (_alvo) {
-                    if (alarm[0] <= 0) {
-                        vida -= 1;
-                        alarm[0] = inv_tempo;
-                    }
-                }
+                pulo_fase = 1;
             }
         }
 
+        // FASE 1 → NO AR
+        if (pulo_fase == 1){
 
-        if (image_index >= image_number - 1) {
-            timer_ataque = tempo_ataque;
-            estado = ESTADO_BOSS.PERSEGUINDO;
-            image_blend = c_white;
-            sprite_index = spr_parado;
-            mask_index = spr_parado;
+            image_speed = 0.8;
+
+            if (vveloc > 0 && place_meeting(x, y + 2, obj_parede)){
+                
+                pulo_fase = 2; // ⚠️ CORRIGIDO (antes estava ==)
+                ja_deu_dano = false;
+                image_index = 10;
+            }
         }
+
+        // FASE 2 → IMPACTO
+        if (pulo_fase == 2){
+
+            image_speed = 1;
+
+            if (!ja_deu_dano && instance_exists(obj_personagem)){
+
+                var _player_no_chao = false;
+
+                with(obj_personagem){
+                    if (place_meeting(x, y + 2, obj_parede)) 
+                        _player_no_chao = true;
+                }
+
+                var _dist = point_distance(x, y, obj_personagem.x, obj_personagem.y);
+
+                if (_player_no_chao && _dist <= 250){
+
+                    with (obj_personagem){
+                        if (alarm[0] <= 0){
+                            vida -= 1;
+                            alarm[0] = inv_tempo;
+                        }
+                    }
+
+                    ja_deu_dano = true;
+                }
+            }
+
+            if (image_index >= image_number -1 ){
+
+                timer_ataque = tempo_ataque;
+                estado = ESTADO_BOSS.PERSEGUINDO;
+                pulo_fase = 0;
+                ja_deu_dano = false;
+
+                image_blend = c_white;
+                sprite_index = spr_parado;
+                mask_index = spr_parado;
+            }
+        }
+
         break;
-
-
-        
 }
 
 
@@ -361,44 +349,42 @@ if (place_meeting(x + hveloc, y, obj_parede)) {
         x += sign(hveloc);
     }
 
-    // Para movimento
     hveloc = 0;
+    // Para movimento
 }
 
-// Aplica movimento
 x += hveloc;
+// Aplica movimento horizontal
 
 
 // ==============================
 // COLISÃO VERTICAL
 // ==============================
 
-// Se vai bater verticalmente
 if (place_meeting(x, y + vveloc, obj_parede)) {
 
-    // Ajusta posição até encostar
     while (!place_meeting(x, y + sign(vveloc), obj_parede)) {
         y += sign(vveloc);
     }
 
-    // Para queda/subida
     vveloc = 0;
+    // Para movimento vertical
 }
 
-// Aplica movimento vertical
 y += vveloc;
+// Aplica movimento vertical
 
 
 // ==============================
-// CHECAGEM DE MORTE
+// MORTE
 // ==============================
 
-// Se vida acabou e ainda não morreu
+// Se a vida acabou
 if (vida_boss <= 0 && estado != ESTADO_BOSS.MORTE) {
 
-    // Entra no estado de morte
     estado = ESTADO_BOSS.MORTE;
+    // Entra no estado de morte
 
-    // Reinicia animação
     image_index = 0;
+    // Reinicia animação
 }

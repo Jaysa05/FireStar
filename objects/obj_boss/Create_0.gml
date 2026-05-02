@@ -75,7 +75,7 @@ enum ESTADO_BOSS {
     PERSEGUINDO, // Boss vai atrás do jogador
     DESCANSO,    // Boss fica parado
     ESPADA,      // Ataque com espada
-    FOGO,        // Ataque de fogo
+    PULO,        // Ataque de pulo com área de dano
     MORTE        // Estado de morte
 }
 
@@ -99,8 +99,8 @@ spr_morte = spr_boss_morrendo;
 spr_ataque = spr_boss_atacando_espada;
 // Sprite usado no ataque de espada
 
-spr_fogo = spr_boss_soltando_fogo;
-// Sprite usado no ataque de lançar fogo
+spr_pulo = spr_boss_pulando;
+// Sprite do ataque de pulo em área
 
 mask_index = spr_parado;
 // Mantém a caixa de colisão sempre igual para evitar prender em paredes
@@ -116,3 +116,12 @@ vida = 999;
 // Vida falsa para impedir que o sistema padrão (do objeto pai)
 // mate o boss automaticamente
 // O controle real da vida está em "vida_boss"
+
+pulo_fase = 0;
+// Fase do ataque de pulo (0 = parado, 1 = subindo, 2 = no ar, 3 = pousou)
+
+ja_deu_dano = false;
+// Variável para garantir que o dano do pulo só ocorra uma vez por impacto
+
+// Controle do ataque de pulo
+ja_deu_dano = false;

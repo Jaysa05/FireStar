@@ -114,14 +114,17 @@ switch (estado) {
             // Se pode atacar
             if (timer_ataque <= 0 && _no_chao && _dist_horizontal <= _distancia_alvo) {
 
-                var _ataque_escolhido = irandom(1);
+                var _ataque_escolhido = irandom(2);
                 // Escolhe ataque aleatório
 
                 if (_ataque_escolhido == 0) {
                     estado = ESTADO_BOSS.ESPADA;
-                } else {
+                } else if (_ataque_escolhido == 1) {
                     estado = ESTADO_BOSS.PULO;
                     pulo_fase = 0;
+                } else {
+                    estado = ESTADO_BOSS.FEITICO;
+                    ja_deu_dano = false;
                 }
 
                 image_index = 0;
@@ -224,7 +227,7 @@ switch (estado) {
 
             var _alvo = collision_circle(_x_espada, y - 10, 40, obj_personagem, false, true);
             // Área circular de dano
-
+            
             if (_alvo != noone) {
 
                 with (_alvo) {
@@ -334,6 +337,119 @@ switch (estado) {
         }
 
         break;
+
+
+       // ==============================
+    // ATAQUE: FEITIÇO (BOLA DE FOGO)
+    // ==============================
+       case ESTADO_BOSS.FEITICO:// Estado onde o boss usa magia
+	   
+	   // Verifica se o jogador existe na sala
+	   if(instance_exists(obj_personagem)){
+		   
+		    // Calcula a distância horizontal entre boss e jogador
+			var _dist = abs(obj_personagem.x - x);
+			
+			 // Verifica se vai bater em uma parede ao tentar recuar
+			 var _batendo_na_parede = place_meeting(x + (spd * -direct), y , obj_parede);
+			 
+			 
+		// ------------------------------
+        // 1. FASE DE RECUO (fugir)
+        // ------------------------------
+		
+		 // Só recua se:
+        // - o jogador estiver perto
+        // - ainda não atacou
+        // - não tem parede atrás
+		if (_dist < 115 && !ja_deu_dano && !_batendo_na_parede){
+			
+			hveloc = spd * -direct;// Move para trás (foge do jogador)
+			sprite_index = spr_andando;// Usa animação de andar
+			image_speed = 1;// Velocidade normal da animação
+			image_blend = c_white;
+			
+		}
+		
+		// ------------------------------
+        // 2. FASE DE ATAQUE
+        // ------------------------------
+		
+		else {
+			hveloc = 0; // Para de se mover
+			
+			// Troca para animação de ataque (se ainda não estiver nela)
+			if (sprite_index != spr_boss_lanca_feitico){
+				sprite_index = spr_boss_lanca_feitico;
+				image_index = 0; // Reinicia animação 
+			}
+			
+			image_speed = 0.5; // Animação mais lenta (dá tempo de reação)
+			
+			// ------------------------------
+            // SINALIZAÇÃO VISUAL (AVISO)
+            // ------------------------------
+			
+			 // Enquanto ainda não atacou, o boss pisca roxo
+			 if (!ja_deu_dano) {
+				 
+				 // Alterna entre roxo e branco (efeito de piscar)
+				  if (floor(image_index) % 2 == 0)
+						image_blend = c_purple;
+				   else
+						image_blend = c_white;   
+				 
+			 } else {
+				 image_blend = c_white; // Após atacar, volta ao normal
+			 }
+			 
+			  // ------------------------------
+            // DISPARO DO FEITIÇO
+            // ------------------------------
+			
+			// No frame 4 da animação, cria a bola de fogo
+			if (floor(image_index) == 4 && !ja_deu_dano){
+				
+				 // Define posição de onde a bola vai sair
+				 var _x_fogo = x + (90 * -image_xscale);
+				 var _y_fogo = y - 25;
+				 
+				 // Cria a bola de fogo
+				 var _fogo = instance_create_depth(_x_fogo , _y_fogo, depth -1 , obj_bola_fogo);
+				 
+				 // Define direção do tiro (esquerda ou direita)
+				var _direcao_tiro = (image_xscale == 1) ? 180 : 0;
+				 
+				  // Aplica movimento à bola
+				  _fogo.direction = _direcao_tiro; // Para onde vai
+				  _fogo.speed = 1; // Velocidade da bola
+				  _fogo.image_angle = _direcao_tiro; // Rotação da imagem
+				  
+				  ja_deu_dano = true; // Marca que já atacou (evita repetir)
+				 	  
+				
+			}
+
+		}
+		
+		
+	   }
+	   
+	   // ------------------------------
+    // FINAL DO ATAQUE
+    // ------------------------------
+	
+	// Quando a animação termina
+	 if (image_index >= image_number - 1 && sprite_index == spr_boss_lanca_feitico) {
+		timer_ataque = tempo_ataque; // Reseta tempo de ataque
+		estado = ESTADO_BOSS.PERSEGUINDO;  // Volta a perseguir o jogador
+		image_blend = c_white; // Volta cor normal
+		sprite_index = spr_parado; // Fica parado
+		ja_deu_dano = false; // Permite atacar novamente
+	}
+	
+	break; // Final do estado
+
 }
 
 

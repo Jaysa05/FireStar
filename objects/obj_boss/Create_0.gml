@@ -52,8 +52,8 @@ tempo_perseguindo = 600;
 timer_perseguicao = tempo_perseguindo; 
 // Contador que vai diminuindo durante a perseguição
 
-tempo_descanso = 300;        
-// Tempo que o boss fica parado descansando (5 segundos se room_speed = 60)
+tempo_descanso = 240;        
+// Tempo que o boss fica parado descansando (4 segundos se room_speed = 60)
 
 timer_descanso = 0;          
 // Contador do tempo de descanso
@@ -72,11 +72,12 @@ timer_ataque = tempo_ataque;
 // ==============================
 
 enum ESTADO_BOSS {
-    PERSEGUINDO, // Boss vai atrás do jogador
-    DESCANSO,    // Boss fica parado
-    ESPADA,      // Ataque com espada
-    PULO,        // Ataque de pulo com área de dano
-    MORTE        // Estado de morte
+    PERSEGUINDO, 
+    DESCANSO,    
+    ESPADA,      
+    PULO,        
+    FEITICO,     
+    MORTE        
 }
 
 estado = ESTADO_BOSS.PERSEGUINDO;

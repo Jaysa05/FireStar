@@ -100,6 +100,13 @@ var _chao =
 
         // Garante que não está dentro dela
         !place_meeting(x, y, obj_plataforma2)
+    ) ||
+
+    // OU: verifica plataforma da fase 2
+    (
+        place_meeting(x, y + 1, obj_plataforma_fase2)
+        &&
+        !place_meeting(x, y, obj_plataforma_fase2)
     );
 
     // -----------------------------
@@ -162,6 +169,9 @@ var _chao =
 
     if (_plat == noone && _pode_usar_plat2)
         _plat = instance_place(x, y + vveloc, obj_plataforma2);
+
+    if (_plat == noone)
+        _plat = instance_place(x, y + vveloc, obj_plataforma_fase2);
 
     if (_plat != noone) {
 

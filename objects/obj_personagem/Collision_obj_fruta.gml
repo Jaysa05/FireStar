@@ -2,16 +2,24 @@
 // Soma 1 ao número de frutas do jogador
 frutas++;
 
-// Verifica se o jogador tem 30 ou mais frutas para ganhar invencibilidade de 6 segundos
-if(frutas >= 30){
+// Verifica se o jogador tem 30 ou mais frutas para ganhar invencibilidade de 8 segundos e a faca
+if( frutas >= 30){
 	
-	// Ativa o alarme 0 com valor 360 (isso funciona como um cronômetro)
-    // 360 frames = 6 segundos
-	alarm[0] = 360;
+	// Ativa o alarme 0 com valor 480 (isso funciona como um cronômetro)
+	// 480 frames = 8 segundos (considerando 60 FPS)
+	alarm[0] = 480;
 	
-	 // Remove 30 frutas do total do jogador
-    // É como "pagar" para ativar a habilidade
+	// Ativa o power-up da faca
+	faca = true;
+	
+	 // Define que a faca tem 5 usos
+	faca_cargas = 5;
+	
+	// Remove 30 frutas do total do jogador
 	frutas -= 30;
+	
+
+
 }
 
 // Verifica se o jogador tem 20 ou mais frutas E a vida é menor que 5

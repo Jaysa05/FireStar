@@ -41,6 +41,9 @@ item_drop = noone;
 vida_boss = 10;
 // Vida real do boss (quantos hits ele aguenta)
 
+vida_boss_max = vida_boss;
+// Armazena a vida máxima para o cálculo da barra de HUD
+
 
 // ==============================
 // SISTEMA DE TEMPO (TIMERS)

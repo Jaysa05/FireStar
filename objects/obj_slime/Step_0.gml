@@ -24,14 +24,82 @@ if (vida <= 0) {
 }
 
 event_inherited(); 
-// 1. Caminha SOMENTE para o lado esquerdo eternamente
-x = x - 1;// Velocidade da caminhada
-image_xscale = 1; // Vira o rostinho para a esquerda
-// 2. O Sensor de Borda do Mapa
-// Quando o X do slime for menor que 0 (Saiu da tela pela esquerda)
-if(x < - 25) {
-	// TELEPORTE! Traz o slime instantaneamente para as coordenadas do começo
-	x = ponto_de_partida
+
+// ------------------------------
+// 1. Lógica de movimento e desaparecimento
+// ------------------------------
+
+// Verifica se o slime está visível (aparecido na tela)
+if(estado_visivel){
+	
+	 // Move o slime para a esquerda
+	 x = x - velocidade_slime;
+	 
+	  // Verifica se ele saiu totalmente da tela pela esquerda
+	  if (x < -50){
+		  
+		   // Define que ele não está mais visível
+		   estado_visivel = false;
+		   
+		   // Esconde o slime da tela
+		   visible = false;
+		   
+		   // Remove a colisão (fica intangível, como um fantasma)
+		   mask_index = -1;
+		   
+		    // Inicia o tempo que ele ficará invisível (ex: 10 segundos)
+			timer_slime = tempo_invisivel;
+			
+			
+	  }
+} else {
+	
+	 // ------------------------------
+    // 2. Lógica enquanto está invisível
+    // ------------------------------
+	
+	// Diminui o timer a cada frame (contador regressivo)
+	timer_slime -= 1;
+	
+	// Quando o tempo de invisível acaba
+	if (timer_slime <= 0){
+		
+		 // ------------------------------
+        // 3. Definir onde ele vai reaparecer
+        // ------------------------------
+		
+		 // Verifica se existe o objeto "girador" na fase
+		 if (instance_exists(obj_girador)){
+			 
+			  // Teleporta o slime para perto do girador
+			  x = obj_girador.x - 40;
+			  
+		 }	else{
+			 
+			  // Se não existir girador, usa uma posição padrão
+			  x = 130;
+		 }
+		 
+		  // ------------------------------
+        // 4. Faz o slime reaparecer
+        // ------------------------------
+		
+		// Define que ele está visível novamente
+		estado_visivel = true;
+		
+		 // Mostra o slime na tela
+		 visible = true;
+		 
+		  // Restaura a colisão normal do slime
+		  mask_index = spr_slime;
+
+	}
+	
 }
 
+// ------------------------------
+// 5. Direção do sprite
+// ------------------------------
 
+// Mantém o slime virado para um lado (depende do sprite)
+image_xscale = 1;

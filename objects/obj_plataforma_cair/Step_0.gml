@@ -77,10 +77,27 @@ switch (estado) {
 
 // Verifica se existe um personagem logo em cima da plataforma
 // (usa y - 1 para checar um pouquinho acima da plataforma)
-if ( place_meeting(x, y - 1, obj_personagem)){
+// Verifica se existe um objeto do tipo "obj_personagem"
+// 2 pixels acima da plataforma
+//
+// x       = posição horizontal atual
+// y - 2   = 2 pixels acima
+//
+// Isso normalmente é usado para verificar
+// se o jogador está em cima da plataforma.
+if ( place_meeting(x, y - 2, obj_personagem)){
+
+	// Só move o personagem junto com a plataforma
+	// se ele NÃO estiver pulando para cima.
 	
-	// Só move o personagem se ele NÃO estiver pulando para cima
-    // vveloc < 0 = subindo | >= 0 = caindo ou parado
+    // vveloc = velocidade vertical do personagem
+    //
+    // vveloc < 0  -> personagem subindo
+    // vveloc = 0  -> personagem parado
+    // vveloc > 0  -> personagem caindo
+    //
+    // >= 0 significa:
+    // "caindo ou parado"
 	if ( obj_personagem.vveloc >= 0) {
 		// Executa o código dentro do objeto personagem
         // ou seja, tudo aqui dentro afeta o player

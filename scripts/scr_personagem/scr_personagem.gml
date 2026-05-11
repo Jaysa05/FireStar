@@ -63,28 +63,43 @@ var _chao =
     // Também conta como chão
     place_meeting(x, y + 1, obj_trampolim) ||
 
-    // OU: verifica plataforma que cai
+    // ------------------------------------------------------------
+// VERIFICA SE O JOGADOR ESTÁ EM CIMA DE UMA PLATAFORMA QUE CAI
+// ------------------------------------------------------------
+
     (
-        // Tem uma plataforma desse tipo logo abaixo?
-        place_meeting(x, y + 1, obj_plataforma_cair)
-
-        && // E ao mesmo tempo...
-
-        // Garante que o personagem NÃO está dentro da plataforma
-        // Isso evita bugs de atravessar ou travar
-        !place_meeting(x, y, obj_plataforma_cair)
-    ) ||
-
-    // OU: verifica plataforma normal
-    (
-        // Tem uma plataforma normal logo abaixo?
-        place_meeting(x, y + 1, obj_plataforma)
-
-        && // E ao mesmo tempo...
-
-        // Garante que NÃO está dentro da plataforma
-        !place_meeting(x, y, obj_plataforma)
-    ) ||
+	
+		// Verifica se existe uma plataforma do tipo
+		// "obj_plataforma_cair" logo abaixo do personagem.
+		
+		// x  = posição horizontal do jogador
+		// y + 1   = 1 pixel abaixo do jogador
+		 // Se existir plataforma ali, retorna TRUE.
+		 place_meeting(x, y +1, obj_plataforma_cair) && 
+		 
+		 
+		 
+		  // bbox_bottom
+        // = parte mais baixa da caixa de colisão do jogador
+        //
+        // instance_place(...)
+        // = pega a plataforma encontrada abaixo do jogador
+        //
+        // .bbox_top
+        // = pega o topo da plataforma
+        //
+        // + 5
+        // = margem de tolerância de 5 pixels
+        //   para evitar falhas de colisão
+        //
+        // Essa comparação verifica se o jogador
+        // está pousando em cima da plataforma.
+		bbox_bottom <= instance_place(x , y + 1, obj_plataforma_cair).bbox_top + 5
+		
+		)
+		
+		||
+		 
 
     // OU: verifica plataforma especial (plat2)
     (
@@ -173,12 +188,31 @@ var _chao =
     if (_plat == noone)
         _plat = instance_place(x, y + vveloc, obj_plataforma_fase2);
 
-    if (_plat != noone) {
-
-        if (vveloc > 0 && bbox_bottom <= _plat.bbox_top) {
-            // Só colide se estiver caindo e acima da plataforma
-
-            while (!place_meeting(x, y + sign(vveloc), _plat)) {
+		// Verifica se alguma plataforma foi encontrada
+		// "_plat" guarda a plataforma encontrada
+		// "noone" significa "nenhum objeto"
+		if( _plat != noone) {
+			
+			 // Cria uma variável chamada "_tolerancia"
+			 // Essa variável serve como margem de erro da colisão
+			 // Se a plataforma encontrada for do tipo "obj_plataforma_cair":
+			 //     tolerância = 5 pixels
+			 // Senão:
+			 //     tolerância = 0
+			// Isso ajuda o jogador a não atravessar a plataforma
+			// quando ela estiver se movendo/subindo.
+			var _tolerancia = (_plat.object_index == obj_plataforma_cair) ? 5: 0;
+			
+			//Verifica duas coisas ao mesmo tempo:
+			// 1. vveloc > 0
+			//  O jogador está caindo
+			// 2. bbox_bottom <= _plat.bbox_top + _tolerancia
+			//    A parte de baixo do jogador está acima
+			//    (ou muito perto do topo) da plataforma
+			 // Só permite colisão se as duas condições forem verdadeiras.
+			 if(vveloc > 0 && bbox_bottom <= _plat.bbox_top + _tolerancia) {
+				 
+			while (!place_meeting(x, y + sign(vveloc), _plat)) {
                 y += sign(vveloc);
             }
 
@@ -186,6 +220,10 @@ var _chao =
             pulos = pulos_max; // Reseta pulos
         }
     }
+			
+		
+
+           
 
     y += vveloc; // Aplica movimento vertical
 

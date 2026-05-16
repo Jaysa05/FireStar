@@ -59,4 +59,3 @@ pulos_max = 2;    // O limite de pulos (2 para duplo pulo)
 morreu = false;
 
 // O carregamento da faca já foi feito lá em cima através das globais
-

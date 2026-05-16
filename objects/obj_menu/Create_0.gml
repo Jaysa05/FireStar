@@ -10,4 +10,3 @@ index = 0;
 // Calcula o número total de opções no menu
 // array_length(opcoes) retorna quantos elementos existem no array
 op_max = array_length(opcoes)
-

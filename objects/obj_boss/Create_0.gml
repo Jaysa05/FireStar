@@ -55,8 +55,8 @@ tempo_perseguindo = 600;
 timer_perseguicao = tempo_perseguindo; 
 // Contador que vai diminuindo durante a perseguição
 
-tempo_descanso = 240;        
-// Tempo que o boss fica parado descansando (4 segundos se room_speed = 60)
+tempo_descanso = 120;      
+// Tempo que o boss fica parado descansando (2 segundos se room_speed = 60)
 
 timer_descanso = 0;          
 // Contador do tempo de descanso

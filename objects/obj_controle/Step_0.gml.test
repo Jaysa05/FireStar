@@ -1,0 +1,13 @@
+/// @description Insert description here
+if (room == rm_fase3){
+    if(tempo_fase > 0 ){
+        tempo_fase -= delta_time / 1000000;
+    }else {
+        tempo_espera = 0;
+        if (instance_exists(obj_personagem)){
+            obj_personagem.vida = 0;
+        }
+    }
+}else {
+    tempo_fase = 60;
+}

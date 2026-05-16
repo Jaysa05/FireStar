@@ -122,6 +122,13 @@ var _chao =
         place_meeting(x, y + 1, obj_plataforma_fase2)
         &&
         !place_meeting(x, y, obj_plataforma_fase2)
+    ) ||
+
+    // OU: verifica plataforma normal
+    (
+        place_meeting(x, y + 1, obj_plataforma)
+        &&
+        !place_meeting(x, y, obj_plataforma)
     );
 
     // -----------------------------

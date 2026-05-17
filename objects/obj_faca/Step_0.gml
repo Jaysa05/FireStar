@@ -1,4 +1,3 @@
-/// @description Insert description here
 
 if melhoria == true {
 	// Movimento senoidal (efeito de "flutuar")

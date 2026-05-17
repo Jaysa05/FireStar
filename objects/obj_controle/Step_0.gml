@@ -28,7 +28,6 @@ if (pausado) {
 
     if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))){
 
-        // Volta uma opção no menu
         opcao_selecionada--;
 
         // Se passar do começo da lista, vai para a última opção
@@ -77,11 +76,9 @@ if (pausado) {
 
 if (room == rm_fase3) {
     if (tempo_fase3 > 0) {
-        // Diminui o tempo baseado no tempo real (delta_time)
         tempo_fase3 -= delta_time / 1000000;
     } else {
         tempo_fase3 = 0;
-        // Se o tempo acabar, o jogador morre
         if (instance_exists(obj_personagem)) {
             obj_personagem.vida = 0;
         }

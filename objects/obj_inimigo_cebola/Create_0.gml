@@ -1,11 +1,9 @@
-/// @description Insert description here
-event_inherited();//chama os conteúdos que estão no parente_inimigo
+event_inherited();
 
 veloc = 0.4;
 
-sprite_morrendo = spr_cebola_morrendo;//sprite quando a cebola morre
+sprite_morrendo = spr_cebola_morrendo;
 
-carrega_faca = false; // Por padrão, cebola não dropa nada.
-
+carrega_faca = false;
 
 item_drop = noone; // Substitui o drop do pai, dizendo que a Cebola derruba "NADA"

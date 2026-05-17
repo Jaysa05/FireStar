@@ -1,5 +1,3 @@
-/// @description Insert description here
-// Guarda a posição original no eixo Y
 pontoy = y;
 
 // Velocidade da oscilação (quanto menor, mais lento)

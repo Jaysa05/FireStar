@@ -1,41 +1,26 @@
-/// @description Insert description here
-script_execute(estado)
-// -----------------------------
-// SISTEMA DE COMBATE (EFEITO DE DANO)
-// -----------------------------
+/// @description Executa estado e efeitos temporários
+script_execute(estado);
 
-// se o alarme ainda estiver ativo
-if (alarm[0] > 0){
-
-	// se estiver totalmente visível
-	if (image_alpha >= 1){
-
-		// começa a ficar invisível
-		alfa_hit = -0.05;
-
-	// se estiver invisível
-	}else if (image_alpha < 0){
-
-		// começa a ficar visível novamente
-		alfa_hit = 0.05;
-	}
-
-	// altera a transparência do sprite
-	image_alpha += alfa_hit;
-
-}else {
-
-	// quando o alarme acabar volta ao normal
-	image_alpha = 1;
+// Efeito visual de piscar ao receber dano (invencibilidade ativa)
+if (alarm[0] > 0) {
+    if (image_alpha >= 1) {
+        alfa_hit = -0.05;
+    } else if (image_alpha < 0) {
+        alfa_hit = 0.05;
+    }
+    image_alpha += alfa_hit;
+} else {
+    image_alpha = 1; // Restaura opacidade quando o alarme expira
 }
 
-depth = -bbox_bottom; //Quanto mais embaixo o personagem estiver na tela, mais na frente ele aparece
+// Depth sorting para efeito de perspectiva
+depth = -bbox_bottom;
 
-	//Se a vida chegar a 0
+// Sistema de Derrota e Renascimento
 if (vida <= 0 && !morreu) {
     morreu = true;
     
-    // Se houver um checkpoint ativo, resetamos os dados para o renascimento
+    // Se houver um checkpoint ativo, resetamos o progresso temporário
     if (variable_global_exists("checkpoint_ativo")) {
         global.vida_save = 5;
         global.faca_save = 0;

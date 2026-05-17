@@ -1,13 +1,9 @@
-/// @description Insert description here
-// Verifica se o inimigo acabou de sofrer um golpe
 if hit == true {
-    veloc = 0;        // Para o movimento horizontal temporariamente (fica “congelado”)
+    veloc = 0;
     alarm[1] = 5;     // Inicia um timer de 5 frames (geralmente usado para efeitos de hit, como piscar ou recuo)
     hit = false;      // Reseta o flag de hit, para não entrar nesse bloco novamente até receber outro dano
 }
 
-// Verifica se a vida do personagem/inimigo chegou a zero
-// Verifica se a vida chegou a zero
 if vida <= 0 {
     if reset == false {
         image_index = 0; 
@@ -23,17 +19,13 @@ if vida <= 0 {
 // SISTEMA DE DROP DE ITENS
 // ==============================
 
-// Verifica se existe um item para dropar (se não for "nenhum")
 if (item_drop != noone){
 	
-	 // Repete o processo de criação de itens
     // de acordo com a quantidade definida
 	for (var i = 0; i < item_drop_quantidade; i ++){
 		
-		// Define uma posição X aleatória próxima ao inimigo
 		var _x_drop = x + random_range(-25, 25);
 		
-		 // Define uma posição Y um pouco acima do inimigo,
         // com uma pequena variação aleatória
 		var _y_drop = (y - 25) + random_range(-10, 0);
 		
@@ -41,10 +33,8 @@ if (item_drop != noone){
         // SISTEMA DE SEGURANÇA CONTRA PAREDES
         // ==============================
 		
-		 // Verifica se o ponto gerado está dentro de uma parede
 		 if (position_meeting(_x_drop, _y_drop, obj_parede)){
 			 
-			 // Se estiver dentro da parede, ajusta a posição
             // para mais perto do centro do inimigo (lugar seguro)
 			_x_drop = x + random_range(-5, 5);
 			_y_drop = y -25;

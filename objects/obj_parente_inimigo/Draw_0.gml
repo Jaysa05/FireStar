@@ -1,4 +1,3 @@
-/// @description Insert description here
 if (sprite_exists(sprite_index)) {
 	if alarm [1] > 0 {
 		gpu_set_fog(true, c_white, 0 ,0 );

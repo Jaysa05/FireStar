@@ -1,4 +1,5 @@
-
+/// @description Insert description here
+/// @description Evento quando a animação termina
 switch (estado) {
     case ESTADO_BOSS.MORTE:
         // Cria a tela de vitória antes de sumir com o boss

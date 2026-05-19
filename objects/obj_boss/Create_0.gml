@@ -1,4 +1,5 @@
 event_inherited(); 
+// Chama o código do evento pai (caso esse objeto herde de outro)
 
 // ==============================
 // SISTEMA DE ALEATORIEDADE
@@ -32,6 +33,7 @@ direct = 1;
 item_drop = noone;
 // Item que o boss pode dropar ao morrer (inicialmente nenhum)
 
+
 // ==============================
 // VIDA
 // ==============================
@@ -40,6 +42,8 @@ vida_boss = 10;
 // Vida real do boss (quantos hits ele aguenta)
 
 vida_boss_max = vida_boss;
+// Armazena a vida máxima para o cálculo da barra de HUD
+
 
 // ==============================
 // SISTEMA DE TEMPO (TIMERS)
@@ -51,8 +55,8 @@ tempo_perseguindo = 600;
 timer_perseguicao = tempo_perseguindo; 
 // Contador que vai diminuindo durante a perseguição
 
-tempo_descanso = 180;      
-// Tempo que o boss fica parado descansando (3 segundos se room_speed = 60)
+tempo_descanso = 120;      
+// Tempo que o boss fica parado descansando (2 segundos se room_speed = 60)
 
 timer_descanso = 0;          
 // Contador do tempo de descanso
@@ -62,6 +66,9 @@ tempo_ataque = 120;
 
 timer_ataque = tempo_ataque;
 // Contador para o cooldown de ataque (começa cheio para não atacar de imediato)
+
+
+
 
 // ==============================
 // MÁQUINA DE ESTADOS
@@ -78,6 +85,7 @@ enum ESTADO_BOSS {
 
 estado = ESTADO_BOSS.PERSEGUINDO;
 // Estado inicial do boss (começa perseguindo)
+
 
 // ==============================
 // SPRITES
@@ -100,6 +108,9 @@ spr_pulo = spr_boss_pulando;
 
 mask_index = spr_parado;
 // Mantém a caixa de colisão sempre igual para evitar prender em paredes
+
+
+
 
 // ==============================
 // VIDA "FAKE"

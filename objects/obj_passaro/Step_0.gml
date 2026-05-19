@@ -1,9 +1,11 @@
-
+/// @description Step do pássaro
 depth = -10;
 // 1. CHECANDO A MORTE COM EXPLOSÃO NATIVA:
 // 1. CHECANDO A MORTE:
+// Verifica se a vida do inimigo chegou a 0 ou menos (morreu)
 if (vida <= 0) {
     
+    // Verifica se o alarm[1] ainda não está ativo (tempo <= 0)
     if (alarm[1] <= 0) {
         
         // Ativa o alarm[1] com 20 frames
@@ -11,19 +13,24 @@ if (vida <= 0) {
         alarm[1] = 20; 
     }
 	
-	image_speed = 3;
+	image_speed = 3; // quanto maior, mais rápido
     
+    // Executa o código do objeto pai
     // (normalmente usado para lidar com a morte, como virar fumaça ou destruir)
     event_inherited(); 
     
+    // Interrompe o restante do código deste evento
+    // Evita que outras ações sejam executadas após a morte
     exit;
 }
 
 event_inherited();
 
+
 // === MOVIMENTO DO PÁSSARO ===
 
 // === MOVIMENTO DO PÁSSARO ===
+// Move o pássaro na horizontal
 x += hveloc;
 // "x" é a posição horizontal
 // "hveloc" é a velocidade horizontal
@@ -32,6 +39,7 @@ x += hveloc;
 
 // Limite DIREITO: inverte para a esquerda
 if ( x >= 460){ // Se o pássaro chegou ou passou do limite direito (posição 460)
+	// Trava ele exatamente no limite (impede de passar)
 	x = 460;
 	
 	// abs(hveloc) pega o valor positivo da velocidade
@@ -40,13 +48,16 @@ if ( x >= 460){ // Se o pássaro chegou ou passou do limite direito (posição 4
 	hveloc = -abs(hveloc);
 	
 	image_xscale = 1
+	 // Define o sprite "normal"
     // Aqui estou dizendo que o pássaro está virado para a esquerda
 }
 	
 	
 	
 // Limite ESQUERDO: inverte para a direita
+// Se o pássaro chegou ou passou do limite esquerdo (posição 300)	
 if ( x <= 300){
+	// Trava ele exatamente no limite (impede de passar)
 	x = 300;
 	
 	 // abs(hveloc) garante que o valor seja positivo
@@ -61,36 +72,47 @@ if ( x <= 300){
 
 // === MERGULHO DO PÁSSARO ===
 
+// Se NÃO está mergulhando e NÃO está voltando
 if(!mergulhando && !voltando){
 	
+	// Verifica se o jogador existe no jogo
 	if ( instance_exists(obj_personagem)){
 		
+		 // Verifica duas coisas:
         // 1) Se o jogador está perto no eixo X (menos de 60 pixels)
         // 2) Se o jogador está embaixo do pássaro (y maior)
 		if(abs(obj_personagem.x - x) < 60 && obj_personagem.y > y){
 			
+			// Começa o mergulho
 			mergulhando = true;
 		}
 	}
 }
 
+// Se estiver mergulhando
 else if (mergulhando){
 	
+	// Move o pássaro para baixo (desce rápido)
 	y += 2;
 	
+	// Verifica se já desceu o limite do mergulho (ex: 45 pixels)
 	if (y >= y_inicial + 45){
 		
 		 // Para de mergulhar
 		 mergulhando = false;
 		 
+		 // Começa a subir (voltar)
 		 voltando = true;
 	}
 }
 
+// Se estiver voltando (subindo)
 else if (voltando){
 	
+	// Move o pássaro para cima (mais devagar que desce)
 	y -= 2;
 	
+	// Quando chegar na altura original
 	if (y <= y_inicial){
 		
 		// Corrige exatamente a posição inicial

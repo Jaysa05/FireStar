@@ -1,3 +1,4 @@
+// Se for necessário pausar o jogo
 if (pausar_proximo_frame) {
 
     // Remove a imagem antiga da pausa
@@ -29,6 +30,7 @@ if (pausar_proximo_frame) {
     pausar_proximo_frame = false;
 }
 
+
 // Desenha a tela congelada da pausa
 if (pausado) {
 
@@ -58,6 +60,8 @@ if (pausado) {
     draw_set_alpha(1);
 }
 
+
+// Define se a HUD deve aparecer
 var _desenhar_hud = false;
 
 if (pausado) {
@@ -75,6 +79,7 @@ if (pausado) {
         }
     }
 }
+
 
 // Desenha HUD
 if (_desenhar_hud) {
@@ -107,6 +112,7 @@ if (_desenhar_hud) {
         );
     }
 
+    // Calcula posição da fruta
     var _x_fruta = 20 + (_sprl + _buffer) * _vidas + 30;
 
     var _centro_guia = 20 + sprite_get_height(spr_vida);
@@ -171,6 +177,7 @@ if (_desenhar_hud) {
         var _texto_palavra = "Tempo: ";
         var _texto_numero = string(_tempo_arredondado);
 
+        // Calcula largura do texto para centralizar
         var _largura_palavra = string_width(_texto_palavra) * 2;
         var _largura_numero = string_width(_texto_numero) * 2;
 
@@ -212,6 +219,7 @@ if (_desenhar_hud) {
         draw_set_color(c_white);
     }
 }
+
 
 // Desenha o menu de pausa
 if (pausado) {
@@ -255,6 +263,7 @@ if (pausado) {
         );
     }
 
+    // Volta configurações padrões
     draw_set_color(c_white);
 
     draw_set_halign(fa_left);

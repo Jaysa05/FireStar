@@ -1,6 +1,8 @@
-
+/// @description Desenha a tela de vitória
+// Define a cor de desenho como preto
 draw_set_color(c_black);
 
+// Define a transparência como totalmente visível
 draw_set_alpha(1);
 
 // Desenha um retângulo cobrindo toda a tela (fundo preto)
@@ -20,12 +22,16 @@ draw_set_halign(fa_center);
 // Alinha o texto verticalmente no centro
 draw_set_valign(fa_center);
 
+// Define a cor do texto como branco
 draw_set_color(c_white);
 
+// Define a transparência do texto como totalmente visível
 draw_set_alpha(1);
 
+// Define a fonte que será usada nos textos
 draw_set_font(fnt_final);
 
+// Calcula o centro da tela (horizontal e vertical)
 var meio_x = display_get_gui_width() / 2;
 var meio_y = display_get_gui_height() / 2;
 
@@ -51,6 +57,8 @@ draw_text(meio_x, meio_y + 120, "Pressione 'R' para Reiniciar ou 'Enter' para o 
 // RESET DAS CONFIGURAÇÕES
 // ----------------------------
 
+// Volta o alinhamento horizontal para o padrão (esquerda)
 draw_set_halign(fa_left);
 
+// Volta o alinhamento vertical para o padrão (topo)
 draw_set_valign(fa_top)

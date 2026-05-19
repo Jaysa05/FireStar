@@ -1,5 +1,9 @@
+/// @description Insert description here
+// Se o checkpoint ainda NÃO foi ativado
 if (!ativado) {
+	// Verifica se o jogador está encostando no checkpoint
 	if (place_meeting(x, y, obj_personagem)){
+		// Marca que o checkpoint já foi ativado (não ativa de novo)
 		ativado = true;
 		
 		  // -------- SALVA DADOS DO CHECKPOINT --------
@@ -35,6 +39,7 @@ if (!ativado) {
 		   // Remove o sprite do checkpoint (faz a bandeira sumir)
 		   sprite_index = -1;
 		   
+		   // Inicia um contador de tempo (timer)
         // 120 frames = 3 segundos (se o jogo roda a 60 FPS)
 		//É o tempo que o texto ficarána tela
 		timer_texto = 60;
@@ -42,6 +47,8 @@ if (!ativado) {
 }
 
 		// -------- CONTADOR DO TEXTO --------
+		// Se o tempo ainda não acabou
 		if (timer_texto > 0){
+			// Diminui o tempo a cada frame
 			timer_texto--;
 		}

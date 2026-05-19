@@ -1,3 +1,4 @@
+/// @description Insert description here
 // ==============================
 // SISTEMA DE MORTE DO INIMIGO
 // ==============================
@@ -17,6 +18,7 @@ if (vida <= 0){
         // 4. SISTEMA DE DROP (FRUTAS)
         // ==============================
 		
+		// Repete 10 vezes para criar 10 frutas
 		for( var i = 0; i < 10; i++){
 			
 			 // Cria uma posição X aleatória perto do inimigo
@@ -26,10 +28,11 @@ if (vida <= 0){
 			 var _y_fruta = y + random_range(-25, 0);
 			 
              // SISTEMA DE SEGURANÇA CONTRA PAREDES:
+             // Se o ponto escolhido aleatoriamente for dentro de uma parede,
              // puxamos a fruta de volta para o centro do inimigo!
              if (position_meeting(_x_fruta, _y_fruta, obj_parede)) {
-                 _x_fruta = x + random_range(-5, 5);
-                 _y_fruta = y - 15;
+                 _x_fruta = x + random_range(-5, 5); // Traz para o meio
+                 _y_fruta = y - 15; // Coloca na altura da cabeça
              }
              
 			 // Cria a fruta na tela nessa posição
@@ -52,13 +55,19 @@ if (vida <= 0){
 // 2. CONTINUA O RESTO (Só se estiver viva):
 event_inherited();
 
+
+// Se estiver no frame 4 da animação E ainda não tiver atirado
 if (floor(image_index) == 4 && !atirou) {
 	// Cria a semente um pouco à frente (direita) e um pouco acima do objeto
 	var _semente = instance_create_layer(x + 30, y - 15, "colisao_2", obj_semente_atiravel);
+	// Define a velocidade horizontal da semente (vai para a direita)
 	_semente.hspeed = 2;
+	// Marca que já atirou, para não repetir no mesmo frame
 	atirou = true;
 }
 
+// Se NÃO estiver no frame 4
 if (floor(image_index) != 4) {
+	// Reseta a variável para permitir atirar novamente
 	atirou = false;
 }

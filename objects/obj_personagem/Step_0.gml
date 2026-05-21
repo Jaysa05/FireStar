@@ -1,6 +1,17 @@
 /// @description Insert description here
 script_execute(estado)
 // -----------------------------
+// COLISÃO COM A LAVA
+// -----------------------------
+if (place_meeting(x, y, obj_lava)) {
+	if (alarm[0] <= 0) {
+		vida -= 1;
+		alarm[0] = inv_tempo;
+	}
+	dano_lava = true; // Ativa o efeito de ficar vermelho
+}
+
+// -----------------------------
 // SISTEMA DE COMBATE (EFEITO DE DANO)
 // -----------------------------
 
@@ -23,10 +34,17 @@ if (alarm[0] > 0){
 	// altera a transparência do sprite
 	image_alpha += alfa_hit;
 
+	// Se o dano foi causado por lava, o personagem fica vermelho
+	if (dano_lava) {
+		image_blend = c_red;
+	}
+
 }else {
 
 	// quando o alarme acabar volta ao normal
 	image_alpha = 1;
+	image_blend = c_white;
+	dano_lava = false;
 }
 
 depth = -bbox_bottom; //Quanto mais embaixo o personagem estiver na tela, mais na frente ele aparece

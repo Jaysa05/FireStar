@@ -21,14 +21,33 @@ veloc = 1.2;
 // SISTEMA DE COMBATE
 // -------------------
 
-// Se as variáveis globais ainda não existem, criamos elas com os valores iniciais
-if (!variable_global_exists("vida_save")) {
-    global.vida_save = 5;
-    global.faca_save = 0;
-    global.faca_cargas_save = 0;
+// Se as variáveis globais ainda não existem, criamos elas com os valores iniciais de forma independente
+if (!variable_global_exists("vida_save")){
+	
+	global.vida_save = 5;
+}
+// Verifica se já existe a variável global "faca_save"
+// Se não existir, cria com valor inicial 0
+if (!variable_global_exists("faca_save")){
+	global.faca_save = 0;
+}
+
+// Verifica se já existe a variável global "faca_cargas_save"
+// Se não existir, cria com valor inicial 0
+if (!variable_global_exists("faca_cargas_save")){
+	global.faca_cargas_save = 0
+}
+
+if (!variable_global_exists("frutas_save")){
 	global.frutas_save = 0;
+}
+
+if (!variable_global_exists("inv_save")){
 	global.inv_save = 0;
 }
+
+
+
 
 
 vida = global.vida_save; // Pega a vida que estava guardada na global
@@ -39,6 +58,8 @@ frutas = global.frutas_save;
 
 alfa_hit = 0; 
 // variável usada para controlar o efeito de piscar quando o personagem toma dano
+dano_lava = false; // variável usada para controlar se o personagem está sob efeito de dano da lava
+
 
 // Inicia o alarme com o tempo que foi salvo ao passar de fase
 alarm[0] = global.inv_save; 

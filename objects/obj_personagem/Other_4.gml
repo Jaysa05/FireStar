@@ -16,10 +16,15 @@ if (variable_global_exists("checkpoint_ativo")
     morreu = false;
     
     // --- RESET DE STATUS AO VOLTAR PARA O CHECKPOINT ---
-    global.vida_save = 5;          // Vida cheia
-    global.faca_save = 0;          // Sem facas
-    global.faca_cargas_save = 0;   // Sem cargas
-    global.frutas_save = 0;        // Sem frutas
+    // Se não estiver carregando um jogo salvo, reseta os status padrões do checkpoint
+    if (!variable_global_exists("carregando_jogo") || !global.carregando_jogo) {
+        global.vida_save = 5;          // Vida cheia
+        global.faca_save = 0;          // Sem facas
+        global.faca_cargas_save = 0;   // Sem cargas
+        global.frutas_save = 0;        // Sem frutas
+    } else {
+        global.carregando_jogo = false; // Consome a flag de carregamento
+    }
     
     vida = global.vida_save;
     faca = global.faca_save;

@@ -17,10 +17,14 @@ if (pausar_proximo_frame) {
         );
     }
 
-    // Salva vida e frutas do jogador
+    // Salva vida, frutas, facas e posição do jogador
     if (instance_exists(obj_personagem)) {
         vida_pause = obj_personagem.vida;
         frutas_pause = obj_personagem.frutas;
+        faca_pause = obj_personagem.faca;
+        faca_cargas_pause = obj_personagem.faca_cargas;
+        player_x_pause = obj_personagem.x;
+        player_y_pause = obj_personagem.y;
     }
 
     // Congela todos os objetos do jogo
@@ -260,6 +264,16 @@ if (pausado) {
             _meio_x,
             _y_opcao,
             opcoes_pause[i]
+        );
+    }
+
+    // Exibe a mensagem de jogo salvo se o timer estiver ativo
+    if (salvo_mensagem_timer > 0) {
+        draw_set_color(c_lime);
+        draw_text(
+            _meio_x,
+            _meio_y + (array_length(opcoes_pause) * 50) + 30,
+            "JOGO SALVO COM SUCESSO!"
         );
     }
 

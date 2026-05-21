@@ -145,6 +145,79 @@ var _chao =
         pulos = pulos_max; // No chão → recarrega pulos
     }
 
+   // -----------------------------
+	// MECÂNICA DE ESCALAR PAREDE
+	// Funciona apenas na fase 5
+	// -----------------------------
+	
+	// Verifica se estamos na fase 5
+	// e se o personagem NÃO está no chão
+	if (room == rm_fase5 && !_chao){
+		
+		 // Verifica se existe parede um pixel à direita
+		 var _parede_dir = place_meeting(x + 1, y, obj_parede);
+		 
+		 // Verifica se existe parede um pixel à esquerda
+		 var _parede_esq = place_meeting(x - 1, y, obj_parede);
+		 
+		  // Se houver parede na direita OU na esquerda
+		  if ( _parede_dir || _parede_esq){
+			  
+			  // Se estiver caindo rápido
+			  if( vveloc > 0.5){
+				  
+				   // Diminui a velocidade da queda
+					// criando o efeito de escorregar na parede
+					vveloc = 0.5;
+			  }
+			  
+			   // Verifica se o jogador apertou:
+				// W, seta para cima ou espaço
+				var _subir = keyboard_check(ord("W")) || keyboard_check(vk_up) || keyboard_check(vk_space);
+				
+				// Se apertou algum botão de subir
+				if(_subir){
+					
+					 // Faz o personagem subir
+					// na parede
+					vveloc = -1.5;
+				}
+				
+				// Recupera todos os pulos
+				// para permitir pular novamente
+				// ao tocar na parede
+				pulos = pulos_max;
+				
+				 // -----------------------------
+				 // CONTROLE DA DIREÇÃO
+				// Faz o personagem olhar
+				// para o lado oposto da parede
+				// -----------------------------
+				
+				 // Se a parede estiver na direita
+				 if (_parede_dir){
+					 
+					  // Define direção para esquerda
+					  direct = 1;
+					  
+					   // Troca sprite olhando esquerda
+					   sprite_index = spr_personagem_parado_esquerda;
+					   
+					}
+					
+					  // Se a parede estiver na esquerda
+					  else if (_parede_esq){
+						  
+						   // Define direção para direita
+						   direct = 0;
+						   
+						    // Troca sprite olhando direita
+							sprite_index = spr_personagem_parado_direita;
+					  }
+				 }
+		  }
+	
+
     // -----------------------------
     // PULO
     // -----------------------------

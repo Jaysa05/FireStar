@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "spr_title_chao",
-    "path": "sprites/spr_title_chao/spr_title_chao.yy",
+    "name": "spr_chao_tile",
+    "path": "sprites/spr_chao_tile/spr_chao_tile.yy",
   },
   "tileWidth": 16,
   "tileHeight": 16,

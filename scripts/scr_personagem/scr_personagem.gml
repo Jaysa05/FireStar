@@ -316,9 +316,9 @@ var _chao =
         estado = scr_personagem_atacando; // Muda estado
 
         if (direct == 0) {
-            instance_create_layer(x + 20, y - 8, "Instances_2", obj_hitbox); // Hitbox direita
+           instance_create_layer(x + 20, y - 8, layer, obj_hitbox); // Hitbox direita
         } else if (direct == 1) {
-            instance_create_layer(x - 20, y - 8, "Instances_2", obj_hitbox); // Hitbox esquerda
+            instance_create_layer(x - 20, y - 8, layer, obj_hitbox); // Hitbox esquerda
         }
     }
 

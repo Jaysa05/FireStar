@@ -138,3 +138,36 @@ if (room == rm_fase3) {
     // Mantém o tempo em 60 nas outras fases
     tempo_fase3 = 60;
 }
+
+// -----------------------------------------------------------------------------
+// INPUT – teclado apenas
+// -----------------------------------------------------------------------------
+var hor = 0;
+var ver = 0;
+
+if (keyboard_check(vk_left) || keyboard_check(ord("A")))
+{
+    hor = -1;
+}
+
+if (keyboard_check(vk_right) || keyboard_check(ord("D")))
+{
+    hor = 1;
+}
+
+if (keyboard_check(vk_up) || keyboard_check(ord("W")))
+{
+    ver = -1;
+}
+
+if (keyboard_check(vk_down) || keyboard_check(ord("S")))
+{
+    ver = 1;
+}
+
+// -----------------------------------------------------------------------------
+// MOVIMENTO
+// -----------------------------------------------------------------------------
+var spd = 4;
+hveloc = hor * spd;
+vveloc = ver * spd;

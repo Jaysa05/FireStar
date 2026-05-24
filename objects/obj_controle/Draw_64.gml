@@ -285,3 +285,4 @@ if (pausado) {
 
     draw_set_font(-1);
 }
+

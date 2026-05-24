@@ -68,3 +68,23 @@ if (vida <= 0 && !morreu) {
     frutas = global.frutas_save;
     room_goto(rm_gameover);
 }
+
+// -----------------------------------------------------------------------------
+// SISTEMA DE INVENCIbilidade E PISCAR
+// -----------------------------------------------------------------------------
+if (invencivel) {
+    timer_invencibilidade--;
+    
+    // Faz o personagem piscar alternando a transparência a cada 4 frames
+    if ((timer_invencibilidade div 4) % 2 == 0) {
+        image_alpha = 1;    // Visível
+    } else {
+        image_alpha = 0.2;  // Quase invisível (piscando)
+    }
+    
+    // Quando o tempo acabar
+    if (timer_invencibilidade <= 0) {
+        invencivel = false;
+        image_alpha = 1;    // Garante que o personagem volte a ficar 100% visível
+    }
+}

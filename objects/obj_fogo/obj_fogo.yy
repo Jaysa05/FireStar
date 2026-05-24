@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "spr_plataforma2",
-    "path": "sprites/spr_plataforma2/spr_plataforma2.yy",
+    "name": "spr_fogo",
+    "path": "sprites/spr_fogo/spr_fogo.yy",
   },
   "solid": false,
   "visible": true,
@@ -22,7 +22,9 @@
   "physicsShapePoints": [],
   "eventList": [
     {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":2,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":7,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":4,"collisionObjectId":{"name":"obj_personagem","path":"objects/obj_personagem/obj_personagem.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
@@ -31,7 +33,7 @@
     "path": "folders/Objetos.yy",
   },
   "resourceVersion": "1.0",
-  "name": "obj_plataforma2",
+  "name": "obj_fogo",
   "tags": [],
   "resourceType": "GMObject",
 }

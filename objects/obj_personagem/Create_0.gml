@@ -80,3 +80,7 @@ pulos_max = 2;    // O limite de pulos (2 para duplo pulo)
 morreu = false;
 
 // O carregamento da faca já foi feito lá em cima através das globais
+// --- SISTEMA DE DANO E PISCAR ---
+invencivel = false;              // Diz se o jogador está imune a dano no momento
+tempo_invencibilidade = 120;      // Duração do efeito (60 frames = 1 segundo a 60 FPS)
+timer_invencibilidade = 0;       // Contador de tempo

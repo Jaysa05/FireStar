@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"spr_tomate_morrendo","path":"sprites/spr_tomate_morrendo/spr_tomate_morrendo.yy",},"order":4,},
     {"id":{"name":"spr_boss_soltando_fogo","path":"sprites/spr_boss_soltando_fogo/spr_boss_soltando_fogo.yy",},"order":14,},
+    {"id":{"name":"obj_fogo","path":"objects/obj_fogo/obj_fogo.yy",},"order":45,},
     {"id":{"name":"spr_vida","path":"sprites/spr_vida/spr_vida.yy",},"order":1,},
     {"id":{"name":"spr_personagem_andando_direita","path":"sprites/spr_personagem_andando_direita/spr_personagem_andando_direita.yy",},"order":0,},
     {"id":{"name":"obj_background","path":"objects/obj_background/obj_background.yy",},"order":43,},
@@ -102,6 +103,7 @@
     {"id":{"name":"obj_passaro","path":"objects/obj_passaro/obj_passaro.yy",},"order":30,},
     {"id":{"name":"rm_menu","path":"rooms/rm_menu/rm_menu.yy",},"order":0,},
     {"id":{"name":"obj_plataforma2","path":"objects/obj_plataforma2/obj_plataforma2.yy",},"order":23,},
+    {"id":{"name":"spr_fogo","path":"sprites/spr_fogo/spr_fogo.yy",},"order":39,},
     {"id":{"name":"obj_coelho_saltitante","path":"objects/obj_coelho_saltitante/obj_coelho_saltitante.yy",},"order":29,},
     {"id":{"name":"tr_raizes2","path":"tilesets/tr_raizes2/tr_raizes2.yy",},"order":6,},
     {"id":{"name":"tr_raizes4","path":"tilesets/tr_raizes4/tr_raizes4.yy",},"order":7,},

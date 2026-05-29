@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"obj_demonio_morrendo","path":"objects/obj_demonio_morrendo/obj_demonio_morrendo.yy",},"order":46,},
     {"id":{"name":"spr_tomate_morrendo","path":"sprites/spr_tomate_morrendo/spr_tomate_morrendo.yy",},"order":4,},
     {"id":{"name":"spr_boss_soltando_fogo","path":"sprites/spr_boss_soltando_fogo/spr_boss_soltando_fogo.yy",},"order":14,},
     {"id":{"name":"obj_fogo","path":"objects/obj_fogo/obj_fogo.yy",},"order":45,},
@@ -93,6 +94,7 @@
     {"id":{"name":"fnt_checkpoint","path":"fonts/fnt_checkpoint/fnt_checkpoint.yy",},"order":3,},
     {"id":{"name":"obj_plataforma_fase2","path":"objects/obj_plataforma_fase2/obj_plataforma_fase2.yy",},"order":36,},
     {"id":{"name":"tr_chao","path":"tilesets/tr_chao/tr_chao.yy",},"order":10,},
+    {"id":{"name":"spr_demonio_morrendo","path":"sprites/spr_demonio_morrendo/spr_demonio_morrendo.yy",},"order":40,},
     {"id":{"name":"obj_espinhos","path":"objects/obj_espinhos/obj_espinhos.yy",},"order":14,},
     {"id":{"name":"rm_fase3","path":"rooms/rm_fase3/rm_fase3.yy",},"order":6,},
     {"id":{"name":"obj_caixa_espinhenta","path":"objects/obj_caixa_espinhenta/obj_caixa_espinhenta.yy",},"order":13,},

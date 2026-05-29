@@ -88,3 +88,5 @@ if (invencivel) {
         image_alpha = 1;    // Garante que o personagem volte a ficar 100% visível
     }
 }
+
+

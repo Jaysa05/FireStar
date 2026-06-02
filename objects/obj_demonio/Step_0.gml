@@ -50,20 +50,4 @@ if (vida > 0) {
     }
 }
 
-// Verifica se a variável "vida" chegou a 0 ou menos (Inimigo morreu)
-if (vida <= 0) {
-    // Verifica se o sprite atual NÃO é o sprite de morte
-    if (sprite_index != spr_demonio_morrendo){
-        
-        // Troca o sprite atual pelo sprite de morte
-        sprite_index = spr_demonio_morrendo;
-         
-        // Faz a animação começar do frame 0 (primeiro frame)
-        image_index = 0;
-         
-        // Define a velocidade básica do objeto como 0
-        speed = 0;
-        hveloc = 0;
-        vveloc = 0;
-    }
-}
+// A morte agora é 100% controlada pelo obj_parente_inimigo!

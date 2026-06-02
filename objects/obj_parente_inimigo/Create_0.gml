@@ -12,3 +12,4 @@ reset = 0;
 
 item_drop = obj_faca;
 item_drop_quantidade = 1;
+

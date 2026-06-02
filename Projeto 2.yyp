@@ -160,9 +160,9 @@
   "RoomOrderNodes": [
     {"roomId":{"name":"rm_menu","path":"rooms/rm_menu/rm_menu.yy",},},
     {"roomId":{"name":"rm_fase5","path":"rooms/rm_fase5/rm_fase5.yy",},},
-    {"roomId":{"name":"rm_fase4","path":"rooms/rm_fase4/rm_fase4.yy",},},
-    {"roomId":{"name":"rm_fase6","path":"rooms/rm_fase6/rm_fase6.yy",},},
     {"roomId":{"name":"rm_fase1","path":"rooms/rm_fase1/rm_fase1.yy",},},
+    {"roomId":{"name":"rm_fase6","path":"rooms/rm_fase6/rm_fase6.yy",},},
+    {"roomId":{"name":"rm_fase4","path":"rooms/rm_fase4/rm_fase4.yy",},},
     {"roomId":{"name":"rm_fase2","path":"rooms/rm_fase2/rm_fase2.yy",},},
     {"roomId":{"name":"rm_fase3","path":"rooms/rm_fase3/rm_fase3.yy",},},
     {"roomId":{"name":"rm_gameover","path":"rooms/rm_gameover/rm_gameover.yy",},},

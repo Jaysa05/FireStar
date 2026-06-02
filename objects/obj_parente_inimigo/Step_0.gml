@@ -2,7 +2,7 @@
 // Verifica se o inimigo acabou de sofrer um golpe
 if hit == true {
     veloc = 0;        // Para o movimento horizontal temporariamente (fica “congelado”)
-    alarm[1] = 5;     // Inicia um timer de 5 frames (geralmente usado para efeitos de hit, como piscar ou recuo)
+    alarm[1] = 20;     // Inicia um timer de 20 frames para o inimigo piscar branco (Dura mais tempo para o jogador poder ver!)
     hit = false;      // Reseta o flag de hit, para não entrar nesse bloco novamente até receber outro dano
 }
 
@@ -53,8 +53,8 @@ if (item_drop != noone){
 		 }
 		
 		// Cria o item no jogo na posição calculada
-        // "colisao" é a layer onde o item será colocado
-		instance_create_layer(_x_drop, _y_drop, "colisao", item_drop);
+        // Usamos depth para nunca dar erro de layer não encontrada em outras fases!
+		instance_create_depth(_x_drop, _y_drop, depth, item_drop);
 	}
 }
 

@@ -84,3 +84,5 @@ morreu = false;
 invencivel = false;              // Diz se o jogador está imune a dano no momento
 tempo_invencibilidade = 120;      // Duração do efeito (60 frames = 1 segundo a 60 FPS)
 timer_invencibilidade = 0;       // Contador de tempo
+atacando = false;
+dano_ataque = 1;

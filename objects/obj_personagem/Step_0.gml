@@ -88,5 +88,10 @@ if (invencivel) {
         image_alpha = 1;    // Garante que o personagem volte a ficar 100% visível
     }
 }
-
+if (keyboard_check_pressed(vk_enter)) {
+    atacando = true; // O personagem entra no modo de ataque
+    
+    // O ataque vai durar um tempo curtinho (ex: 20 frames) e depois desliga
+    alarm[1] = 5; 
+}
 

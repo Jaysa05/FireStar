@@ -1,5 +1,75 @@
-/// @description Insert description here
-script_execute(estado)
+// Executa o script armazenado na variável "estado".
+// Normalmente é usado para controlar comportamentos do objeto
+// (andar, atacar, parado, etc.).
+script_execute(estado);
+
+
+// =====================================================
+// SISTEMA DE BLOQUEIO DA PORTA DA DIREITA (FASE 5)
+// =====================================================
+
+// Verifica se o jogador está na Fase 5.
+if (room == rm_fase5) {
+    
+    // Executa o código para todas as portas de transição da sala.
+    with (obj_transicao) {
+        
+        // Verifica se esta é a porta da direita.
+        // A porta da direita possui Y maior que 100.
+        // A porta de cima possui Y negativo, então será ignorada.
+        if (y > 100) {
+            
+            // Verifica se a variável "parede_bloqueio"
+            // já existe nesta porta.
+            if (!variable_instance_exists(id, "parede_bloqueio")) {
+                
+                // Cria a variável e define que ela não está
+                // apontando para nenhuma parede ainda.
+                parede_bloqueio = noone;
+            }
+            
+            // Verifica se o demônio ainda existe na sala.
+            if (instance_exists(obj_demonio)) {
+                
+                // Se ainda não existe uma parede criada...
+                if (parede_bloqueio == noone) {
+                    
+                    // Cria uma parede invisível exatamente na
+                    // posição da porta.
+                    parede_bloqueio = instance_create_depth(
+                        x,
+                        y,
+                        depth,
+                        obj_parede
+                    );
+                    
+                    // Faz a parede ter a mesma largura da porta.
+                    parede_bloqueio.image_xscale = image_xscale;
+                    
+                    // Faz a parede ter a mesma altura da porta.
+                    parede_bloqueio.image_yscale = image_yscale;
+                }
+            }
+            
+            // Se não existe mais demônio...
+            else {
+                
+                // Verifica se existe uma parede bloqueando a porta.
+                if (parede_bloqueio != noone) {
+                    
+                    // Remove a parede invisível.
+                    instance_destroy(parede_bloqueio);
+                    
+                    // Limpa a referência da variável.
+                    parede_bloqueio = noone;
+                }
+            }
+        }
+    }
+}
+
+
+// ----------------------------------------------------
 // -----------------------------
 // COLISÃO COM A LAVA
 // -----------------------------

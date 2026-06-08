@@ -1,3 +1,5 @@
+if (room != rm_fase5) exit;
+
 if (instance_exists(obj_personagem)){
 	 // Verifica se o jogador está em cima da plataforma
 	 var _jogador_em_cima = place_meeting(x, y -4, obj_personagem);

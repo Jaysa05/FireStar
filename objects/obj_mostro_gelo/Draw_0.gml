@@ -1,0 +1,150 @@
+// ==============================
+// CÁLCULO DE POSIÇÃO DE DESENHO (CORREÇÃO DO SENTIDO E ORIGEM 0,0 DOS SPRITES)
+// ==============================
+var _natural_dir = -1; // Por padrão, spr_monstro_gelo, spr_monstro_gelo_atacando e spr_monstro_gelo_andando_esquerda70 olham para a esquerda (-1)
+if (sprite_index == spr_monstro_gelo_andando_direita) {
+    _natural_dir = 1; // spr_monstro_gelo_andando_direita olha para a direita (1)
+}
+
+var _draw_x = x;
+var _visual_scale = 1;
+
+if (direct == _natural_dir) {
+    // Já está olhando naturalmente para onde deve olhar, desenha sem alteração
+    _visual_scale = 1;
+    _draw_x = x;
+} else {
+    // Precisa inverter horizontalmente para olhar para o lado correto
+    _visual_scale = -1;
+    _draw_x = x + sprite_get_width(sprite_index); // Ajusta o deslocamento devido à origem (0,0)
+}
+
+// ==============================
+// DESENHO DO CORPO DO BOSS
+// ==============================
+var _blend = make_color_rgb(140, 210, 255); // Tom azulado de monstro de gelo
+
+if (alarm[1] > 0) {
+    // Efeito de piscar branco ao receber dano (usando Fog da GPU)
+    gpu_set_fog(true, c_white, 0, 0);
+    draw_sprite_ext(sprite_index, image_index, _draw_x + shake_x, y + y_offset, _visual_scale * scale_x_visual, scale_y_visual, 0, c_white, 1);
+    gpu_set_fog(false, c_white, 0, 0);
+} else {
+    // Desenha o monstro com o tom azulado de gelo
+    draw_sprite_ext(sprite_index, image_index, _draw_x + shake_x, y + y_offset, _visual_scale * scale_x_visual, scale_y_visual, 0, _blend, 1);
+}
+
+// ==============================
+// INDICADORES VISUAIS DOS ATAQUES
+// ==============================
+
+// 1. Indicador do SOCÃO (Telegrafa em laranja/vermelho antes de bater)
+if (estado == ESTADO_MONSTRO_GELO.SOCAO) {
+    var _range = 70;
+    var _punch_left = (direct == 1) ? bbox_right : bbox_left - _range;
+    var _punch_right = (direct == 1) ? bbox_right + _range : bbox_left;
+    var _punch_top = bbox_bottom - 64; // Altura ajustada
+    var _punch_bottom = bbox_bottom;
+    
+    if (image_index < 5) {
+        // Fase de preparação (Aviso Laranja/Vermelho translúcido)
+        draw_set_color(c_orange);
+        draw_set_alpha(0.3);
+        draw_rectangle(_punch_left, _punch_top, _punch_right, _punch_bottom, false);
+        draw_set_color(c_red);
+        draw_rectangle(_punch_left, _punch_top, _punch_right, _punch_bottom, true);
+    } else if (image_index >= 5 && image_index <= 8) {
+        // Ataque ativo (Azul/Aqua vibrante)
+        draw_set_color(make_color_rgb(135, 206, 250));
+        draw_set_alpha(0.65);
+        draw_rectangle(_punch_left, _punch_top, _punch_right, _punch_bottom, false);
+        draw_set_color(c_aqua);
+        draw_rectangle(_punch_left, _punch_top, _punch_right, _punch_bottom, true);
+    }
+    draw_set_alpha(1.0);
+    draw_set_color(c_white);
+}
+
+// 2. Indicador da PISADA (Telegrafação retangular no solo)
+if (estado == ESTADO_MONSTRO_GELO.PISADA) {
+    var _monster_center = x + (bbox_right - bbox_left) / 2;
+    var _ground_y = bbox_bottom;
+    
+    if (image_index < 5) {
+        // Fase de elevação: Desenha área de perigo vermelha no solo (Retângulo limpo e legível)
+        draw_set_color(c_red);
+        draw_set_alpha(0.35);
+        draw_rectangle(_monster_center - 160, _ground_y - 6, _monster_center + 160, _ground_y, false);
+        draw_set_color(c_orange);
+        draw_rectangle(_monster_center - 160, _ground_y - 6, _monster_center + 160, _ground_y, true);
+    } else {
+        // Impacto e propagação da onda ativa
+        var _alpha = 1.0 - ((image_index - 5) / (image_number - 5));
+        draw_set_color(c_aqua);
+        draw_set_alpha(clamp(_alpha, 0, 1));
+        
+        draw_line_width(_monster_center - stomp_wave_radius, _ground_y, _monster_center + stomp_wave_radius, _ground_y, 3);
+        
+        for (var i = -stomp_wave_radius; i <= stomp_wave_radius; i += 24) {
+            if (abs(i) < 16) continue;
+            if (abs(i) <= 160) {
+                draw_triangle(_monster_center + i, _ground_y, _monster_center + i - 6, _ground_y - 12, _monster_center + i + 6, _ground_y - 12, false);
+            }
+        }
+    }
+    draw_set_alpha(1.0);
+    draw_set_color(c_white);
+}
+
+// 3. Indicador da BRAÇADA (Telegrafação retangular)
+if (estado == ESTADO_MONSTRO_GELO.BRACADA) {
+    var _sweep_range = 110;
+    var _sweep_left = (direct == 1) ? bbox_right : bbox_left - _sweep_range;
+    var _sweep_right = (direct == 1) ? bbox_right + _sweep_range : bbox_left;
+    var _sweep_top = bbox_bottom - 48; // Altura ajustada
+    var _sweep_bottom = bbox_bottom;
+    
+    if (image_index < 6) {
+        // Fase de preparação (Aviso Laranja/Vermelho rasteiro)
+        draw_set_color(c_orange);
+        draw_set_alpha(0.25);
+        draw_rectangle(_sweep_left, _sweep_top, _sweep_right, _sweep_bottom, false);
+        draw_set_color(c_red);
+        draw_rectangle(_sweep_left, _sweep_top, _sweep_right, _sweep_bottom, true);
+    } else if (image_index >= 6 && image_index <= 10) {
+        // Ataque ativo (Vassoura de gelo verde/azul)
+        draw_set_color(c_teal);
+        draw_set_alpha(0.4);
+        draw_rectangle(_sweep_left, _sweep_top, _sweep_right, _sweep_bottom, false);
+        draw_set_color(c_aqua);
+        draw_rectangle(_sweep_left, _sweep_top, _sweep_right, _sweep_bottom, true);
+    }
+    draw_set_alpha(1.0);
+    draw_set_color(c_white);
+}
+
+// ==============================
+// BARRA DE VIDA HUD (SOBRE A CABEÇA)
+// ==============================
+if (vida_monstro_gelo > 0) {
+    var _porcentagem = vida_monstro_gelo / vida_monstro_gelo_max;
+    var _escala = 0.8;
+    var _largura_final = 128 * _escala;
+    var _monster_center = x + (bbox_right - bbox_left) / 2;
+    var _x_barra = _monster_center - (_largura_final / 2);
+    var _y_barra = y - 16; // 16 pixels acima do topo do monstro
+    
+    if (sprite_exists(spr_chefe_hud_vida)) {
+        draw_sprite_ext(
+            spr_chefe_hud_vida,
+            0,
+            _x_barra,
+            _y_barra,
+            _porcentagem * _escala,
+            1.2,
+            0,
+            c_white,
+            1
+        );
+    }
+}

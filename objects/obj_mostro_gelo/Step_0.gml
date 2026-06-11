@@ -1,0 +1,338 @@
+// ==============================
+// SISTEMA DE DANO (HIT E MORTE)
+// ==============================
+
+// Se o boss foi golpeado (marcado como hit pelo ataque do jogador)
+if (hit == true) {
+    alarm[1] = 20; // Ativa piscar branco do pai
+    vida_monstro_gelo -= 1;
+    hit = false; // Limpa o flag
+}
+
+// Se a vida real acabar, ativa a morte através do comportamento do pai
+if (vida_monstro_gelo <= 0) {
+    vida = 0; // Isso faz o script do pai (Step de obj_parente_inimigo) cuidar da animação de morte e drop
+    event_inherited(); // MÁGICA: Executa a morte, drops de itens e destruição do pai!
+    exit;
+}
+
+// =========================================================================
+// SISTEMA ANTI-TRAVAMENTO / DESENGATE (Prepara contra travamentos de spawn/subpixel)
+// =========================================================================
+var _chao_atual = place_meeting(x, y, obj_parede) || 
+                  place_meeting(x, y, obj_plataforma_fase2) || 
+                  place_meeting(x, y, obj_plataforma) || 
+                  place_meeting(x, y, obj_plataforma2);
+
+if (_chao_atual) {
+    for (var i = 1; i <= 32; i++) {
+        if (!place_meeting(x, y - i, obj_parede) && 
+            !place_meeting(x, y - i, obj_plataforma_fase2) && 
+            !place_meeting(x, y - i, obj_plataforma) && 
+            !place_meeting(x, y - i, obj_plataforma2)) {
+            y -= i;
+            break;
+        }
+    }
+}
+
+// ==============================
+// FISICA E GRAVIDADE
+// ==============================
+vveloc += gravidade;
+
+// ==============================
+// MÁQUINA DE ESTADOS DO CÉREBRO
+// ==============================
+switch (estado) {
+
+    // ==============================
+    // ESTADO: PERSEGUINDO
+    // ==============================
+    case ESTADO_MONSTRO_GELO.PERSEGUINDO:
+        hveloc = 0;
+        scale_x_visual = 1;
+        scale_y_visual = 1;
+        
+        if (timer_ataque > 0) timer_ataque -= 1;
+
+        if (instance_exists(obj_personagem)) {
+            var _monster_center = x + (bbox_right - bbox_left) / 2;
+            var _dif_x = obj_personagem.x - _monster_center;
+            var _dist_horizontal = abs(_dif_x);
+
+            // Ajusta a direção para onde olhar
+            if (_dist_horizontal > 10) {
+                direct = sign(_dif_x);
+            }
+
+            // AJUSTE DE DISTÂNCIA: Para a 105px do centro para respeitar o corpo largo (170px)
+            // Isso evita que o boss sobreponha o jogador e cause dano de contato contínuo!
+            if (_dist_horizontal > 105) {
+                hveloc = spd * direct;
+                sprite_index = (direct == 1) ? spr_andando_direita : spr_andando_esquerda;
+            } else {
+                hveloc = 0;
+                sprite_index = spr_parado;
+            }
+
+            // Checa se está no chão (parede ou plataformas)
+            var _no_chao = place_meeting(x, y + 1, obj_parede) || 
+                           place_meeting(x, y + 1, obj_plataforma_fase2) || 
+                           place_meeting(x, y + 1, obj_plataforma) || 
+                           place_meeting(x, y + 1, obj_plataforma2);
+
+            // Escolhe o próximo ataque na sequência cíclica se o jogador estiver ao alcance (máx 120px) e o cooldown zerar
+            if (timer_ataque <= 0 && _no_chao && _dist_horizontal <= 120) {
+                if (proximo_ataque == 0) {
+                    estado = ESTADO_MONSTRO_GELO.SOCAO;
+                    proximo_ataque = 1;
+                    sprite_index = spr_socao;
+                } else if (proximo_ataque == 1) {
+                    estado = ESTADO_MONSTRO_GELO.PISADA;
+                    proximo_ataque = 2;
+                    sprite_index = spr_pisada;
+                } else {
+                    estado = ESTADO_MONSTRO_GELO.BRACADA;
+                    proximo_ataque = 0;
+                    sprite_index = spr_bracada;
+                }
+                timer_estado = 0;
+                ja_deu_dano = false;
+                image_index = 0;
+            }
+        } else {
+            sprite_index = spr_parado;
+            hveloc = 0;
+        }
+        break;
+
+    // ==============================
+    // ESTADO: DESCANSO (VULNERÁVEL)
+    // ==============================
+    case ESTADO_MONSTRO_GELO.DESCANSO:
+        hveloc = 0;
+        sprite_index = spr_parado;
+        scale_x_visual = 1;
+        scale_y_visual = 1;
+
+        if (timer_descanso > 0) {
+            timer_descanso -= 1;
+        } else {
+            estado = ESTADO_MONSTRO_GELO.PERSEGUINDO;
+            timer_ataque = tempo_ataque;
+        }
+        break;
+
+    // ==============================
+    // ATAQUE: SOCÃO (DANO DIRETO)
+    // ==============================
+    case ESTADO_MONSTRO_GELO.SOCAO:
+        hveloc = 0;
+        timer_estado += 1;
+        sprite_index = spr_socao;
+
+        // Fase 1: Wind-up / Preparação (Telegrafando)
+        if (image_index < 5) {
+            shake_x = random_range(-2, 2);
+            scale_x_visual = 0.95;
+            scale_y_visual = 1.05; // Estica um pouco para cima na preparação
+        } 
+        // Fase 2: Impacto / Golpe (Executa o dano somente nos frames de impacto do sprite)
+        else {
+            shake_x = 0;
+            scale_x_visual = 1.15;
+            scale_y_visual = 0.95; // Achata um pouco no golpe
+
+            if (image_index >= 5 && image_index <= 8) {
+                if (!ja_deu_dano && instance_exists(obj_personagem)) {
+                    var _range = 70;
+                    var _punch_left = (direct == 1) ? bbox_right : bbox_left - _range;
+                    var _punch_right = (direct == 1) ? bbox_right + _range : bbox_left;
+                    
+                    var _punch_top = bbox_bottom - 64;
+                    var _punch_bottom = bbox_bottom;
+
+                    var _hit = collision_rectangle(_punch_left, _punch_top, _punch_right, _punch_bottom, obj_personagem, false, true);
+                    if (_hit != noone) {
+                        with (_hit) {
+                            if (alarm[0] <= 0) {
+                                vida -= 1;
+                                alarm[0] = inv_tempo;
+                                hveloc = 2.5 * other.direct;
+                                vveloc = -2;
+                            }
+                        }
+                        ja_deu_dano = true;
+                    }
+                }
+            }
+        }
+
+        // Final do ataque quando a animação terminar
+        if (image_index >= image_number - 1 || timer_estado >= 90) {
+            shake_x = 0;
+            scale_x_visual = 1;
+            scale_y_visual = 1;
+            estado = ESTADO_MONSTRO_GELO.DESCANSO;
+            timer_descanso = tempo_descanso;
+        }
+        break;
+
+    // ==============================
+    // ATAQUE: PISADA (DANO EM ÁREA)
+    // ==============================
+    case ESTADO_MONSTRO_GELO.PISADA:
+        hveloc = 0;
+        timer_estado += 1;
+        sprite_index = spr_pisada;
+
+        // Fase 1: Wind-up / Elevação
+        if (image_index < 5) {
+            y_offset = -16 * sin((image_index / 5) * pi); // Sobe o boss de acordo com a animação
+            shake_x = random_range(-1, 1);
+            scale_x_visual = 0.90;
+            scale_y_visual = 1.15;
+            stomp_wave_radius = 0;
+        } 
+        // Fase 2: Impacto
+        else {
+            y_offset = 0;
+            shake_x = 0;
+            scale_x_visual = 1.25;
+            scale_y_visual = 0.75; // Efeito de impacto no solo
+            
+            // A onda de choque vai expandindo na tela a partir do frame do impacto
+            stomp_wave_radius = (image_index - 5) * 24; 
+
+            if (image_index >= 5 && image_index <= 8) {
+                if (!ja_deu_dano && instance_exists(obj_personagem)) {
+                    // Detecta se o jogador está próximo do chão (independente de qual objeto seja a ponte)
+                    var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 16);
+
+                    var _monster_center = x + (bbox_right - bbox_left) / 2;
+                    var _dist = abs(obj_personagem.x - _monster_center);
+
+                    // Só causa dano se o jogador estiver no chão E dentro do raio de colisão horizontal
+                    if (_player_no_chao && _dist <= 160) {
+                        with (obj_personagem) {
+                            if (alarm[0] <= 0) {
+                                vida -= 1;
+                                alarm[0] = inv_tempo;
+                                vveloc = -3.5; // Lança o jogador no ar
+                            }
+                        }
+                        ja_deu_dano = true;
+                    }
+                }
+            }
+        }
+
+        // Final do ataque quando a animação terminar
+        if (image_index >= image_number - 1 || timer_estado >= 90) {
+            stomp_wave_radius = 0;
+            scale_x_visual = 1;
+            scale_y_visual = 1;
+            estado = ESTADO_MONSTRO_GELO.DESCANSO;
+            timer_descanso = tempo_descanso;
+        }
+        break;
+
+    // ==============================
+    // ATAQUE: BRAÇADA (DANO EM ÁREA RASTEIRO)
+    // ==============================
+    case ESTADO_MONSTRO_GELO.BRACADA:
+        hveloc = 0;
+        timer_estado += 1;
+        sprite_index = spr_bracada;
+
+        // Fase 1: Wind-up / Puxada de braço
+        if (image_index < 6) {
+            shake_x = -direct * 4; // Puxa para trás
+            scale_x_visual = 0.85;
+            scale_y_visual = 1.05;
+            sweep_progress = 0;
+        } 
+        // Fase 2: Sweep ativo (Executa o dano somente nos frames de varredura do sprite)
+        else {
+            shake_x = 0;
+            scale_x_visual = 1.20;
+            scale_y_visual = 0.90;
+            
+            sweep_progress = (image_index - 6) / (image_number - 6);
+
+            if (image_index >= 6 && image_index <= 10) {
+                if (!ja_deu_dano && instance_exists(obj_personagem)) {
+                    var _sweep_range = 110;
+                    var _sweep_left = (direct == 1) ? bbox_right : bbox_left - _sweep_range;
+                    var _sweep_right = (direct == 1) ? bbox_right + _sweep_range : bbox_left;
+
+                    var _sweep_top = bbox_bottom - 48;
+                    var _sweep_bottom = bbox_bottom;
+
+                    var _hit = collision_rectangle(_sweep_left, _sweep_top, _sweep_right, _sweep_bottom, obj_personagem, false, true);
+                    if (_hit != noone) {
+                        with (_hit) {
+                            if (alarm[0] <= 0) {
+                                vida -= 1;
+                                alarm[0] = inv_tempo;
+                                hveloc = 3 * other.direct;
+                                vveloc = -2.5;
+                            }
+                        }
+                        ja_deu_dano = true;
+                    }
+                }
+            }
+        }
+
+        // Final do ataque quando a animação terminar
+        if (image_index >= image_number - 1 || timer_estado >= 90) {
+            sweep_progress = 0;
+            scale_x_visual = 1;
+            scale_y_visual = 1;
+            estado = ESTADO_MONSTRO_GELO.DESCANSO;
+            timer_descanso = tempo_descanso;
+        }
+        break;
+}
+
+// ==============================
+// COLISÃO HORIZONTAL (PAREDES / BLOQUEIOS DE INIMIGO)
+// ==============================
+var _colidiu_h = place_meeting(x + hveloc, y, obj_parede) || place_meeting(x + hveloc, y, obj_parede_inimigo);
+if (_colidiu_h) {
+    var _obj_colisao = place_meeting(x + hveloc, y, obj_parede) ? obj_parede : obj_parede_inimigo;
+    while (!place_meeting(x + sign(hveloc), y, _obj_colisao)) {
+        x += sign(hveloc);
+    }
+    hveloc = 0;
+}
+x += hveloc;
+
+// ==============================
+// COLISÃO VERTICAL (CHÃO/TETO/PLATAFORMAS)
+// ==============================
+// 1. Colisão sólida com obj_parede
+if (place_meeting(x, y + vveloc, obj_parede)) {
+    while (!place_meeting(x, y + sign(vveloc), obj_parede)) {
+        y += sign(vveloc);
+    }
+    vveloc = 0;
+}
+
+// 2. Colisão passável unidirecional com plataformas
+var _plat = instance_place(x, y + vveloc, obj_plataforma_fase2);
+if (_plat == noone) _plat = instance_place(x, y + vveloc, obj_plataforma);
+if (_plat == noone) _plat = instance_place(x, y + vveloc, obj_plataforma2);
+
+if (_plat != noone) {
+    // Só colide se estiver caindo (vveloc > 0) e a base do monstro estiver acima do topo da plataforma
+    if (vveloc > 0 && bbox_bottom <= _plat.bbox_top + 4) {
+        while (!place_meeting(x, y + sign(vveloc), _plat)) {
+            y += sign(vveloc);
+        }
+        vveloc = 0;
+    }
+}
+y += vveloc;

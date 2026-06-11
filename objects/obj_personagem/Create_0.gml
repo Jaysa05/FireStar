@@ -86,3 +86,34 @@ tempo_invencibilidade = 120;      // Duração do efeito (60 frames = 1 segundo 
 timer_invencibilidade = 0;       // Contador de tempo
 atacando = false;
 dano_ataque = 1;
+
+// =========================================================================
+// CORREÇÃO DE ESTRUTURAS FÍSICAS (FASE 7)
+// =========================================================================
+if (room == rm_fase7) {
+    // 1. Cria a colisão física da ponte superior como plataforma (para poder subir/descer).
+    // A ponte original está na altura Y = 216.
+    for (var xx = 160; xx < 768; xx += 16) {
+        instance_create_depth(xx, 216, depth, obj_plataforma_fase2);
+    }
+    
+    // Converte os blocos de colisão sólida (obj_parede) da ponte colocados no editor
+    // para plataformas (obj_plataforma_fase2) para que o jogador possa descer/atravessar.
+    with (obj_parede) {
+        if (y >= 210 && y <= 220 && x < 185) {
+            instance_change(obj_plataforma_fase2, true);
+        }
+    }
+    
+    // 2. Cria uma barreira vertical no limite esquerdo da sala (X = 0)
+    // Isso impede o jogador de atravessar a parede visual da esquerda e sair do mapa.
+    for (var yy = 0; yy <= 216; yy += 16) {
+        instance_create_depth(0, yy, depth, obj_parede);
+    }
+    
+    // 3. Cria a colisão física no topo da árvore (X = 224 até X = 512 na altura Y = 72)
+    // Isso permite que o jogador fique de pé em cima da árvore se for colocado lá.
+    for (var xx = 224; xx < 512; xx += 16) {
+        instance_create_depth(xx, 72, depth, obj_parede);
+    }
+}

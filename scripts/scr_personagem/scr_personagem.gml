@@ -1,11 +1,40 @@
 function scr_personagem_movendo() { // Início da Função de Movimento
     
+    // =========================================================================
+    // SISTEMA ANTI-TRAVAMENTO / DESENGATE (Prepara contra travamentos de spawn/subpixel)
+    // =========================================================================
+    if (place_meeting(x, y, obj_parede) || place_meeting(x, y, obj_trampolim)) {
+        var _subiu = false;
+        // Tenta empurrar o personagem para cima até 16 pixels para descolar
+        for (var i = 1; i <= 16; i++) {
+            if (!place_meeting(x, y - i, obj_parede) && !place_meeting(x, y - i, obj_trampolim)) {
+                y -= i;
+                _subiu = true;
+                break;
+            }
+        }
+        // Se subir não funcionou, tenta empurrar para as laterais
+        if (!_subiu) {
+            for (var i = 1; i <= 16; i++) {
+                if (!place_meeting(x - i, y, obj_parede) && !place_meeting(x - i, y, obj_trampolim)) {
+                    x -= i;
+                    break;
+                }
+                if (!place_meeting(x + i, y, obj_parede) && !place_meeting(x + i, y, obj_trampolim)) {
+                    x += i;
+                    break;
+                }
+            }
+        }
+    }
+
     // -----------------------------
     // INPUT (BOTÕES DO TECLADO)
     // -----------------------------
+    var _apertou_baixo = keyboard_check(ord("S")) || keyboard_check(vk_down);
     direita = keyboard_check(ord("D"));
     esquerda = keyboard_check(ord("A"));
-    cima = keyboard_check_pressed(vk_space);
+    cima = keyboard_check_pressed(vk_space) && !_apertou_baixo;
 
     // -----------------------------
     // DIREÇÃO E SPRITE (VISUAL)
@@ -53,6 +82,22 @@ function scr_personagem_movendo() { // Início da Função de Movimento
         (_pode_usar_plat2 && place_meeting(x, y + 1, obj_plataforma2) && !place_meeting(x, y, obj_plataforma2)) ||
         (place_meeting(x, y + 1, obj_plataforma_fase2) && !place_meeting(x, y, obj_plataforma_fase2)) ||
         (place_meeting(x, y + 1, obj_plataforma) && !place_meeting(x, y, obj_plataforma));
+
+    // -----------------------------
+    // DESCER DA PLATAFORMA (Down + Jump)
+    // -----------------------------
+    if (_chao && _apertou_baixo && keyboard_check_pressed(vk_space)) {
+        var _plat_sob_pes = instance_place(x, y + 1, obj_plataforma_cair);
+        if (_plat_sob_pes == noone) _plat_sob_pes = instance_place(x, y + 1, obj_plataforma);
+        if (_plat_sob_pes == noone && _pode_usar_plat2) _plat_sob_pes = instance_place(x, y + 1, obj_plataforma2);
+        if (_plat_sob_pes == noone) _plat_sob_pes = instance_place(x, y + 1, obj_plataforma_fase2);
+        
+        if (_plat_sob_pes != noone) {
+            y += 8; // Move o jogador para baixo da plataforma para ignorar a colisão
+            vveloc = 1;
+            _chao = false;
+        }
+    }
 
     // -----------------------------
     // GRAVIDADE

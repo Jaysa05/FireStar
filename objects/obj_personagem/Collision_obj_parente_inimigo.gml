@@ -2,6 +2,12 @@
 // Verifica se o inimigo está vivo
 if (other.vida > 0) {
     
+    // IGNORA DANO POR CONTATO DIRETO COM O MONSTRO DE GELO
+    // O jogador só toma dano pelos ataques telegrafados do próprio boss (gerenciados no Step dele)
+    if (other.object_index == obj_mostro_gelo || object_is_ancestor(other.object_index, obj_mostro_gelo)) {
+        exit;
+    }
+    
     // VERIFICA SE ESTÁ PULANDO EM CIMA DO COELHO SALTITANTE
     if (other.object_index == obj_coelho_saltitante && vveloc > 0 && y < other.y) {
         

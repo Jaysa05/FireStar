@@ -7,7 +7,10 @@
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_mostro_gelo",
+    "path": "objects/obj_mostro_gelo/obj_mostro_gelo.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,

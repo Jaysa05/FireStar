@@ -7,7 +7,9 @@ if (other.object_index == obj_coelho_saltitante) {
 }
 
 with (other){
-	vida -= 1;
-	hit = true;
+	if (!variable_instance_exists(id, "vulneravel") || vulneravel == true) {
+		vida -= 1;
+		hit = true;
+	}
 }
 instance_destroy()

@@ -22,7 +22,10 @@ if (direct == _natural_dir) {
 // ==============================
 // DESENHO DO CORPO DO BOSS
 // ==============================
-var _blend = make_color_rgb(140, 210, 255); // Tom azulado de monstro de gelo
+var _blend = make_color_rgb(140, 210, 255); // Tom azulado de monstro de gelo (Vulnerável)
+if (vulneravel == false) {
+    _blend = make_color_rgb(90, 110, 140); // Tom acinzentado/escuro indicando invulnerabilidade
+}
 
 if (alarm[1] > 0) {
     // Efeito de piscar branco ao receber dano (usando Fog da GPU)
@@ -30,7 +33,7 @@ if (alarm[1] > 0) {
     draw_sprite_ext(sprite_index, image_index, _draw_x + shake_x, y + y_offset, _visual_scale * scale_x_visual, scale_y_visual, 0, c_white, 1);
     gpu_set_fog(false, c_white, 0, 0);
 } else {
-    // Desenha o monstro com o tom azulado de gelo
+    // Desenha o monstro
     draw_sprite_ext(sprite_index, image_index, _draw_x + shake_x, y + y_offset, _visual_scale * scale_x_visual, scale_y_visual, 0, _blend, 1);
 }
 

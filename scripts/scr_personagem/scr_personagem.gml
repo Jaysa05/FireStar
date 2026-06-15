@@ -212,7 +212,7 @@ function scr_personagem_movendo() { // Início da Função de Movimento
             
             if (_inimigo != noone) { // Se achou um inimigo
                 with (_inimigo) { // Entra dentro do inimigo
-                    if (alarm[1] <= 0) { // Se não estiver invulnerável
+                    if (alarm[1] <= 0 && (!variable_instance_exists(id, "vulneravel") || vulneravel == true)) { // Se não estiver invulnerável e for vulnerável
                         vida -= 1; // Tira vida
                         hit = true; // Pisca e congela
                         alarm[1] = 20; // Força o timer do flash branco (fog) diretamente!

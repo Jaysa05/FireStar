@@ -166,3 +166,8 @@ scale_x_visual = 1;
 // Escala visual vertical.
 // Usada para efeitos de squash and stretch.
 scale_y_visual = 1;
+
+// Define se o boss está vulnerável a ataques.
+// O boss começa invulnerável e só fica vulnerável ao terminar sua sequência de 3 ataques.
+vulneravel = false;
+

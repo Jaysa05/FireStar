@@ -4,10 +4,13 @@
 
 // Se o boss foi golpeado (marcado como hit pelo ataque do jogador)
 if (hit == true) {
-    alarm[1] = 20; // Ativa piscar branco do pai
-    vida_monstro_gelo -= 1;
+    if (vulneravel == true) {
+        alarm[1] = 20; // Ativa piscar branco do pai
+        vida_monstro_gelo -= 1;
+    }
     hit = false; // Limpa o flag
 }
+
 
 // Se a vida real acabar, ativa a morte através do comportamento do pai
 if (vida_monstro_gelo <= 0) {
@@ -88,14 +91,17 @@ switch (estado) {
                     estado = ESTADO_MONSTRO_GELO.SOCAO;
                     proximo_ataque = 1;
                     sprite_index = spr_socao;
+                    image_speed = 0.5; // Socão lento
                 } else if (proximo_ataque == 1) {
                     estado = ESTADO_MONSTRO_GELO.PISADA;
                     proximo_ataque = 2;
                     sprite_index = spr_pisada;
+                    image_speed = 0.3; // Pisada ainda mais lenta para dar tempo de desviar
                 } else {
                     estado = ESTADO_MONSTRO_GELO.BRACADA;
                     proximo_ataque = 0;
                     sprite_index = spr_bracada;
+                    image_speed = 0.5; // Braçada lenta
                 }
                 timer_estado = 0;
                 ja_deu_dano = false;
@@ -121,6 +127,7 @@ switch (estado) {
         } else {
             estado = ESTADO_MONSTRO_GELO.PERSEGUINDO;
             timer_ataque = tempo_ataque;
+            vulneravel = false; // Retorna a ficar invulnerável ao sair do descanso
         }
         break;
 
@@ -170,12 +177,13 @@ switch (estado) {
         }
 
         // Final do ataque quando a animação terminar
-        if (image_index >= image_number - 1 || timer_estado >= 90) {
+        if (scr_fim_da_animacao() || timer_estado >= 180) {
             shake_x = 0;
             scale_x_visual = 1;
             scale_y_visual = 1;
             estado = ESTADO_MONSTRO_GELO.DESCANSO;
             timer_descanso = tempo_descanso;
+            image_speed = 1.0; // Restaura a velocidade padrão da animação
         }
         break;
 
@@ -208,7 +216,7 @@ switch (estado) {
             if (image_index >= 5 && image_index <= 8) {
                 if (!ja_deu_dano && instance_exists(obj_personagem)) {
                     // Detecta se o jogador está próximo do chão (independente de qual objeto seja a ponte)
-                    var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 16);
+                    var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 2);
 
                     var _monster_center = x + (bbox_right - bbox_left) / 2;
                     var _dist = abs(obj_personagem.x - _monster_center);
@@ -229,12 +237,13 @@ switch (estado) {
         }
 
         // Final do ataque quando a animação terminar
-        if (image_index >= image_number - 1 || timer_estado >= 90) {
+        if (scr_fim_da_animacao() || timer_estado >= 180) {
             stomp_wave_radius = 0;
             scale_x_visual = 1;
             scale_y_visual = 1;
             estado = ESTADO_MONSTRO_GELO.DESCANSO;
             timer_descanso = tempo_descanso;
+            image_speed = 1.0; // Restaura a velocidade padrão da animação
         }
         break;
 
@@ -287,12 +296,14 @@ switch (estado) {
         }
 
         // Final do ataque quando a animação terminar
-        if (image_index >= image_number - 1 || timer_estado >= 90) {
+        if (scr_fim_da_animacao() || timer_estado >= 180) {
             sweep_progress = 0;
             scale_x_visual = 1;
             scale_y_visual = 1;
             estado = ESTADO_MONSTRO_GELO.DESCANSO;
-            timer_descanso = tempo_descanso;
+            timer_descanso = 180; // Descanso estendido para 180 frames (3 segundos)
+            vulneravel = true;    // Fica vulnerável a ataques do jogador
+            image_speed = 1.0; // Restaura a velocidade padrão da animação
         }
         break;
 }

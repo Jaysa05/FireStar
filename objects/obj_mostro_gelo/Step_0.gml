@@ -60,7 +60,7 @@ switch (estado) {
         if (timer_ataque > 0) timer_ataque -= 1;
 
         if (instance_exists(obj_personagem)) {
-            var _monster_center = x + (bbox_right - bbox_left) / 2;
+            var _monster_center = (bbox_left + bbox_right) / 2;
             var _dif_x = obj_personagem.x - _monster_center;
             var _dist_horizontal = abs(_dif_x);
 
@@ -204,38 +204,105 @@ switch (estado) {
             stomp_wave_radius = 0;
         } 
         // Fase 2: Impacto
-        else {
-            y_offset = 0;
-            shake_x = 0;
-            scale_x_visual = 1.25;
-            scale_y_visual = 0.75; // Efeito de impacto no solo
-            
-            // A onda de choque vai expandindo na tela a partir do frame do impacto até o alcance máximo de 160
-            var _total_frames_onda = max(1, image_number - 6);
-            stomp_wave_radius = ((image_index - 5) / _total_frames_onda) * 160; 
+       else{
+		   
+		   // Volta o monstro para sua posição vertical normal.
+    // Durante a preparação ele pode ter sido deslocado para cima.
+			y_offset = 0;
+			
+			// Remove qualquer tremor horizontal.
+			shake_x = 0;
+			
+			// Estica o monstro horizontalmente para dar sensação de peso no impacto.
+			scale_x_visual = 1.25;
+			
+			 // Achata o monstro verticalmente.
+			 scale_y_visual = 0.75;
+			 
+			 // EXPANSÃO DA ONDA DE CHOQUE
+			 
+			  // A onda cresce 4 pixels por frame.
+			// Ela nunca ultrapassa 160 pixels de alcance.
+			if (stomp_wave_radius < 160) {
+				stomp_wave_radius = min(160, stomp_wave_radius + 4);
+			}
+			
+			 //JANELA DE DANO DA ANIMAÇÃO
+			 
+			 // Só verifica dano quando a animação já chegou
+			// na parte do impacto (frame 5 em diante).
+			if (image_index >= 5 && image_index < image_number){
+				
+				// Verifica se este ataque ainda não causou dano
+				// e se o jogador existe na sala.
+				if (!ja_deu_dano && instance_exists(obj_personagem)){
+					
+					 // VERIFICA SE O JOGADOR ESTÁ NO CHÃO
+					 
+					 // Compara a parte inferior da hitbox do jogador
+					 // com a parte inferior da hitbox do monstro.
+					//
+					// Se o jogador estiver praticamente na mesma altura
+					 // do chão onde a onda se propaga, considera que ele
+					 // está em contato com o solo.
+					 var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 2);
+					 
+					  // CENTRO DO MONSTRO
+					  
+					   // Calcula o ponto central da hitbox do monstro.
+					   var _monster_center = (bbox_left + bbox_right) / 2;
+					   
+					   // DISTÂNCIA ENTRE O JOGADOR E O CENTRO DO MONSTRO
+					   
+					    // abs() garante que o resultado seja sempre positivo.
+			            //
+			            // Exemplo:
+			            // Jogador à esquerda  = 50 pixels
+			            // Jogador à direita   = 50 pixels
+			            //
+			            // Em ambos os casos a distância será 50.
+						var _dist = abs(obj_personagem.x - _monster_center);
+						
+						 // VERIFICA SE A ONDA ALCANÇOU O JOGADOR
+						 
+						  // Só causa dano se:
+				            //
+				            // 1) O jogador estiver no chão.
+				            // 2) A onda já tiver alcançado sua posição.
+						
+						if (_player_no_chao && _dist <= stomp_wave_radius){
+							
+							 // Executa código dentro do objeto jogador.
+							 with (obj_personagem){
+								 
+								  // Só recebe dano se não estiver
+			                    // em período de invulnerabilidade.
+			                    if (alarm[0] <= 0) {
 
-            if (image_index >= 5 && image_index < image_number) {
-                if (!ja_deu_dano && instance_exists(obj_personagem)) {
-                    // Detecta se o jogador está próximo do chão (independente de qual objeto seja a ponte)
-                    var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 2);
+		                        // Remove 1 ponto de vida.
+		                        vida -= 1;
 
-                    var _monster_center = x + (bbox_right - bbox_left) / 2;
-                    var _dist = abs(obj_personagem.x - _monster_center);
-
-                    // Só causa dano se o jogador estiver no chão E a onda de choque já tiver alcançado a posição dele
-                    if (_player_no_chao && _dist <= stomp_wave_radius) {
-                        with (obj_personagem) {
-                            if (alarm[0] <= 0) {
-                                vida -= 1;
-                                alarm[0] = inv_tempo;
-                                vveloc = -3.5; // Lança o jogador no ar
-                            }
-                        }
-                        ja_deu_dano = true;
-                    }
-                }
-            }
-        }
+		                        // Ativa a invulnerabilidade temporária.
+		                        alarm[0] = inv_tempo;
+								
+										 // Lança o jogador para cima.
+		                        //
+		                        // No GameMaker:
+		                        // valor negativo = sobe
+		                        // valor positivo = desce
+								vveloc = -3.5;
+							 }
+						}
+						
+						// Marca que esta pisada já causou dano.
+						// Impede múltiplos acertos no mesmo ataque.
+						ja_deu_dano = true;
+						
+				}
+			}
+	   }
+	   
+	   }
 
         // Final do ataque quando a animação terminar
         if (scr_fim_da_animacao() || timer_estado >= 180) {

@@ -70,7 +70,7 @@ if (estado == ESTADO_MONSTRO_GELO.SOCAO) {
 
 // 2. Indicador da PISADA (Telegrafação retangular no solo)
 if (estado == ESTADO_MONSTRO_GELO.PISADA) {
-    var _monster_center = x + (bbox_right - bbox_left) / 2;
+    var _monster_center = (bbox_left + bbox_right) / 2;
     var _ground_y = bbox_bottom;
     
     if (image_index < 5) {
@@ -81,22 +81,26 @@ if (estado == ESTADO_MONSTRO_GELO.PISADA) {
         draw_set_color(c_orange);
         draw_rectangle(_monster_center - 160, _ground_y - 6, _monster_center + 160, _ground_y, true);
     } else {
-        // Impacto e propagação da onda ativa
-        var _alpha = 1.0 - ((image_index - 5) / (image_number - 5));
+        // Impacto e propagação da onda ativa (desaparece gradualmente conforme se aproxima de 160)
+        var _alpha = 1.0 - (stomp_wave_radius / 160);
         draw_set_color(c_aqua);
         draw_set_alpha(clamp(_alpha, 0, 1));
         
+        // Desenha a linha da onda em ambas as direções
         draw_line_width(_monster_center - stomp_wave_radius, _ground_y, _monster_center + stomp_wave_radius, _ground_y, 3);
         
-        for (var i = -stomp_wave_radius; i <= stomp_wave_radius; i += 24) {
-            if (abs(i) < 16) continue;
-            if (abs(i) <= 160) {
-                draw_triangle(_monster_center + i, _ground_y, _monster_center + i - 6, _ground_y - 12, _monster_center + i + 6, _ground_y - 12, false);
+        // Desenha os espinhos/triângulos simetricamente a cada 32 pixels
+        for (var _dist_onda = 32; _dist_onda <= stomp_wave_radius; _dist_onda += 32) {
+            if (_dist_onda <= 160) {
+                // Espinho da esquerda
+                draw_triangle(_monster_center - _dist_onda, _ground_y, _monster_center - _dist_onda - 6, _ground_y - 12, _monster_center - _dist_onda + 6, _ground_y - 12, false);
+                // Espinho da direita
+                draw_triangle(_monster_center + _dist_onda, _ground_y, _monster_center + _dist_onda - 6, _ground_y - 12, _monster_center + _dist_onda + 6, _ground_y - 12, false);
             }
         }
-    }
     draw_set_alpha(1.0);
     draw_set_color(c_white);
+}
 }
 
 // 3. Indicador da BRAÇADA (Telegrafação retangular)

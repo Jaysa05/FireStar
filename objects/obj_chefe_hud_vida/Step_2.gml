@@ -6,9 +6,8 @@ if (instance_exists(obj_demonio)){
 	// Define a largura da barra para 60% do tamanho original.
 	var escala_largura = 0.6;
 	
-	 // Calcula o centro horizontal do demônio.
-    // A posição x do sprite fica na esquerda, então somamos metade da largura.
-	var centro_demonio_x = obj_demonio.x + (obj_demonio.sprite_width / 2);
+	 // Calcula o centro horizontal do demônio usando a bounding box (mais preciso).
+	var centro_demonio_x = (obj_demonio.bbox_left + obj_demonio.bbox_right) / 2;
 	
 	 
     // Calcula a largura máxima da barra considerando a escala definida.

@@ -210,10 +210,11 @@ switch (estado) {
             scale_x_visual = 1.25;
             scale_y_visual = 0.75; // Efeito de impacto no solo
             
-            // A onda de choque vai expandindo na tela a partir do frame do impacto
-            stomp_wave_radius = (image_index - 5) * 24; 
+            // A onda de choque vai expandindo na tela a partir do frame do impacto até o alcance máximo de 160
+            var _total_frames_onda = max(1, image_number - 6);
+            stomp_wave_radius = ((image_index - 5) / _total_frames_onda) * 160; 
 
-            if (image_index >= 5 && image_index <= 8) {
+            if (image_index >= 5 && image_index < image_number) {
                 if (!ja_deu_dano && instance_exists(obj_personagem)) {
                     // Detecta se o jogador está próximo do chão (independente de qual objeto seja a ponte)
                     var _player_no_chao = (obj_personagem.bbox_bottom >= bbox_bottom - 2);
@@ -221,8 +222,8 @@ switch (estado) {
                     var _monster_center = x + (bbox_right - bbox_left) / 2;
                     var _dist = abs(obj_personagem.x - _monster_center);
 
-                    // Só causa dano se o jogador estiver no chão E dentro do raio de colisão horizontal
-                    if (_player_no_chao && _dist <= 160) {
+                    // Só causa dano se o jogador estiver no chão E a onda de choque já tiver alcançado a posição dele
+                    if (_player_no_chao && _dist <= stomp_wave_radius) {
                         with (obj_personagem) {
                             if (alarm[0] <= 0) {
                                 vida -= 1;

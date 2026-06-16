@@ -19,17 +19,20 @@ if (vida_boss > 0 && estado != ESTADO_BOSS.MORTE) {
     // 0.8 = 80% do tamanho original
 	var _escala = 0.8;
 	
-	 // Calcula a largura final da barra com base na sprite original (128px)
-    // Multiplica pela escala para reduzir o tamanho
-	var _largura_final = 128 * _escala;
+	 // Calcula a largura final da barra com base na sprite original
+     // Multiplica pela escala para reduzir o tamanho
+	var _largura_final = sprite_get_width(spr_chefe_hud_vida) * _escala;
+	
+	 // Calcula o centro horizontal do boss usando a bounding box (mais preciso)
+	var _centro_boss_x = (bbox_left + bbox_right) / 2;
 	
 	 // Calcula a posição X da barra
-    // Subtrai metade da largura para centralizar no boss
-	var _x_barra = x - (_largura_final /2);
+     // Subtrai metade da largura para centralizar no boss
+	var _x_barra = _centro_boss_x - (_largura_final / 2);
 	
 	 // Calcula a posição Y da barra
-    // Coloca a barra acima do boss (100 pixels acima)
-	var _y_barra = y - 100;
+     // Coloca a barra acima do boss (20 pixels acima da cabeça do boss)
+	var _y_barra = bbox_top - 20;
 	
 	 // Desenha a barra de vida
 	 draw_sprite_ext(

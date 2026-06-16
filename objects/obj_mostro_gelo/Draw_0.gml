@@ -129,25 +129,64 @@ if (estado == ESTADO_MONSTRO_GELO.BRACADA) {
 // ==============================
 // BARRA DE VIDA HUD (SOBRE A CABEÇA)
 // ==============================
-if (vida_monstro_gelo > 0) {
-    var _porcentagem = vida_monstro_gelo / vida_monstro_gelo_max;
-    var _escala = 0.8;
-    var _largura_final = 128 * _escala;
-    var _monster_center = x + (bbox_right - bbox_left) / 2;
-    var _x_barra = _monster_center - (_largura_final / 2);
-    var _y_barra = y - 16; // 16 pixels acima do topo do monstro
-    
-    if (sprite_exists(spr_chefe_hud_vida)) {
-        draw_sprite_ext(
-            spr_chefe_hud_vida,
-            0,
-            _x_barra,
-            _y_barra,
-            _porcentagem * _escala,
-            1.2,
-            0,
-            c_white,
-            1
-        );
-    }
+
+// Só desenha a barra se o monstro ainda estiver vivo
+if (vida_monstro_gelo > 0){
+	
+	 // Calcula a porcentagem de vida restante
+    // Exemplo: 50 / 100 = 0.5 (50%)
+	var _porcentagem = vida_monstro_gelo / vida_monstro_gelo_max;
+	
+	 // Define o tamanho da barra (80% do tamanho original)
+	 var _escala = 0.8;
+	 
+	  // Obtém a largura da sprite da barra de vida
+    // e aplica a escala definida acima
+	var _largura_final = sprite_get_width(spr_chefe_hud_vida) * _escala;
+	
+	 // Calcula o centro horizontal do monstro
+    // usando os limites esquerdo e direito da hitbox
+	var _monster_center = (bbox_left + bbox_right) / 2;
+	
+	  // Calcula a posição X da barra
+    // para que ela fique centralizada sobre o monstro
+	var _x_barra = _monster_center - (_largura_final / 2);
+	
+	// Define a posição Y da barra
+    // 20 pixels acima do topo do monstro
+	var _y_barra = bbox_top - 20;
+	
+	// Desenha a barra de vida real
+	
+	// Verifica se a sprite da barra de vida existe antes de tentar desenhá-la
+	if (sprite_exists(spr_chefe_hud_vida)){
+		
+		 // Desenha a sprite da barra de vida com configurações personalizadas
+		 draw_sprite_ext(
+			 // Sprite utilizada como barra de vida
+			 spr_chefe_hud_vida,
+			  // Frame da sprite (0 = primeiro frame)
+			  0,
+			   // Posição X onde a barra será desenhada
+			   _x_barra,
+			   // Posição Y onde a barra será desenhada
+			   _y_barra,
+			    // Escala horizontal da barra.
+        // A porcentagem de vida restante controla o quanto a barra aparece preenchida.
+        // Exemplo:
+        // Vida cheia = 1.0 * 0.8 = 80% do tamanho original
+				_porcentagem * _escala,
+				 // Escala vertical.
+        // Valor maior que 1 deixa a barra mais alta/grossa.
+				1.2,
+				// Rotação da sprite em graus.
+        // 0 = sem rotação.
+				0,
+				// Cor aplicada à sprite.
+        // c_white mantém as cores originais da imagem.
+				c_white,
+				 // Transparência (alpha).
+        // 1 = totalmente visível.
+				1);
+	}
 }

@@ -411,8 +411,8 @@ switch (estado) {
 			if (floor(image_index) == 4 && !ja_deu_dano){
 				
 				 // Define posição de onde a bola vai sair
-				 var _x_fogo = x + (90 * -image_xscale);
-				 var _y_fogo = y - 25;
+				 var _x_fogo = x + (25 * -image_xscale);
+				 var _y_fogo = y - 18;
 				 
 				 // Cria a bola de fogo
 				 var _fogo = instance_create_depth(_x_fogo , _y_fogo, depth -1 , obj_bola_fogo);
@@ -422,7 +422,7 @@ switch (estado) {
 				 
 				  // Aplica movimento à bola
 				  _fogo.direction = _direcao_tiro; // Para onde vai
-				  _fogo.speed = 1; // Velocidade da bola
+				  _fogo.speed = 3; // Velocidade da bola corrigida para ser perceptível e funcional
 				  _fogo.image_angle = _direcao_tiro; // Rotação da imagem
 				  
 				  ja_deu_dano = true; // Marca que já atacou (evita repetir)

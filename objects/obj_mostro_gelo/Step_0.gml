@@ -268,9 +268,10 @@ switch (estado) {
 						  // Só causa dano se:
 				            //
 				            // 1) O jogador estiver no chão.
-				            // 2) A onda já tiver alcançado sua posição.
+				            // 2) A onda de choque (frente de colisão) estiver passando exatamente pela posição do jogador.
 						
-						if (_player_no_chao && _dist <= stomp_wave_radius){
+						var _wave_width = 12; // Tolerância da largura da onda de choque (frente de colisão)
+						if (_player_no_chao && _dist >= stomp_wave_radius - _wave_width && _dist <= stomp_wave_radius + _wave_width){
 							
 							 // Executa código dentro do objeto jogador.
 							 with (obj_personagem){

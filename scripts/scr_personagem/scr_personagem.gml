@@ -32,9 +32,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     // INPUT (BOTÕES DO TECLADO)
     // -----------------------------
     var _apertou_baixo = keyboard_check(ord("S")) || keyboard_check(vk_down);
-    direita = keyboard_check(ord("D"));
-    esquerda = keyboard_check(ord("A"));
-    cima = keyboard_check_pressed(vk_space) && !_apertou_baixo;
+    direita = keyboard_check(ord("D")) || keyboard_check(vk_right);
+    esquerda = keyboard_check(ord("A")) || keyboard_check(vk_left);
+    cima = (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) && !_apertou_baixo;
 
     // -----------------------------
     // DIREÇÃO E SPRITE (VISUAL)
@@ -145,8 +145,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     // -----------------------------
     // COLISÃO HORIZONTAL (Paredes)
     // -----------------------------
-    if (place_meeting(x + hveloc, y, obj_parede)) { 
-        while (!place_meeting(x + sign(hveloc), y, obj_parede)) {
+    // Usamos y - 2 para evitar que o personagem enrosque em emendas do chão ou subpixels
+    if (place_meeting(x + hveloc, y - 2, obj_parede)) { 
+        while (!place_meeting(x + sign(hveloc), y - 2, obj_parede)) {
             x += sign(hveloc); 
         }
         hveloc = 0; 

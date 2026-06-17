@@ -2,6 +2,9 @@
 // Isso faz o Monstro de Gelo herdar comportamentos básicos do inimigo.
 event_inherited();
 
+// O monstro de gelo não dropa nenhum item ao morrer.
+item_drop = noone;
+
 // =====================================================
 // SISTEMA DE ALEATORIEDADE
 // =====================================================

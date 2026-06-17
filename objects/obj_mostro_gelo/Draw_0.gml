@@ -82,26 +82,82 @@ if (estado == ESTADO_MONSTRO_GELO.PISADA) {
         draw_rectangle(_monster_center - 160, _ground_y - 6, _monster_center + 160, _ground_y, true);
     } else {
         // Impacto e propagação da onda ativa (desaparece gradualmente conforme se aproxima de 160)
-        var _alpha = 1.0 - (stomp_wave_radius / 160);
-        draw_set_color(c_aqua);
-        draw_set_alpha(clamp(_alpha, 0, 1));
         
-        // Desenha a linha da onda em ambas as direções
-        draw_line_width(_monster_center - stomp_wave_radius, _ground_y, _monster_center + stomp_wave_radius, _ground_y, 3);
-        
-        // Desenha os espinhos/triângulos simetricamente a cada 32 pixels
-        for (var _dist_onda = 32; _dist_onda <= stomp_wave_radius; _dist_onda += 32) {
-            if (_dist_onda <= 160) {
-                // Espinho da esquerda
-                draw_triangle(_monster_center - _dist_onda, _ground_y, _monster_center - _dist_onda - 6, _ground_y - 12, _monster_center - _dist_onda + 6, _ground_y - 12, false);
-                // Espinho da direita
-                draw_triangle(_monster_center + _dist_onda, _ground_y, _monster_center + _dist_onda - 6, _ground_y - 12, _monster_center + _dist_onda + 6, _ground_y - 12, false);
-            }
-        }
-    draw_set_alpha(1.0);
-    draw_set_color(c_white);
-}
-}
+		 // FASE DE IMPACTO DA PISADA
+		 
+		 // Nesta fase o monstro já bateu o pé no chão.
+		// Agora desenhamos a onda de choque se espalhand
+		
+		 // Calcula a transparência da onda.
+		// Quanto maior o raio da onda, mais transparente ela fica.
+		var _alpha = 1.0 - (stomp_wave_radius / 160);
+		
+		 // Define a cor usada para desenhar a onda.
+		 draw_set_color(c_aqua);
+		draw_set_alpha(1.0);
+	
+		
+		 // Aplica a transparência.
+		// clamp garante que o valor fique entre 0 e 1.
+		draw_set_alpha(clamp(_alpha, 0, 1));
+		
+		  // DESENHA A LINHA DA ONDA
+		  draw_line_width(
+			_monster_center - stomp_wave_radius,// início da linha (esquerda)
+			_ground_y, // altura da linha
+			_monster_center + stomp_wave_radius, // final da linha (direita)
+			_ground_y, // mesma altura
+			// espessura da linha
+			3);
+			
+			// DESENHA OS ESPINHOS DA ONDA
+			
+			 // A cada 32 pixels desenhamos um par de triângulos.
+			for (var _dist_onda = 32;
+				 _dist_onda <= min(stomp_wave_radius,160);
+				 _dist_onda += 32)
+					
+					// Segurança extra:
+					// só desenha se a distância for até 160 pixels.
+					
+						
+						 // ESPINHO DA ESQUERDA
+						 // Desenha um triângulo apontando para cima
+						// no lado esquerdo da onda.
+						 draw_triangle(
+			                _monster_center - _dist_onda,      // vértice inferior esquerdo
+			                _ground_y,
+
+			                _monster_center - _dist_onda - 6,  // vértice superior esquerdo
+			                _ground_y - 12,
+
+			                _monster_center - _dist_onda + 6,  // vértice superior direito
+			                _ground_y - 12,
+
+			                false
+								);
+								
+							 // ESPINHO DA DIREITA
+							  // Desenha outro triângulo simétrico
+							// no lado direito da onda.
+							 draw_triangle(
+				                _monster_center + _dist_onda,      // vértice inferior esquerdo
+				                _ground_y,
+
+				                _monster_center + _dist_onda - 6,  // vértice superior esquerdo
+				                _ground_y - 12,
+
+				                _monster_center + _dist_onda + 6,  // vértice superior direito
+				                _ground_y - 12,
+
+				                false
+				            );
+						
+					}
+					
+				}
+
+
 
 // 3. Indicador da BRAÇADA (Telegrafação retangular)
 if (estado == ESTADO_MONSTRO_GELO.BRACADA) {

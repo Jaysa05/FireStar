@@ -74,8 +74,8 @@ estado = scr_personagem_movendo;
 inv_tempo = 180; //Tempo de invensibilidade do personagem depois de tomar dano
 
 forca_pulo = 3.5; // Força do pulo 
-pulos = 0;        // Quantos pulos ele tem disponíveis agora
 pulos_max = 2;    // O limite de pulos (2 para duplo pulo)
+pulos = pulos_max;        // Quantos pulos ele tem disponíveis agora
 
 morreu = false;
 

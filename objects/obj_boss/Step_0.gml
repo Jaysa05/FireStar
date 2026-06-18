@@ -407,26 +407,38 @@ switch (estado) {
             // DISPARO DO FEITIÇO
             // ------------------------------
 			
-			// No frame 4 da animação, cria a bola de fogo
+			// Quando a animação chegar ao frame 4 e o boss ainda não tiver disparado,
+			// cria uma única bola de fogo.
 			if (floor(image_index) == 4 && !ja_deu_dano){
 				
-				 // Define posição de onde a bola vai sair
-				 var _x_fogo = x + (25 * -image_xscale);
-				 var _y_fogo = y - 18;
+				 // Calcula a posição horizontal onde a bola de fogo será criada.
+				// O valor muda dependendo do lado para o qual o boss está olhando.
+				var _x_fogo = x + (25 * -image_xscale);
+				
+				 // Calcula a posição vertical da bola de fogo.
+				 // O "-18" faz a bola nascer um pouco acima da origem do boss.
+				 var _y_fogo = y -18;
 				 
-				 // Cria a bola de fogo
-				 var _fogo = instance_create_depth(_x_fogo , _y_fogo, depth -1 , obj_bola_fogo);
-				 
-				 // Define direção do tiro (esquerda ou direita)
-				var _direcao_tiro = (image_xscale == 1) ? 180 : 0;
-				 
-				  // Aplica movimento à bola
-				  _fogo.direction = _direcao_tiro; // Para onde vai
-				  _fogo.speed = 3; // Velocidade da bola corrigida para ser perceptível e funcional
-				  _fogo.image_angle = _direcao_tiro; // Rotação da imagem
+				  // Cria a bola de fogo na posição calculada.
+				  var _fogo = instance_create_depth(_x_fogo, _y_fogo, depth -1, obj_bola_fogo);
 				  
-				  ja_deu_dano = true; // Marca que já atacou (evita repetir)
-				 	  
+				  // Define a direção do disparo.
+				  // Se o boss estiver olhando para a direita (image_xscale == 1),
+				   // a direção será 180°. Caso contrário, será 0°.
+				   var _direcao_tiro = (image_xscale == 1) ? 180 : 0;
+				   
+				   // Define para qual direção a bola irá se mover
+				   _fogo.direction = _direcao_tiro;
+				   
+				   // Define a velocidade da bola de fogo.
+				   _fogo.speed = 3;
+				   
+				    // Gira a imagem da bola para acompanhar a direção do movimento.
+					_fogo.image_angle = _direcao_tiro;
+					
+					// Marca que o disparo já foi realizado neste ataque,
+					// evitando que várias bolas sejam criadas no mesmo frame.
+					ja_deu_dano = true;
 				
 			}
 

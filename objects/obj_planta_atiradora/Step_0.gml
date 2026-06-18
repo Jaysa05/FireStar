@@ -46,7 +46,7 @@ if (vida <= 0){
 	 event_inherited();
 	 
 	 // 7. Para o resto do código daqui pra frente
-    // (evita bugs depois da morte)
+     // (evita bugs depois da morte)
 	exit;
 }
 
@@ -56,10 +56,10 @@ event_inherited();
 
 // Se estiver no frame 4 da animação E ainda não tiver atirado
 if (floor(image_index) == 4 && !atirou) {
-	// Cria a semente um pouco à frente (direita) e um pouco acima do objeto
-	var _semente = instance_create_layer(x + 30, y - 15, "colisao_2", obj_semente_atiravel);
-	// Define a velocidade horizontal da semente (vai para a direita)
-	_semente.hspeed = 2;
+	// Cria a semente um pouco à frente (esquerda) e um pouco acima do objeto
+	var _semente = instance_create_layer(x - 30, y - 15, "colisao_2", obj_semente_atiravel);
+	// Define a velocidade horizontal da semente (vai para a esquerda)
+	_semente.hspeed = -2;
 	// Marca que já atirou, para não repetir no mesmo frame
 	atirou = true;
 }

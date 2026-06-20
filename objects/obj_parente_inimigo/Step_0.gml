@@ -67,3 +67,8 @@ instance_destroy()
 
 	}
 }
+
+// Ajusta a profundidade (depth) dinamicamente para que o inimigo apareça na frente do fundo e dos tiles,
+// e se alinhe corretamente com o jogador (Y-sorting).
+depth = -bbox_bottom;
+

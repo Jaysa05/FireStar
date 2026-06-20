@@ -1,10 +1,16 @@
 {
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_minotauro",
+    "path": "sprites/spr_minotauro/spr_minotauro.yy",
+  },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_parente_inimigo",
+    "path": "objects/obj_parente_inimigo/obj_parente_inimigo.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -25,7 +31,7 @@
     "path": "folders/Objetos.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Object49",
+  "name": "obj_minotauro",
   "tags": [],
   "resourceType": "GMObject",
 }

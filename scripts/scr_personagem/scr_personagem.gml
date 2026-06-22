@@ -110,9 +110,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     }
 
     // -----------------------------
-    // MECÂNICA DE ESCALAR PAREDE (Fase 5)
+    // MECÂNICA DE ESCALAR PAREDE (Fase 5 e Fase 6)
     // -----------------------------
-    if (room == rm_fase5 && !_chao) {
+    if ((room == rm_fase5 || room == rm_fase6) && !_chao) {
         var _parede_dir = place_meeting(x + 1, y, obj_parede);
         var _parede_esq = place_meeting(x - 1, y, obj_parede);
          

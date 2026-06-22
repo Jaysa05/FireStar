@@ -8,6 +8,14 @@ if (other.vida > 0) {
         exit;
     }
     
+    // REGRA PARA O MINOTAURO:
+    // O jogador só toma dano se o Minotauro estiver no estado de investida (atacando)
+    if (other.object_index == obj_minotauro || object_is_ancestor(other.object_index, obj_minotauro)) {
+        if (other.estado != "investida") {
+            exit; // Ignora o dano se não estiver no ataque
+        }
+    }
+    
     // VERIFICA SE ESTÁ PULANDO EM CIMA DO COELHO SALTITANTE
     if (other.object_index == obj_coelho_saltitante && vveloc > 0 && y < other.y) {
         

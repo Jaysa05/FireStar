@@ -3,6 +3,7 @@ event_inherited(); // Executa primeiro o código do objeto pai
 // Se a vida chegou a 0 ou menos, para tudo
 if (vida <= 0){
 	image_blend = c_white; // Remove a cor verde/lima ao morrer
+	visible = true; // Garante que ele fique visível para tocar a animação de morte!
 	exit;
 }
 
@@ -178,22 +179,107 @@ if (instance_exists(obj_personagem)){
 			 // Quando o cronômetro terminar
 			 if (timer_estado <= 0){
 				 
-				   // Inicia a investida
-				   estado = "investida";
-				   sprite_index = sprite_investida;
-				   image_index = 0;
-				   mask_index = sprite_investida; // Usa a caixa de colisão do golpe para alcançar o jogador
-				   
-				    // Duração da investida
-					timer_estado = 60;
+				// Verifica qual será o próximo ataque do inimigo.
+				// Quando proximo_ataque for 0, ele fará a investida.
+				// Quando for 1, ele fará o golpe girador.
+				if (proximo_ataque == 0) {
 					
-					 // Alterna para o próximo tipo de ataque
-					 if (proximo_ataque == 0)
-	                proximo_ataque = 1;
-					else if (proximo_ataque == 1)
-	                proximo_ataque = 2;
-					else if (proximo_ataque == 2)
-	                proximo_ataque = 0;
+	 // ----------------------------------------------------
+    // ATAQUE 0: INVESTIDA
+    // ----------------------------------------------------
+	
+	 // Muda o estado do inimigo para "investida".
+    // Isso faz o inimigo executar o comportamento desse ataque.
+	estado = "investida";
+	
+	 // Troca o sprite para a animação da investida
+	 sprite_index = sprite_investida;
+	 
+	 // Reinicia a animação começando pelo primeiro frame.
+	 image_index = 0;
+	 
+	 // Troca a máscara de colisão.
+    // Usa a área do sprite da investida para que o golpe
+    // consiga alcançar o jogador.
+	mask_index = sprite_investida;
+	
+	// Define quanto tempo a investida vai durar.
+    // O valor representa quantidade de frames.
+	timer_estado = 60;
+	
+	 // Depois da investida, o próximo ataque será o girador.
+	 proximo_ataque = 1;
+				}
+				
+				else {
+					
+
+    // ATAQUE 1: GOLPE GIRADOR
+	
+	// Muda o estado do inimigo para o ataque girador
+	estado = "girador";
+	
+	 // Usa o sprite parado porque o ataque girador
+    // será criado por outro objeto separado.
+	sprite_index = sprite_idle;
+	
+	// Reinicia a animação.
+	image_index = 0;
+	
+	// Esconde o corpo do Minotauro durante o giro.
+    // Assim aparece somente o objeto do golpe girador.
+	visible = false;
+	
+	// Define a duração do ataque girador
+	timer_estado = 45;
+	
+	 // ----------------------------------------------------
+    // CRIA O OBJETO DO ATAQUE GIRATÓRIO
+    // ----------------------------------------------------
+	
+	// Guarda a posição X atual do Minotauro.
+    // Esse será o ponto inicial onde o ataque nascerá.
+	var _spawn_x = x;
+	
+	 // Verifica se o Minotauro está olhando para esquerda.
+    // direct == -1 significa esquerda.
+	if (direct == -1) {
+		
+		 // Ajusta a posição do golpe para aparecer
+        // no lado correto do personagem.
+		_spawn_x = x + sprite_get_width(sprite_index);
+	}
+	
+	 // Cria uma instância do objeto responsável pelo golpe giratório.
+    //
+    // _spawn_x → posição horizontal
+    // y → mesma altura do Minotauro
+    // depth - 1 → fica desenhado atrás dele
+    // obj_golpe_girador → objeto criado
+	var _girador = instance_create_depth(
+					_spawn_x,
+					y,
+					depth - 1,
+					obj_golpe_girador);
+					
+	 // Verifica se o objeto foi criado corretamente.
+	 if (_girador != noone){
+		 
+		  // Faz o golpe giratório seguir a mesma direção
+        // que o Minotauro está olhando.
+        //
+        // 1 = direita
+        // -1 = esquerda
+		_girador.image_xscale = direct;
+	 }
+	 
+	  // Depois do golpe girador,
+    // volta para a investida.
+    //
+    // Cria um ciclo:
+    // Investida → Girador → Investida → Girador
+	proximo_ataque = 0;
+				}
 			 }
 			 
 			 break;
@@ -236,11 +322,22 @@ if (instance_exists(obj_personagem)){
             
         
         // ==========================================
-        // ESTADO: ATAQUE 2 (FUTURO / PLACEHOLDER)
+        // ESTADO: ATAQUE 1 (GOLPE GIRADOR)
         // ==========================================
-        case "ataque_2":
+        case "girador":
             hveloc = 0;
             image_xscale = 1;
+			
+			// Decrementa o tempo do estado
+			timer_estado -= 1;
+			
+			// Se o tempo de ataque acabou, entra em cansaço
+			if (timer_estado <= 0) {
+				estado = "exhausted";
+				visible = true; // Torna o Minotauro visível novamente ao fim do ataque
+				timer_estado = 90; // Cansaço um pouco menor (1.5 segundos)
+				hveloc = 0;
+			}
             break;
             
         // ==========================================

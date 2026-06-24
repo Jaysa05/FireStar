@@ -64,7 +64,7 @@ mask_index = spr_minotauro;
 // "chase"              -> perseguindo o jogador
 // "prepara_investida"  -> preparando a investida
 // "investida"          -> correndo em alta velocidade
-// "ataque_2"           -> segundo ataque
+// "girador"           -> ataque girador do machado
 // "ataque_3"           -> terceiro ataque
 // "exhausted"          -> cansado após atacar
 
@@ -96,8 +96,7 @@ timer_vulnerabilidade = 300; // 300 frames a 60 FPS (5 segundos)
 // Define qual será o próximo ataque utilizado.
 //
 // 0 = investida
-// 1 = ataque_2
-// 2 = ataque_3
+// 1 = girador
 proximo_ataque = 0;
 
 // ========================

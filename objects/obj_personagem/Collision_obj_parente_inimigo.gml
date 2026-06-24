@@ -9,10 +9,10 @@ if (other.vida > 0) {
     }
     
     // REGRA PARA O MINOTAURO:
-    // O jogador só toma dano se o Minotauro estiver no estado de investida (atacando)
+    // O jogador só toma dano se o Minotauro estiver no estado de investida (atacando) e nos frames ativos do golpe (4 a 12)
     if (other.object_index == obj_minotauro || object_is_ancestor(other.object_index, obj_minotauro)) {
-        if (other.estado != "investida") {
-            exit; // Ignora o dano se não estiver no ataque
+        if (other.estado != "investida" || other.image_index < 4 || other.image_index > 12) {
+            exit; // Ignora o dano se não estiver no ataque ou fora dos frames ativos
         }
     }
     

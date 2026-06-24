@@ -86,7 +86,8 @@ cooldown_investida = 180;
 //
 // true  = pode receber dano
 // false = está invulnerável
-vulneravel = true;
+vulneravel = false; // Começa invencível (por 5 segundos)
+timer_vulnerabilidade = 300; // 300 frames a 60 FPS (5 segundos)
 
 // ========================
 // CONTROLE DOS ATAQUES

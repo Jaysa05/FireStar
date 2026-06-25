@@ -180,105 +180,154 @@ if (instance_exists(obj_personagem)){
 			 if (timer_estado <= 0){
 				 
 				// Verifica qual será o próximo ataque do inimigo.
-				// Quando proximo_ataque for 0, ele fará a investida.
-				// Quando for 1, ele fará o golpe girador.
+				// 0 = investida
+				// 1 = girador
+				// 2 = machadada (último golpe)
 				if (proximo_ataque == 0) {
 					
-	 // ----------------------------------------------------
-    // ATAQUE 0: INVESTIDA
-    // ----------------------------------------------------
-	
-	 // Muda o estado do inimigo para "investida".
-    // Isso faz o inimigo executar o comportamento desse ataque.
-	estado = "investida";
-	
-	 // Troca o sprite para a animação da investida
-	 sprite_index = sprite_investida;
-	 
-	 // Reinicia a animação começando pelo primeiro frame.
-	 image_index = 0;
-	 
-	 // Troca a máscara de colisão.
-    // Usa a área do sprite da investida para que o golpe
-    // consiga alcançar o jogador.
-	mask_index = sprite_investida;
-	
-	// Define quanto tempo a investida vai durar.
-    // O valor representa quantidade de frames.
-	timer_estado = 60;
-	
-	 // Depois da investida, o próximo ataque será o girador.
-	 proximo_ataque = 1;
+					// ----------------------------------------------------
+					// ATAQUE 0: INVESTIDA
+					// ----------------------------------------------------
+					
+					// Muda o estado do inimigo para "investida".
+					// Isso faz o inimigo executar o comportamento desse ataque.
+					estado = "investida";
+					
+					// Troca o sprite para a animação da investida
+					sprite_index = sprite_investida;
+					
+					// Reinicia a animação começando pelo primeiro frame.
+					image_index = 0;
+					
+					// Troca a máscara de colisão.
+					// Usa a área do sprite da investida para que o golpe
+					// consiga alcançar o jogador.
+					mask_index = sprite_investida;
+					
+					// Define quanto tempo a investida vai durar.
+					// O valor representa quantidade de frames.
+					timer_estado = 60;
+					
+					// Depois da investida, o próximo ataque será o girador.
+					proximo_ataque = 1;
+				}
+				
+				else if (proximo_ataque == 1) {
+					
+					// ----------------------------------------------------
+					// ATAQUE 1: GOLPE GIRADOR
+					// ----------------------------------------------------
+					
+					// Muda o estado do inimigo para o ataque girador
+					estado = "girador";
+					
+					// Usa o sprite parado porque o ataque girador
+					// será criado por outro objeto separado.
+					sprite_index = sprite_idle;
+					
+					// Reinicia a animação.
+					image_index = 0;
+					
+					// Esconde o corpo do Minotauro durante o giro.
+					// Assim aparece somente o objeto do golpe girador.
+					visible = false;
+					
+					// Define a duração do ataque girador
+					timer_estado = 45;
+					
+					// ----------------------------------------------------
+					// CRIA O OBJETO DO ATAQUE GIRATÓRIO
+					// ----------------------------------------------------
+					
+					// Guarda a posição X atual do Minotauro.
+					// Esse será o ponto inicial onde o ataque nascerá.
+					var _spawn_x = x;
+					
+					// Verifica se o Minotauro está olhando para esquerda.
+					// direct == -1 significa esquerda.
+					if (direct == -1) {
+						
+						// Ajusta a posição do golpe para aparecer
+						// no lado correto do personagem.
+						_spawn_x = x + sprite_get_width(sprite_index);
+					}
+					
+					// Cria uma instância do objeto responsável pelo golpe giratório.
+					//
+					// _spawn_x → posição horizontal
+					// y → mesma altura do Minotauro
+					// depth - 1 → fica desenhado atrás dele
+					// obj_golpe_girador → objeto criado
+					var _girador = instance_create_depth(
+									_spawn_x,
+									y,
+									depth - 1,
+									obj_golpe_girador);
+									
+					// Verifica se o objeto foi criado corretamente.
+					if (_girador != noone){
+						
+						// Faz o golpe giratório seguir a mesma direção
+						// que o Minotauro está olhando.
+						//
+						// 1 = direita
+						// -1 = esquerda
+						_girador.image_xscale = direct;
+					}
+					
+					// Depois do golpe girador, o próximo ataque será o da machadada.
+					proximo_ataque = 2;
 				}
 				
 				else {
 					
-
-    // ATAQUE 1: GOLPE GIRADOR
-	
-	// Muda o estado do inimigo para o ataque girador
-	estado = "girador";
-	
-	 // Usa o sprite parado porque o ataque girador
-    // será criado por outro objeto separado.
-	sprite_index = sprite_idle;
-	
-	// Reinicia a animação.
-	image_index = 0;
-	
-	// Esconde o corpo do Minotauro durante o giro.
-    // Assim aparece somente o objeto do golpe girador.
-	visible = false;
-	
-	// Define a duração do ataque girador
-	timer_estado = 45;
-	
-	 // ----------------------------------------------------
-    // CRIA O OBJETO DO ATAQUE GIRATÓRIO
-    // ----------------------------------------------------
-	
-	// Guarda a posição X atual do Minotauro.
-    // Esse será o ponto inicial onde o ataque nascerá.
-	var _spawn_x = x;
-	
-	 // Verifica se o Minotauro está olhando para esquerda.
-    // direct == -1 significa esquerda.
-	if (direct == -1) {
-		
-		 // Ajusta a posição do golpe para aparecer
-        // no lado correto do personagem.
-		_spawn_x = x + sprite_get_width(sprite_index);
-	}
-	
-	 // Cria uma instância do objeto responsável pelo golpe giratório.
-    //
-    // _spawn_x → posição horizontal
-    // y → mesma altura do Minotauro
-    // depth - 1 → fica desenhado atrás dele
-    // obj_golpe_girador → objeto criado
-	var _girador = instance_create_depth(
-					_spawn_x,
-					y,
-					depth - 1,
-					obj_golpe_girador);
+					// ----------------------------------------------------
+					// ATAQUE 2: GOLPE DA MACHADADA (ÚLTIMO GOLPE)
+					// ----------------------------------------------------
 					
-	 // Verifica se o objeto foi criado corretamente.
-	 if (_girador != noone){
-		 
-		  // Faz o golpe giratório seguir a mesma direção
-        // que o Minotauro está olhando.
-        //
-        // 1 = direita
-        // -1 = esquerda
-		_girador.image_xscale = direct;
-	 }
-	 
-	  // Depois do golpe girador,
-    // volta para a investida.
-    //
-    // Cria um ciclo:
-    // Investida → Girador → Investida → Girador
-	proximo_ataque = 0;
+					// Muda o estado do inimigo para a machadada
+					estado = "machadada";
+					
+					// Usa o sprite da machadada diretamente no Minotauro
+					sprite_index = spr_machadada;
+					
+					// Trava a máscara de colisão física no corpo normal para evitar que ele mude de tamanho e pule!
+					mask_index = spr_minotauro;
+					
+					// Reinicia a animação.
+					image_index = 0;
+					
+					// Garante que o Minotauro continue visível
+					visible = true;
+					
+					// Define a duração da machadada
+					timer_estado = 45;
+					
+					// ----------------------------------------------------
+					// CRIA A HITBOX INVISÍVEL DA MACHADADA
+					// ----------------------------------------------------
+					var _spawn_x = x;
+					var _hitbox_xscale = 1;
+					
+					// Se o Minotauro está olhando para a direita, ajusta a posição e espelha a hitbox
+					if (direct == 1) {
+						_spawn_x = x + sprite_get_width(sprite_index);
+						_hitbox_xscale = -1;
+					}
+					
+					// Cria a hitbox invisível
+					var _machadada = instance_create_depth(
+									_spawn_x,
+									y,
+									depth - 1,
+									obj_machadada);
+									
+					if (_machadada != noone){
+						_machadada.image_xscale = _hitbox_xscale;
+					}
+					
+					// Reseta o ciclo de ataques voltando para a investida.
+					proximo_ataque = 0;
 				}
 			 }
 			 
@@ -340,13 +389,54 @@ if (instance_exists(obj_personagem)){
 			}
             break;
             
-        // ==========================================
-        // ESTADO: ATAQUE 3 (FUTURO / PLACEHOLDER)
-        // ==========================================
-        case "ataque_3":
-            hveloc = 0;
-            image_xscale = 1;
-            break;
+       // ==========================================
+		// ESTADO: GOLPE DA MACHADADA (ÚLTIMO GOLPE)
+		// ==========================================
+		
+		case "machadada":
+		
+		// Enquanto o Minotauro está dando a machadada,
+		// ele não pode andar. Zera a velocidade horizontal.
+		hveloc = 0;
+		
+		// Define que o sprite não está invertido.
+		// 1 = direção normal
+		// -1 = sprite espelhado para o outro lado
+		image_xscale = 1;
+		
+		// Verifica se a animação da machadada terminou.
+		// Essa função provavelmente retorna TRUE quando
+		// chega no último frame do sprite.
+		if (scr_fim_da_animacao()) {
+			
+			// Troca o estado do personagem.
+			// Sai do ataque e entra no estado de cansaço.
+			estado = "exhausted";
+			
+			 // Troca a animação para o sprite parado.
+			// O Minotauro deixa de fazer a machadada.
+			sprite_index = sprite_idle;
+			
+			 // Volta a máscara de colisão para o tamanho normal do corpo.
+			// Durante o ataque ela pode ser diferente.
+			mask_index = spr_minotauro;
+			
+			 // Garante que o personagem continue aparecendo na tela.
+			 visible = true;
+			 
+			  // Define quanto tempo ele ficará cansado.
+			// 90 frames = aproximadamente 1,5 segundos
+			// em um jogo rodando a 60 FPS.
+			timer_estado = 90;
+			
+			// Garante novamente que ele não está se movendo.
+			hveloc = 0;
+		}
+		
+		// Encerra esse estado.
+		// Impede que o código continue executando outros estados.
+		
+		break;
        
 		// ==========================================
 		// ESTADO: EXHAUSTED / CANSAÇO

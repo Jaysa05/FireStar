@@ -65,7 +65,7 @@ mask_index = spr_minotauro;
 // "prepara_investida"  -> preparando a investida
 // "investida"          -> correndo em alta velocidade
 // "girador"           -> ataque girador do machado
-// "ataque_3"           -> terceiro ataque
+// "machadada"          -> terceiro ataque (machadada)
 // "exhausted"          -> cansado após atacar
 
 estado = "chase";
@@ -97,6 +97,7 @@ timer_vulnerabilidade = 300; // 300 frames a 60 FPS (5 segundos)
 //
 // 0 = investida
 // 1 = girador
+// 2 = machadada
 proximo_ataque = 0;
 
 // ========================

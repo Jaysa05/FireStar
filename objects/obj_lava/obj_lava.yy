@@ -24,8 +24,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Objetos",
-    "path": "folders/Objetos.yy",
+    "name": "Projeto 2",
+    "path": "Projeto 2.yyp",
   },
   "resourceVersion": "1.0",
   "name": "obj_lava",

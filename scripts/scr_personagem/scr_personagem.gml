@@ -79,9 +79,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
         place_meeting(x, y + 1, obj_parede) || 
         place_meeting(x, y + 1, obj_trampolim) ||
         (place_meeting(x, y + 1, obj_plataforma_cair) && bbox_bottom <= instance_place(x, y + 1, obj_plataforma_cair).bbox_top + 5) ||
-        (_pode_usar_plat2 && place_meeting(x, y + 1, obj_plataforma2) && !place_meeting(x, y, obj_plataforma2)) ||
-        (place_meeting(x, y + 1, obj_plataforma_fase2) && !place_meeting(x, y, obj_plataforma_fase2)) ||
-        (place_meeting(x, y + 1, obj_plataforma) && !place_meeting(x, y, obj_plataforma));
+        (_pode_usar_plat2 && place_meeting(x, y + 1, obj_plataforma2) && bbox_bottom <= instance_place(x, y + 1, obj_plataforma2).bbox_top + 5) ||
+        (place_meeting(x, y + 1, obj_plataforma_fase2) && bbox_bottom <= instance_place(x, y + 1, obj_plataforma_fase2).bbox_top + 5) ||
+        (place_meeting(x, y + 1, obj_plataforma) && bbox_bottom <= instance_place(x, y + 1, obj_plataforma).bbox_top + 5);
 
     // -----------------------------
     // DESCER DA PLATAFORMA (Down + Jump)
@@ -170,19 +170,54 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     var _plat = instance_place(x, y + vveloc, obj_plataforma_cair); 
     if (_plat == noone) _plat = instance_place(x, y + vveloc, obj_plataforma);
     if (_plat == noone && _pode_usar_plat2) _plat = instance_place(x, y + vveloc, obj_plataforma2);
-    if (_plat == noone) _plat = instance_place(x, y + vveloc, obj_plataforma_fase2);
-
-    if (_plat != noone) { // Se tocou em alguma plataforma
-        var _tolerancia = (_plat.object_index == obj_plataforma_cair) ? 5 : 0;
-        
-        if (vveloc > 0 && bbox_bottom <= _plat.bbox_top + _tolerancia) { // Se está caindo em cima dela
-            while (!place_meeting(x, y + sign(vveloc), _plat)) {
-                y += sign(vveloc);
-            }
-            vveloc = 0; 
-            pulos = pulos_max; 
-        }
-    }
+   // Se ainda não foi encontrada nenhuma plataforma,
+	// procura uma plataforma da fase 2 na posição para onde
+	// o personagem irá se mover neste frame.
+	if (_plat == noone)
+		_plat = instance_place(x , y + vveloc, obj_plataforma_fase2);
+		
+	// Verifica se foi encontrada alguma plataforma.
+	// Se "_plat" for diferente de "noone", significa que existe
+	// uma plataforma na direção do movimento.
+	if (_plat != noone ){
+		
+		// Cria uma margem de segurança de 5 pixels.
+		// Isso ajuda a evitar que o personagem atravesse a plataforma
+		// quando estiver caindo muito rápido.
+		var _tolerancia = 5;
+		
+		// Verifica duas condições:
+	    //
+	    // 1) O personagem está caindo? (vveloc > 0)
+	    // 2) Os pés do personagem ainda estão acima (ou muito próximos)
+	    //    do topo da plataforma?
+	    //
+	    // Se as duas condições forem verdadeiras,
+	    // o personagem pode pousar na plataforma.
+		if (vveloc > 0 && bbox_bottom <= _plat.bbox_top + _tolerancia){
+			
+			 // Enquanto o personagem ainda NÃO estiver encostando
+			// na plataforma...
+			while (!place_meeting(x , y + sign(vveloc), _plat)){
+				
+				 // Move o personagem apenas 1 pixel por vez
+				// na direção da queda.
+				// Isso garante que ele pare exatamente sobre
+				// a plataforma, sem atravessá-la.
+				y += sign(vveloc);
+				
+			}
+			
+			 // Depois que o personagem encostou na plataforma,
+			// a velocidade vertical é zerada para que ele
+			// pare de cair.
+			vveloc = 0;
+			
+			// Restaura todos os pulos disponíveis.
+			// Assim o jogador pode pular novamente.
+			pulos = pulos_max;
+		}
+	}
 
     y += vveloc; // Aplica o movimento vertical
 

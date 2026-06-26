@@ -2,8 +2,8 @@
 event_inherited(); 
 sprite_morrendo = spr_tomate_morrendo; 
 
-// A planta vai dropar maças ao morrer
-item_drop = noone; 
+item_drop = obj_fruta; 
+item_drop_quantidade = 10;
 dropou = false;
 
 // Variáveis de controle do tiro

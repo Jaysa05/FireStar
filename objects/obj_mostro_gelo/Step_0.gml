@@ -380,15 +380,55 @@ switch (estado) {
 // ==============================
 // COLISÃO HORIZONTAL (PAREDES / BLOQUEIOS DE INIMIGO)
 // ==============================
-var _colidiu_h = place_meeting(x + hveloc, y, obj_parede) || place_meeting(x + hveloc, y, obj_parede_inimigo);
+
+// Verifica se existe uma parede ou um bloqueio de inimigo
+// na direção em que o personagem irá andar.
+//
+// O "y - 4" faz a verificação um pouco acima dos pés,
+// evitando que o personagem fique preso em pequenas
+// irregularidades do chão.
+var _colidiu_h = 
+		place_meeting(x + hveloc, y - 4, obj_parede)||
+		place_meeting(x + hveloc, y - 4, obj_parede_inimigo);
+		
+// Se houve colisão com alguma parede...
 if (_colidiu_h) {
-    var _obj_colisao = place_meeting(x + hveloc, y, obj_parede) ? obj_parede : obj_parede_inimigo;
-    while (!place_meeting(x + sign(hveloc), y, _obj_colisao)) {
-        x += sign(hveloc);
-    }
-    hveloc = 0;
+	
+	 // Descobre qual objeto foi atingido.
+    //
+    // Se a colisão foi com uma parede comum,
+    // guarda "obj_parede".
+    //
+    // Caso contrário, guarda "obj_parede_inimigo".
+	var _obj_colisao =
+			place_meeting(x + hveloc, y - 4, obj_parede)
+			? obj_parede
+			: obj_parede_inimigo;
+			
+	// Enquanto o personagem ainda NÃO estiver
+    // encostando na parede...
+	 while (!place_meeting(x + sign(hveloc), y - 4, _obj_colisao)) {
+		
+		 // Move apenas 1 pixel na direção em que está andando.
+        //
+        // Isso faz o personagem parar exatamente
+        // ao lado da parede, sem atravessá-la.
+		x += sign(hveloc);
+		
+		 // Zera a velocidade horizontal.
+		// Assim o personagem para de andar.
+		
+	}
+	
+	// Move o personagem horizontalmente.
+	//
+	// Se houve colisão, "hveloc" será 0,
+	// então ele não se moverá.
+	//
+	// Se não houve colisão,
+	// ele andará normalmente.
+	x += hveloc;
 }
-x += hveloc;
 
 // ==============================
 // COLISÃO VERTICAL (CHÃO/TETO/PLATAFORMAS)

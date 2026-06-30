@@ -155,6 +155,32 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     x += hveloc; // Aplica o movimento depois de checar
 
     // -----------------------------
+    // AJUSTE DE QUINA NA ESCALADA (Evita travamentos em quinas de paredes na Fase 5 e 6)
+    // -----------------------------
+    if ((room == rm_fase5 || room == rm_fase6) && vveloc < 0 && place_meeting(x, y + vveloc, obj_parede)) {
+        // Se estiver escalando parede pela esquerda (e colidir com o teto)
+        if (place_meeting(x - 1, y, obj_parede)) {
+            // Tenta desviar para a direita para ultrapassar a quina
+            for (var i = 1; i <= 4; i++) {
+                if (!place_meeting(x + i, y + vveloc, obj_parede)) {
+                    x += i;
+                    break;
+                }
+            }
+        }
+        // Se estiver escalando parede pela direita (e colidir com o teto)
+        else if (place_meeting(x + 1, y, obj_parede)) {
+            // Tenta desviar para a esquerda para ultrapassar a quina
+            for (var i = 1; i <= 4; i++) {
+                if (!place_meeting(x - i, y + vveloc, obj_parede)) {
+                    x -= i;
+                    break;
+                }
+            }
+        }
+    }
+
+    // -----------------------------
     // COLISÃO VERTICAL (Teto/Chão sólido)
     // -----------------------------
     if (place_meeting(x, y + vveloc, obj_parede) || place_meeting(x, y + vveloc, obj_trampolim)) {

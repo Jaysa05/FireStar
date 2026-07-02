@@ -23,8 +23,8 @@ if (direct == _natural_dir) {
 // DESENHO DO CORPO DO BOSS
 // ==============================
 var _blend = make_color_rgb(40, 80, 180); // Tom azul escuro indicando vulnerabilidade (pode tomar dano)
-if (vulneravel == false) {
-    _blend = c_white; // Cor normal/padrão do sprite (não pode tomar dano)
+if (vulneravel == false || vida_monstro_gelo <= 0) {
+    _blend = c_white; // Cor normal/padrão do sprite (não pode tomar dano ou ao morrer)
 }
 
 if (alarm[1] > 0) {

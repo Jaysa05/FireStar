@@ -119,3 +119,7 @@ sprite_investida = spr_investida_cortante_minotauro;
 // Sprite/animação reproduzida quando o Minotauro morre.
 sprite_morrendo = spr_minotauro_morrendo;
 
+// Cria a barra de vida do chefe (obj_chefe_hud_vida) centralizada sobre a cabeça do minotauro
+var _hud = instance_create_depth(x, y, depth - 10, obj_chefe_hud_vida);
+_hud.target = id;
+

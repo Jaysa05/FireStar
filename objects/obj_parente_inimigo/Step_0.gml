@@ -62,6 +62,11 @@ if (item_drop != noone){
 // REMOÇÃO DO INIMIGO
 // ==============================
 
+// Se for o Minotauro ou o Monstro de Gelo (ou um de seus descendentes), cria a tela de vitória
+if (object_index == obj_minotauro || object_index == obj_mostro_gelo || object_is_ancestor(object_index, obj_mostro_gelo)) {
+    instance_create_depth(x, y, depth, obj_vitoria);
+}
+
 // Depois de dropar os itens, remove o inimigo do jogo
 instance_destroy()
 

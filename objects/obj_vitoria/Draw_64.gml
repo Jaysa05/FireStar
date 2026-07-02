@@ -28,30 +28,50 @@ draw_set_color(c_white);
 // Define a transparência do texto como totalmente visível
 draw_set_alpha(1);
 
-// Define a fonte que será usada nos textos
-draw_set_font(fnt_final);
+// Escolhe a fonte que será usada para desenhar o título.
+draw_set_font(fnt_titulo);
 
-// Calcula o centro da tela (horizontal e vertical)
+// Cria uma variável chamada "meio_x".
+// Ela guarda o valor da metade da largura da tela,
+// ou seja, o centro horizontal.
 var meio_x = display_get_gui_width() / 2;
+
+// Cria uma variável chamada "meio_y".
+// Ela guarda o valor da metade da altura da tela,
+// ou seja, o centro vertical.
 var meio_y = display_get_gui_height() / 2;
 
 // ----------------------------
-// TEXTOS NA TELA
+// DESENHA O TÍTULO
 // ----------------------------
 
-// Desenha o texto principal "END GAME!"
-// meio_x = centro horizontal
-// meio_y - 120 = um pouco acima do centro
-// 2, 2 = aumenta o tamanho do texto
-// 0 = sem rotação
-draw_text_transformed(meio_x , meio_y - 120, "FIM DE JOGO!", 2, 2 , 0);
+// Escreve "The End" usando a fonte do título.
+// O texto fica centralizado na horizontal
+// e 100 pixels acima do centro da tela.
+draw_text(meio_x, meio_y - 100, "The End");
 
-// Desenha o nome do criador um pouco abaixo do título
-draw_text(meio_x, meio_y - 60, "By Jaysa Kelly");
+// ----------------------------
+// DESENHA O NOME DO CRIADOR
+// ----------------------------
 
-// Desenha as instruções para o jogador
-// meio_y + 120 = abaixo do centro
+// Troca para a fonte usada no menu.
+draw_set_font(fnt_menu);
+
+// Escreve o nome do criador.
+// O texto fica centralizado e apenas 20 pixels acima do centro.
+draw_text(meio_x, meio_y - 20, "Feito por Jaysa Kelly");
+
+// ----------------------------
+// DESENHA AS INSTRUÇÕES
+// ----------------------------
+
+// Troca para a fonte das instruções finais.
+draw_set_font(fnt_final);
+
+// Escreve as instruções para o jogador.
+// O texto fica centralizado e 120 pixels abaixo do centro.
 draw_text(meio_x, meio_y + 120, "Pressione 'R' para Reiniciar ou 'Enter' para o Menu");
+
 
 // ----------------------------
 // RESET DAS CONFIGURAÇÕES

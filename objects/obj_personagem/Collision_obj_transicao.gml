@@ -52,8 +52,8 @@ if ( room == rm_fase1)
 		// Como essa porta fica próxima ao topo da sala,
 		// sua coordenada Y é menor que 100.
 		if (other.y < 100) {
-			 // Define a Fase 7 como destino.
-			 _target = rm_fase7;
+			 // Define a Fase 6 como destino.
+			 _target = rm_fase6;
 		}
 		
 		// Caso contrário, é a porta da direita.
@@ -63,8 +63,8 @@ if ( room == rm_fase1)
 			// Isso significa que o chefe foi derrotado.
 			if (!instance_exists(obj_demonio)){
 				
-				 // Libera o acesso para a Fase 6
-				 _target = rm_fase6;
+				 // Libera o acesso para a Fase 7
+				 _target = rm_fase7;
 			}
 			
 			 // O demônio ainda está vivo.

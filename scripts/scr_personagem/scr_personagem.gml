@@ -110,9 +110,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     }
 
     // -----------------------------
-    // MECÂNICA DE ESCALAR PAREDE (Fase 5 e Fase 6)
+    // MECÂNICA DE ESCALAR PAREDE (Fase 5)
     // -----------------------------
-    if ((room == rm_fase5 || room == rm_fase6) && !_chao) {
+    if (room == rm_fase5 && !_chao) {
         var _parede_dir = place_meeting(x + 1, y, obj_parede);
         var _parede_esq = place_meeting(x - 1, y, obj_parede);
          
@@ -155,9 +155,9 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     x += hveloc; // Aplica o movimento depois de checar
 
     // -----------------------------
-    // AJUSTE DE QUINA NA ESCALADA (Evita travamentos em quinas de paredes na Fase 5 e 6)
+    // AJUSTE DE QUINA NA ESCALADA (Evita travamentos em quinas de paredes na Fase 5)
     // -----------------------------
-    if ((room == rm_fase5 || room == rm_fase6) && vveloc < 0 && place_meeting(x, y + vveloc, obj_parede)) {
+    if (room == rm_fase5 && vveloc < 0 && place_meeting(x, y + vveloc, obj_parede)) {
         // Se estiver escalando parede pela esquerda (e colidir com o teto)
         if (place_meeting(x - 1, y, obj_parede)) {
             // Tenta desviar para a direita para ultrapassar a quina

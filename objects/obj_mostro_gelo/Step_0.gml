@@ -381,54 +381,63 @@ switch (estado) {
 // COLISÃO HORIZONTAL (PAREDES / BLOQUEIOS DE INIMIGO)
 // ==============================
 
-// Verifica se existe uma parede ou um bloqueio de inimigo
-// na direção em que o personagem irá andar.
+		
+// Verifica se haverá colisão na horizontal na próxima posição do personagem.
 //
-// O "y - 4" faz a verificação um pouco acima dos pés,
-// evitando que o personagem fique preso em pequenas
-// irregularidades do chão.
-var _colidiu_h = 
-		place_meeting(x + hveloc, y - 4, obj_parede)||
+// x + hveloc -> posição para onde o personagem vai se mover.
+// y - 4      -> verifica a colisão um pouco acima dos pés do personagem.
+//
+// A variável "_colidiu_h" será:
+// true  -> se houver colisão com alguma parede.
+// false -> se não houver colisão.
+var _colidiu_h =
+		place_meeting(x + hveloc, y - 4, obj_parede) ||
 		place_meeting(x + hveloc, y - 4, obj_parede_inimigo);
 		
-// Se houve colisão com alguma parede...
+// Se houver colisão com alguma parede...
 if (_colidiu_h) {
 	
-	 // Descobre qual objeto foi atingido.
+	// Descobre com qual objeto aconteceu a colisão.
     //
-    // Se a colisão foi com uma parede comum,
-    // guarda "obj_parede".
+    // Se for uma parede comum,
+    // "_obj_colisao" receberá obj_parede.
     //
-    // Caso contrário, guarda "obj_parede_inimigo".
-	var _obj_colisao =
+    // Caso contrário,
+    // receberá obj_parede_inimigo.
+	var _obj_colisao = 
 			place_meeting(x + hveloc, y - 4, obj_parede)
 			? obj_parede
 			: obj_parede_inimigo;
 			
-	// Enquanto o personagem ainda NÃO estiver
-    // encostando na parede...
-	 while (!place_meeting(x + sign(hveloc), y - 4, _obj_colisao)) {
+	// Enquanto o personagem ainda NÃO estiver encostando
+    // na parede encontrada...
+	while (!place_meeting(x + sign(hveloc), y - 4, _obj_colisao)){
 		
-		 // Move apenas 1 pixel na direção em que está andando.
+		// Move o personagem apenas 1 pixel por vez.
         //
-        // Isso faz o personagem parar exatamente
-        // ao lado da parede, sem atravessá-la.
+        // sign(hveloc) retorna:
+        //  1  -> se estiver andando para a direita.
+        // -1  -> se estiver andando para a esquerda.
+        //
+        // Esse movimento de 1 em 1 pixel faz o personagem
+        // parar exatamente ao lado da parede, sem atravessá-la.
 		x += sign(hveloc);
-		
-		 // Zera a velocidade horizontal.
-		// Assim o personagem para de andar.
-		
 	}
 	
-	// Move o personagem horizontalmente.
-	//
-	// Se houve colisão, "hveloc" será 0,
-	// então ele não se moverá.
-	//
-	// Se não houve colisão,
-	// ele andará normalmente.
-	x += hveloc;
+	 // Como o personagem chegou na parede,
+    // a velocidade horizontal é zerada.
+	hveloc = 0;
 }
+
+// Move o personagem horizontalmente.
+//
+// Se houve colisão:
+// hveloc será 0, então ele não se moverá.
+//
+// Se não houve colisão:
+// hveloc continuará com seu valor normal,
+// e o personagem andará normalmente.
+	x += hveloc;
 
 // ==============================
 // COLISÃO VERTICAL (CHÃO/TETO/PLATAFORMAS)

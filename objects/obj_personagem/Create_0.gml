@@ -76,6 +76,8 @@ inv_tempo = 180; //Tempo de invensibilidade do personagem depois de tomar dano
 forca_pulo = 3.5; // Força do pulo 
 pulos_max = 2;    // O limite de pulos (2 para duplo pulo)
 pulos = pulos_max;        // Quantos pulos ele tem disponíveis agora
+chao_anterior = false; // Armazena o estado de colisão com o chão do frame anterior
+mask_index = spr_personagem_parado_direita; // Garante uma caixa de colisão fixa para evitar travamento em paredes ao mudar de sprite
 
 morreu = false;
 

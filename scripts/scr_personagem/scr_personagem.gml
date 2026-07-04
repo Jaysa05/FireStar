@@ -104,19 +104,23 @@ function scr_personagem_movendo() { // Início da Função de Movimento
     // -----------------------------
     if (!_chao) { // Se não está no chão (está caindo ou pulando)
         vveloc += gravidade; 
-        if (pulos == pulos_max) pulos = pulos_max - 1; // Tira 1 pulo para evitar pulo duplo no ar
+        if (chao_anterior && vveloc >= 0 && pulos == pulos_max) {
+            pulos = pulos_max - 1; // Tira 1 pulo para evitar pulo duplo no ar ao cair
+        }
     } else {
         pulos = pulos_max; // Se pisou no chão, recarrega os pulos
     }
+    chao_anterior = _chao; // Atualiza o estado do chão para o próximo frame
 
     // -----------------------------
     // MECÂNICA DE ESCALAR PAREDE (Fase 5)
     // -----------------------------
     if (room == rm_fase5 && !_chao) {
-        var _parede_dir = place_meeting(x + 1, y, obj_parede);
-        var _parede_esq = place_meeting(x - 1, y, obj_parede);
+        // Só ativa a escalada se o jogador estiver empurrando o direcional na direção da parede
+        var _parede_dir = place_meeting(x + 1, y, obj_parede) && direita;
+        var _parede_esq = place_meeting(x - 1, y, obj_parede) && esquerda;
          
-        if (_parede_dir || _parede_esq) { // Se encostou em alguma parede
+        if (_parede_dir || _parede_esq) { // Se encostou em alguma parede empurrando o direcional
             if (vveloc > 0.5) vveloc = 0.5; // Escorrega devagarzinho
               
             var _subir = keyboard_check(ord("W")) || keyboard_check(vk_up) || keyboard_check(vk_space);

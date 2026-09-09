@@ -9,6 +9,9 @@ global.faca_save = faca;
 // Salva as cargas/munições/energia da faca
 global.faca_cargas_save = faca_cargas;
 
+// Salva a quantidade de frutas coletadas
+global.frutas_save = frutas;
+
 // Salva o tempo restante de invencibilidade
 // max(0, alarm[0]) impede que o valor fique negativo
 global.inv_save = max(0, alarm[0]);

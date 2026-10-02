@@ -1,44 +1,51 @@
-// Verifica se a tecla R foi pressionada neste exato momento
+﻿// Verifica se a tecla R foi pressionada neste exato momento
 var _apertou_r = keyboard_check_pressed(ord("R"));
 
 // Verifica se a tecla ENTER foi pressionada neste exato momento
 var _apertou_enter = keyboard_check_pressed(vk_enter);
 
 // Se o jogador apertou R OU ENTER
-if ( _apertou_r || _apertou_enter){
+if (_apertou_r || _apertou_enter){
+
 	// ===============================
-    // RESET DOS STATUS (acontece para os dois casos)
-    // ===============================
-	global.vida_save = 5;            // Define a vida do jogador como 5
-    global.faca_save = 0;            // Zera a quantidade de facas
-    global.faca_cargas_save = 0;     // Zera as cargas das facas
-    global.frutas_save = 0;          // Zera as frutas coletadas
-    
-	 // ===============================
-    // SE APERTAR A TECLA R
+    // SE APERTAR A TECLA R (RECOMECAR DO CHECKPOINT)
     // ===============================
 	if (_apertou_r) {
-		// Verifica se a variável de checkpoint existe E está ativada
-		if ( variable_global_exists("checkpoint_ativo") && global.checkpoint_ativo){
-			 // Se tiver checkpoint ativo, vai para a sala salva nele
-			 room_goto(global.checkpoint_sala);
-		}else {
-			// Se NÃO tiver checkpoint, volta para a fase inicial
+		
+		// Tenta recarregar dados do save.ini para garantir estado salvo
+		if (file_exists("save.ini")){
+			ini_open("save.ini");
+			global.checkpoint_ativo    = ini_read_real("Checkpoint", "ativo", false);
+			global.checkpoint_sala     = ini_read_real("Checkpoint", "sala", room);
+			global.checkpoint_x        = ini_read_real("Checkpoint", "x", 0);
+			global.checkpoint_y        = ini_read_real("Checkpoint", "y", 0);
+			global.vida_save           = ini_read_real("Player", "vida", 5);
+			global.faca_save           = ini_read_real("Player", "faca", 0);
+			global.faca_cargas_save    = ini_read_real("Player", "faca_cargas", 0);
+			global.frutas_save         = ini_read_real("Player", "frutas", 0);
+			ini_close();
+			if (global.checkpoint_ativo) {
+				global.carregando_jogo = true;
+			}
+		}
+		
+		// Verifica se o checkpoint esta ativo e vai para a sala salva
+		if (variable_global_exists("checkpoint_ativo") && global.checkpoint_ativo){
+			room_goto(global.checkpoint_sala);
+		} else {
+			// Se NAO tiver checkpoint, reseta e volta para a fase inicial
+			global.vida_save        = 5;
+			global.faca_save        = 0;
+			global.faca_cargas_save = 0;
+			global.frutas_save      = 0;
 			room_goto(rm_fase1);
 		}
 	}
 
-
-// ===============================
-    // SE APERTAR ENTER
+	// ===============================
+    // SE APERTAR ENTER (VOLTAR AO MENU)
     // ===============================
 	else if (_apertou_enter) {
-		// Verifica se a variável checkpoint existe
-		if (variable_global_exists("checkpoint_ativo")){
-			 // Desativa o checkpoint (como se apagasse ele)
-			 global.checkpoint_ativo = false;
-		}
-		// Vai para o menu principal do jogo
 		room_goto(rm_menu);
 	}
 }

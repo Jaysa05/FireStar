@@ -1,54 +1,40 @@
-/// @description Insert description here
-// Se o checkpoint ainda NÃO foi ativado
+/// @description Sistema de ativacao do Checkpoint e Salvamento
+
 if (!ativado) {
-	// Verifica se o jogador está encostando no checkpoint
-	if (place_meeting(x, y, obj_personagem)){
-		// Marca que o checkpoint já foi ativado (não ativa de novo)
-		ativado = true;
-		
-		  // -------- SALVA DADOS DO CHECKPOINT --------
-		 // Diz que existe um checkpoint ativo
-		 global.checkpoint_ativo = true;
-		 
-		  // Salva em qual sala (fase) o checkpoint está
-		  global.checkpoint_sala = room;
-		  
-		  // Salva a posição X do checkpoint
-		  global.checkpoint_x = x;
-		  
-		   // Salva a posição Y do checkpoint
-		   global.checkpoint_y = y;
-		   
-		   // -------- SALVA DADOS DO JOGADOR --------
-		   
-		   // Acessa o objeto do jogador
-		   with (obj_personagem){
-			   // Salva a vida atual do jogador
-			   global.vida_save = vida;
-			   
-			   // Salva se o jogador tem faca
-			   global.faca_save = faca;
-			   
-			   // Salva quantas cargas de faca ele tem
-			   global.faca_cargas_save = faca_cargas;
-			   
-			   // Salva quantas frutas o jogador tem
-			   global.frutas_save = frutas;
-		   }
-		   
-		   // Remove o sprite do checkpoint (faz a bandeira sumir)
-		   sprite_index = -1;
-		   
-		   // Inicia um contador de tempo (timer)
-        // 120 frames = 3 segundos (se o jogo roda a 60 FPS)
-		//É o tempo que o texto ficarána tela
-		timer_texto = 60;
-	}
+    if (place_meeting(x, y, obj_personagem)){
+        ativado = true;
+        
+        // -------- SALVA DADOS DO CHECKPOINT NAS GLOBAIS --------
+        global.checkpoint_ativo = true;
+        global.checkpoint_sala = room;
+        global.checkpoint_x = x;
+        global.checkpoint_y = y;
+           
+        // -------- SALVA DADOS DO JOGADOR NAS GLOBAIS --------
+        with (obj_personagem){
+            global.vida_save = vida;
+            global.faca_save = faca;
+            global.faca_cargas_save = faca_cargas;
+            global.frutas_save = frutas;
+        }
+        
+        // -------- SALVA NO ARQUIVO FÍSICO SAVE.INI --------
+        ini_open("save.ini");
+        ini_write_real("Checkpoint", "ativo", true);
+        ini_write_real("Checkpoint", "sala", global.checkpoint_sala);
+        ini_write_real("Checkpoint", "x", global.checkpoint_x);
+        ini_write_real("Checkpoint", "y", global.checkpoint_y);
+        ini_write_real("Player", "vida", global.vida_save);
+        ini_write_real("Player", "faca", global.faca_save);
+        ini_write_real("Player", "faca_cargas", global.faca_cargas_save);
+        ini_write_real("Player", "frutas", global.frutas_save);
+        ini_close();
+           
+        sprite_index = -1;
+        timer_texto = 60;
+    }
 }
 
-		// -------- CONTADOR DO TEXTO --------
-		// Se o tempo ainda não acabou
-		if (timer_texto > 0){
-			// Diminui o tempo a cada frame
-			timer_texto--;
-		}
+if (timer_texto > 0){
+    timer_texto--;
+}

@@ -142,6 +142,8 @@ if (_desenhar_hud) {
             c_white,
             1
         );
+		
+		draw_set_color(c_white);
 
         draw_set_font(fnt_menu);
 

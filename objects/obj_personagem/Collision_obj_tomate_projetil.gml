@@ -1,10 +1,10 @@
-/// @description Insert description here
-if alarm [0] <= 0 {//se o alarme estiver em 0 ou menor pode sofrer dano
-	vida -= 1;//perde 1 vida 
-	alarm[0] = inv_tempo;//3 segundos sem poder tomar dano
-}
+/// @description Colisão com projétil de tomate
+if (!invencivel && alarm[0] <= 0) {
+    vida -= 1;
+    alarm[0] = inv_tempo;
+    invencivel = true;
+    }
 
-with (other){
-	instance_destroy(); //Destroe o projétil quando colidir com o personagem
+with (other) {
+    instance_destroy();
 }
-

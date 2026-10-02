@@ -146,8 +146,9 @@ if ( other.object_index == obj_machadada) {
     }
 
     // SISTEMA NORMAL DE TOMAR DANO
-    if (alarm[0] <= 0) { //se o alarme estiver em 0 ou menor pode sofrer dano
-        vida -= 1; //perde 1 vida
-        alarm[0] = inv_tempo; // tempo sem poder sofrer dano
-    }
+    if (!invencivel && alarm[0] <= 0) { // Só toma dano se não estiver invencível
+        vida -= 1;
+        alarm[0] = inv_tempo;
+        invencivel = true;
+            }
 }

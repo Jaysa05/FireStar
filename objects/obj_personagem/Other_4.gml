@@ -1,7 +1,7 @@
-/// @description Posicionamento ao entrar na fase
+﻿/// @description Posicionamento ao entrar na fase
 
 // ---------------------------------------------------
-// CHECKPOINT: Se existe checkpoint ativo nesta sala, spawna lá
+// CHECKPOINT: Se existe checkpoint ativo nesta sala, spawna la
 // ---------------------------------------------------
 if (variable_global_exists("checkpoint_ativo") 
     && global.checkpoint_ativo 
@@ -15,56 +15,49 @@ if (variable_global_exists("checkpoint_ativo")
     gravidade = 0.2;
     morreu = false;
     
-    // --- RESET DE STATUS AO VOLTAR PARA O CHECKPOINT ---
-    // Se não estiver carregando um jogo salvo, reseta os status padrões do checkpoint
-    if (!variable_global_exists("carregando_jogo") || !global.carregando_jogo) {
-        global.vida_save = 5;          // Vida cheia
-        global.faca_save = 0;          // Sem facas
-        global.faca_cargas_save = 0;   // Sem cargas
-        global.frutas_save = 0;        // Sem frutas
-    } else {
-        global.carregando_jogo = false; // Consome a flag de carregamento
+    // Consome a flag de carregamento se existir
+    if (variable_global_exists("carregando_jogo") && global.carregando_jogo) {
+        global.carregando_jogo = false;
     }
     
-    vida = global.vida_save;
-    faca = global.faca_save;
+    vida       = global.vida_save;
+    faca       = global.faca_save;
     faca_cargas = global.faca_cargas_save;
-    frutas = global.frutas_save;
+    frutas     = global.frutas_save;
     
-    // Mantém a invencibilidade atual ou dá 60 frames (1 segundo) de segurança
+    // Mantem a invencibilidade atual ou da 60 frames de seguranca
     alarm[0] = max(alarm[0], 60);
     
     show_debug_message("Respawn no checkpoint!");
-    exit; // Sai do evento, não executa o spawn padrão abaixo
+    exit; // Sai do evento, nao executa o spawn padrao abaixo
 }
 
 // ---------------------------------------------------
-// SPAWN PADRÃO (só roda se NÃO há checkpoint ativo)
+// SPAWN PADRAO (so roda se NAO ha checkpoint ativo nesta sala)
 // ---------------------------------------------------
 var _nome_sala = room_get_name(room);
 
 if (_nome_sala == "rm_fase3") {
 	
-	// POSIÇÃO DE SEGURANÇA: Nasce no ar (y=200) para cair no chão suavemente
 	x = 32; 
 	y = 200; 
 	
-	// RESET TOTAL DE FÍSICA
 	vveloc = 0;
 	hveloc = 0;
 	gravidade = 0.2; 
-	morreu = false;  // SUPREMA BLINDAGEM: Cancela o estado de morte
+	morreu = false;
 	
-	// RESTAURAÇÃO DE VIDA SEGURA (Força 5 vidas no spawn)
-	global.vida_save = 5;
+	// Restauracao de vida segura
+	if (!variable_global_exists("vida_save") || global.vida_save <= 0) {
+		global.vida_save = 5;
+	}
 	vida = global.vida_save;
 	
-	// INVENCIBILIDADE TEMPORÁRIA: Mantém a invencibilidade da fase anterior, ou dá 1 segundo de segurança
 	alarm[0] = max(alarm[0], 60); 
 	
-	// Restaurar itens
-	faca = global.faca_save;
+	faca        = global.faca_save;
 	faca_cargas = global.faca_cargas_save;
+	frutas      = global.frutas_save;
 	
-	show_debug_message("Personagem ressuscitado e spawnado na Fase 3 com imunidade temporária.");
+	show_debug_message("Personagem spawnado na Fase 3 com imunidade temporaria.");
 }

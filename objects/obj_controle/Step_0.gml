@@ -7,7 +7,7 @@ if (keyboard_check_pressed(vk_escape)) {
 
             pausar_proximo_frame = true;
 
-            // Seleciona a primeira opção do menu
+            // Seleciona a primeira opcao do menu
             opcao_selecionada = 0;
         }
 
@@ -34,10 +34,10 @@ if (pausado) {
 
     if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))){
 
-        // Volta uma opção no menu
+        // Volta uma opcao no menu
         opcao_selecionada--;
 
-        // Se passar do começo da lista, vai para a última opção
+        // Se passar do comeco da lista, vai para a ultima opcao
         if (opcao_selecionada < 0){
             opcao_selecionada = array_length(opcoes_pause) - 1;
         }
@@ -47,7 +47,7 @@ if (pausado) {
 
         opcao_selecionada++;
 
-        // Se passar da última opção, volta para a primeira
+        // Se passar da ultima opcao, volta para a primeira
         if (opcao_selecionada >= array_length(opcoes_pause)){
             opcao_selecionada = 0;
         }
@@ -75,18 +75,28 @@ if (pausado) {
             var _chk_x = 0;
             var _chk_y = 0;
 
-            if (variable_global_exists("Checkpoint_ativo") && global.checkpoint_ativo) {
+            if (variable_global_exists("checkpoint_ativo") && global.checkpoint_ativo) {
                 _chk_ativo = true;
                 _chk_sala = global.checkpoint_sala;
                 _chk_x = global.checkpoint_x;
                 _chk_y = global.checkpoint_y;
             } else {
-                // Se não há checkpoint ativo ainda, salva a última posição capturada ao pausar
+                // Se nao ha checkpoint ativo ainda, salva a ultima posicao capturada ao pausar
                 _chk_ativo = true;
                 _chk_sala = room;
                 _chk_x = player_x_pause;
-                _chk_y = player_y_pause + 32; // Adiciona compensação para o spawn
+                _chk_y = player_y_pause + 32; // Adiciona compensacao para o spawn
             }
+
+            // Atualiza tambem as variaveis globais na memoria
+            global.checkpoint_ativo = _chk_ativo;
+            global.checkpoint_sala = _chk_sala;
+            global.checkpoint_x = _chk_x;
+            global.checkpoint_y = _chk_y;
+            global.vida_save = vida_pause;
+            global.faca_save = faca_pause;
+            global.faca_cargas_save = faca_cargas_pause;
+            global.frutas_save = frutas_pause;
 
             ini_open("save.ini");
             ini_write_real("Checkpoint", "ativo", _chk_ativo);
@@ -105,7 +115,7 @@ if (pausado) {
         // SAIR DO JOGO (Voltar para o Menu)
         } else if (opcao_selecionada == 2){
 
-            // Limpa o estado da pausa e reativa instâncias
+            // Limpa o estado da pausa e reativa instancias
             pausado = false;
             salvo_mensagem_timer = 0;
             instance_activate_all();
@@ -119,7 +129,7 @@ if (pausado) {
         }
     }
 
-    // Para o restante do código enquanto estiver pausado
+    // Para o restante do codigo enquanto estiver pausado
     exit;
 }
 
@@ -135,12 +145,12 @@ if (room == rm_fase3) {
         }
     }
 } else {
-    // Mantém o tempo em 60 nas outras fases
+    // Mantem o tempo em 60 nas outras fases
     tempo_fase3 = 60;
 }
 
 // -----------------------------------------------------------------------------
-// INPUT – teclado apenas
+// INPUT - teclado apenas
 // -----------------------------------------------------------------------------
 var hor = 0;
 var ver = 0;
